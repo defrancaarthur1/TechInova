@@ -1,0 +1,86 @@
+aculdade de Tecnologia de Barueri "Padre Danilo José de Oliveira Ohl
+
+```
+Integrantes:
+```
+- Arthur de França de Lucena
+- Bianca Oliveira Alves
+- Letícia Souza Schimanski
+- Laís Norato Martins
+- André Talarico Monteiro
+
+```
+Professor: Vander Ribeiro
+```
+```
+Empresa TechInova
+```
+```
+Barueri
+3º semestre 2025
+```
+
+Sistema de Controle de Entrada de Estoque de Fornecedores para Adega.
+
+# Objetivo do Sistema
+
+O sistema tem como objetivo auxiliar no controle de estoque de fornecedores de uma
+adega. A proposta é facilitar a organização das compras realizadas com fornecedores,
+melhorar o controle dos produtos disponíveis em estoque e reduzir perdas causadas pela
+falta de registro.
+
+# Tecnologias Utilizadas
+
+## Linguagem de Programação
+
+Será utilizada a linguagem Java para o desenvolvimento da lógica do sistema,
+funcionalidades principais e integração com o banco de dados.
+
+## Banco de Dados
+
+Será utilizado o MySQL para armazenar e gerenciar todas as informações do sistema,
+como:
+
+```
+ cadastro de produtos;
+ cadastro de fornecedores;
+ controle de estoque;
+ histórico
+ movimentação de entradas de produtos.
+```
+
+## Ambiente de Desenvolvimento
+
+O desenvolvimento do sistema será realizado na plataforma NetBeans, utilizada para
+criação, organização e execução do projeto em Java.
+
+## Interface do Sistema
+
+A interface do sistema será desenvolvida utilizando os recursos gráficos do Java no
+NetBeans, proporcionando telas simples, organizadas e de fácil utilização para o usuário.
+
+# Funcionalidades Principais
+
+O sistema contará com as seguintes funcionalidades:
+
+```
+ Cadastro de produtos;
+ Cadastro de fornecedores;
+ Registro de compras realizadas pelos fornecedores;
+ Controle de entrada de mercadorias;
+ Atualização automática do estoque;
+ Consulta de produtos disponíveis;
+ Visualização do histórico de compras.
+```
+# Público-Alvo
+
+O sistema será destinado ao proprietário e funcionários da adega, auxiliando no controle
+interno de estoque e organização das compras realizadas com fornecedores.
+
+
+# Considerações Finais
+
+O desenvolvimento do sistema busca proporcionar maior organização e praticidade no
+gerenciamento do estoque da adega, contribuindo para um melhor controle das
+mercadorias e das compras realizadas. O uso das tecnologias escolhidas permitirá a
+criação de um sistema funcional, simples e eficiente.
