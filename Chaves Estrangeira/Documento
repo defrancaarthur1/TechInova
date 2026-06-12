@@ -1,0 +1,52 @@
+Definir chaves estrangeiras
+Banco de dados: Estilo MYSQL
+
+Create Table Fornecedor
+(
+IdFornecedor Integer Primary key AUTOINCREMENT,
+nomeFornecedor Varchar( 100 ),
+cnpjFornecedor Varchar( 18 ),
+telefoneFornecedor Varchar( 12 ),
+emailFornecedor Varchar( 100 ),
+categoriaProduto Varchar( 50 ),
+enderecoFornecedor Varchar( 200 ),
+dataCadastro Date(),
+consultorVenda Varchar( 100 ),
+telefoneConsultor Varchar( 12 ),
+produtosFornecedor Varchar( 100 ),
+
+Create Table Produto
+(
+idProduto Integer Primary Key
+nomeProduto Varchar( 100 )
+categoriaProduto Varchar( 50 )
+preco Decimal
+quantidade Integer
+dataCadastro Date
+idFornecedor Integer
+);
+
+Create Table Compra
+(
+idCompra Integer Primary key
+dataCompra Date
+categoriaProduto Varchar( 50 )
+nomeProduto Varchar( 100 )
+valorTotal Decimal
+quantidade Integer
+idFornecedor Integer
+
+Create Table itemCompra
+(
+idCompra Integer foreigh key (se conecta com a tabela Compra)
+idProduto integer
+nomeProduto Varchar( 100 )
+quantidade Integer
+valorTotal Decimal
+dataCompra Date
+);
+
+Create Table categoria
+(
+idCategoria Integer Primary key
+nomeCategoria Varchar( 100 )
