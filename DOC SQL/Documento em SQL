@@ -1,6 +1,6 @@
-#Documentação do Banco de Dados em SQL
+Documentação do Banco de Dados em SQL
 
-##Objetivo
+Objetivo
 
 Este banco de dados tem a finalidade de armazenar informações de:
 
@@ -19,9 +19,9 @@ A estrutura foi organizada para:
 ```
 ---
 
-##Descrição das tabelas
+Descrição das tabelas
 
-###Tabela fornecedor
+Tabela fornecedor
 
 Armazena os dados cadastrados dos fornecedores.
 
@@ -40,7 +40,7 @@ Atributos:
 ● telefoneConsultor
 ● produtosFornecedor.
 ```
-###Tabela produto
+Tabela produto
 
 Armazena os produtos fornecidos por cada fornecedor.
 
@@ -58,7 +58,7 @@ Atributos:
 ● dataCadastro
 ● idFornecedor.
 ```
-###Tabela compra
+Tabela compra
 
 Armazena os registros de compra.
 
@@ -73,7 +73,7 @@ Atributos:
 ● quantidade
 ● idFornecedor.
 ```
-###Tabela categoria
+Tabela categoria
 
 Armazena as categorias utilizadas para classificar produtos e compras.
 
@@ -83,7 +83,7 @@ Atributos:
 ● idCategoria
 ● nomeCategoria.
 ```
-###Tabela itemCompra
+Tabela itemCompra
 
 Armazena os itens de uma compra, relacionando compra e produto.
 
@@ -99,7 +99,7 @@ Atributos:
 ```
 ---
 
-##Regras de modelagem adotadas
+Regras de modelagem adotadas
 
 Para facilitar a implementação futura, foram adotadas as seguintes decisões:
 
@@ -120,9 +120,9 @@ categoria(nomeCategoria)
 ➔ itemCompra terá idCompra como chave estrangeira para compra(idCompra)
 ➔ itemCompra terá idProduto como chave estrangeira para produto(idProduto)
 ```
-####---
+---
 
-##Script SQL de criação das tabelas
+Script SQL de criação das tabelas
 
 CREATE DATABASE IF NOT EXISTS sistema_compras;
 USE sistema_compras;
@@ -237,9 +237,9 @@ CHECK (valorTotal >= 0)
 
 ---
 
-## Chaves primárias e estrangeiras
+Chaves primárias e estrangeiras
 
-### Chaves primárias
+Chaves primárias
 
 Cada tabela possui uma chave primária para identificar unicamente seus registros:
 
@@ -251,7 +251,7 @@ Cada tabela possui uma chave primária para identificar unicamente seus registro
 ➔ categoria.idCategoria
 ➔ itemCompra(idCompra, idProduto)
 ```
-###Chaves estrangeiras
+Chaves estrangeiras
 
 As chaves estrangeiras garantem os relacionamentos entre as tabelas:
 
@@ -265,11 +265,11 @@ As chaves estrangeiras garantem os relacionamentos entre as tabelas:
 ```
 ---
 
-##Garantia da integridade dos dados
+Garantia da integridade dos dados
 
 A integridade é mantida com as seguintes regras:
 
-###NOT NULL
+NOT NULL
 
 Impede que campos obrigatórios fiquem vazios, como:
 
@@ -289,7 +289,7 @@ Impede que campos obrigatórios fiquem vazios, como:
 ● idCompra
 ● idProduto
 ```
-###UNIQUE
+UNIQUE
 
 Evita duplicidade em:
 
@@ -310,7 +310,7 @@ Valida condições importantes:
 ➔ quantidade > 0 em itemCompra
 ➔ valorTotal >= 0 em itemCompra
 ```
-###FOREIGN KEY
+FOREIGN KEY
 
 Garante que:
 
@@ -324,7 +324,7 @@ Essas definições ajudam a manter consistência e organização dos dados.
 
 ---
 
-##Conclusão
+Conclusão
 
 A estrutura proposta representa corretamente o modelo definido no DER atualizado, com as
 tabelas Fornecedor, Produto, Compra, Categoria e ItemCompra, mantendo os atributos
