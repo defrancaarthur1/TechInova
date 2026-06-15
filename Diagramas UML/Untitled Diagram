@@ -1,0 +1,287 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36">
+  <diagram name="Página-1" id="g5FWV9hyLb9GxCsi7Zwq">
+    <mxGraphModel grid="1" page="1" gridSize="13" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Pb_6pXC2u4CXWtzYYQBL-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Usuário/Dono da Adega&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="290" x="20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="155" y="35" as="sourcePoint" />
+            <mxPoint x="155" y="83" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-1" parent="1" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;strokeWidth=6;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="145" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-2" edge="1" parent="1" source="2r0E6Jfxsky9IXHyrTgf-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="2r0E6Jfxsky9IXHyrTgf-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Sistema de Controle de Compras&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="290" x="443" y="663" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Usuário acessa o sistema&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="44" width="120" x="100" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Seleciona o fornecedor&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="53" width="120" x="95" y="262" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-18" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="154.29" y="147" />
+              <mxPoint x="154.29" y="147" />
+            </Array>
+            <mxPoint x="154.29" y="130.0000000000001" as="sourcePoint" />
+            <mxPoint x="154.29" y="172" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Selecionar o produto&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="43" width="114" x="95" y="444" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Acesse o menu &quot;Registrar compras&quot;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="45" width="120" x="100" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-21" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="154" y="594" />
+              <mxPoint x="154" y="594" />
+            </Array>
+            <mxPoint x="154" y="581" as="sourcePoint" />
+            <mxPoint x="154" y="619" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit; font-size: 10px;&quot;&gt;Informar a quantidade&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="163.5" x="66.5" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-23" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="701" y="993.9999999999998" as="sourcePoint" />
+            <mxPoint x="701" y="1035" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Informar valor unitário&amp;nbsp;&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="36" width="120" x="96.5" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Clicar em &quot;Adicionar item&quot;&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="31" width="120" x="100" y="706" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-26" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="752" as="sourcePoint" />
+            <mxPoint x="495" y="752" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-25" parent="1" style="line;strokeWidth=2;direction=south;html=1;" value="" vertex="1">
+          <mxGeometry height="24" width="15" x="149" y="742" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-28" parent="1" style="line;strokeWidth=2;direction=south;html=1;" value="" vertex="1">
+          <mxGeometry height="24" width="15" x="496" y="739" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-30" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="583.58" y="768" as="sourcePoint" />
+            <mxPoint x="583.58" y="809" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Validar dados do item&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="39" width="120" x="525" y="729" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-42" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="468" y="857" />
+            </Array>
+            <mxPoint x="544.0000000000002" y="857.0000000000002" as="sourcePoint" />
+            <mxPoint x="468" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-46" connectable="0" parent="2r0E6Jfxsky9IXHyrTgf-42" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;não&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3188" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-31" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Dados validos?&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="544" y="817" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-44" edge="1" parent="1" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="704" y="857" />
+            </Array>
+            <mxPoint x="624" y="857" as="sourcePoint" />
+            <mxPoint x="704" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-49" connectable="0" parent="2r0E6Jfxsky9IXHyrTgf-44" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;sim&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2626" y="-1" as="geometry">
+            <mxPoint y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Exibir erro&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="29" width="85" x="426" y="884" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-52" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="701" y="914" as="sourcePoint" />
+            <mxPoint x="700" y="959" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Calcular subtotal&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="32" width="120" x="638" y="884" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Calcular valor total" vertex="1">
+          <mxGeometry height="30" width="120" x="639" y="964" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-65" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Validar compra" vertex="1">
+          <mxGeometry height="26" width="120" x="638" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-67" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Dados validos?&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="662" y="1113" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-68" edge="1" parent="1" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="822" y="1153" />
+            </Array>
+            <mxPoint x="742" y="1153" as="sourcePoint" />
+            <mxPoint x="822" y="1176" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-69" connectable="0" parent="2r0E6Jfxsky9IXHyrTgf-68" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;sim&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2626" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-70" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="588" y="1153" />
+            </Array>
+            <mxPoint x="664.0000000000002" y="1153.0000000000002" as="sourcePoint" />
+            <mxPoint x="588" y="1176" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-71" connectable="0" parent="2r0E6Jfxsky9IXHyrTgf-70" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;não&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3188" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-72" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Exibir erro&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="29" width="85" x="550" y="1179" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;&lt;font dir=&quot;auto&quot; style=&quot;vertical-align: inherit;&quot;&gt;Selecionar o fornecedor&lt;/font&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="92" y="356" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-75" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="154" y="233.9999999999999" />
+              <mxPoint x="154" y="233.9999999999999" />
+            </Array>
+            <mxPoint x="154" y="217" as="sourcePoint" />
+            <mxPoint x="154" y="258.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-76" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="153" y="501.9999999999999" />
+              <mxPoint x="153" y="501.9999999999999" />
+            </Array>
+            <mxPoint x="153" y="485" as="sourcePoint" />
+            <mxPoint x="153" y="526.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-77" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="677.9999999999999" />
+              <mxPoint x="155" y="677.9999999999999" />
+            </Array>
+            <mxPoint x="155" y="661" as="sourcePoint" />
+            <mxPoint x="155" y="702.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-78" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="153" y="323.9999999999999" />
+              <mxPoint x="153" y="323.9999999999999" />
+            </Array>
+            <mxPoint x="153" y="307" as="sourcePoint" />
+            <mxPoint x="153" y="348.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-81" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="702" y="1083" />
+              <mxPoint x="702" y="1083" />
+            </Array>
+            <mxPoint x="702" y="1066" as="sourcePoint" />
+            <mxPoint x="702" y="1108" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-84" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="413.9999999999999" />
+              <mxPoint x="155" y="413.9999999999999" />
+            </Array>
+            <mxPoint x="155" y="397" as="sourcePoint" />
+            <mxPoint x="155" y="438.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-85" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Salvar compra" vertex="1">
+          <mxGeometry height="39" width="117" x="764" y="1179" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-86" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="827" y="1421" />
+              <mxPoint x="827" y="1421" />
+            </Array>
+            <mxPoint x="827" y="1404" as="sourcePoint" />
+            <mxPoint x="827" y="1446" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-87" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Exibir mensagem de sucesso" vertex="1">
+          <mxGeometry height="39" width="117" x="764" y="1365" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-88" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="825" y="1235" />
+              <mxPoint x="825" y="1235" />
+            </Array>
+            <mxPoint x="825" y="1218" as="sourcePoint" />
+            <mxPoint x="825" y="1260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-89" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Salvar item da compra" vertex="1">
+          <mxGeometry height="61" width="129" x="757" y="1265" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-90" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="824" y="1342" />
+              <mxPoint x="824" y="1342" />
+            </Array>
+            <mxPoint x="824" y="1325" as="sourcePoint" />
+            <mxPoint x="824" y="1367" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-91" parent="1" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="39" width="39" x="807" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="2r0E6Jfxsky9IXHyrTgf-92" parent="1" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;strokeWidth=14;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="817" y="1460" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
