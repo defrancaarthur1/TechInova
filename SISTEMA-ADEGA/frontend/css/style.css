@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+
+/* CABEÇALHO */
+
+.cabecalho {
+    background-color: #5b1f2a;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 40px;
+}
+
+.logo h1 {
+    font-size: 24px;
+}
+
+.logo span {
+    font-size: 13px;
+    color: #ddd;
+}
+
+
+/* MENU */
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+
+/* BOTÃO SAIR */
+
+.botao-sair {
+    background-color: white;
+    color: #5b1f2a;
+
+    border: none;
+
+    padding: 9px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.botao-sair:hover {
+    background-color: #eee;
+}
+
+
+/* BOAS VINDAS */
+
+.boas-vindas {
+    padding: 50px 40px 30px;
+
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+.boas-vindas h2 {
+    color: #5b1f2a;
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.boas-vindas p {
+    font-size: 17px;
+
+    color: #666;
+}
+
+
+/* PAINEL */
+
+.painel {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 20px 40px 60px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* CARDS */
+
+.card {
+    background-color: white;
+
+    border-radius: 10px;
+
+    padding: 30px;
+
+    min-height: 250px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.icone {
+    font-size: 40px;
+
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: #5b1f2a;
+
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #666;
+
+    line-height: 1.5;
+
+    min-height: 75px;
+}
+
+
+/* BOTÕES DOS CARDS */
+
+.card button {
+    background-color: #5b1f2a;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    margin-top: 15px;
+}
+
+.card button:hover {
+    background-color: #781f31;
+}
+
+
+/* CARD DE COMPRA */
+
+.destaque {
+    border-top: 4px solid #5b1f2a;
+}
+
+
+/* RODAPÉ */
+
+footer {
+    background-color: #333;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 800px) {
+
+    .cabecalho {
+        flex-direction: column;
+
+        gap: 20px;
+
+        text-align: center;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .boas-vindas {
+        padding: 30px 20px;
+    }
+
+    .painel {
+        padding: 10px 20px 40px;
+    }
+
+}
