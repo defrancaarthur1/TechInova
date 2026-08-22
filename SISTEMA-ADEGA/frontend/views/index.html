@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema Adega</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <div class="logo">
+            <h1>Sistema Adega</h1>
+            <span>Controle de Compras</span>
+        </div>
+
+        <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="fornecedores.html">Fornecedores</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="compras.html">Compras</a>
+            <a href="historico.html">Histórico</a>
+            <a href="relatorios.html">Relatórios</a>
+        </nav>
+
+        <button class="botao-sair" id="btnSair">
+            Sair
+        </button>
+
+    </header>
+
+
+    <main>
+
+        <section class="boas-vindas">
+
+            <h2>Bem-vindo ao Sistema de Controle de Compras</h2>
+
+            <p>
+                Gerencie fornecedores, produtos, compras e relatórios
+                de forma simples e organizada.
+            </p>
+
+        </section>
+
+
+        <section class="painel">
+
+            <div class="card" onclick="abrirPagina('fornecedores.html')">
+
+                <div class="icone">🏢</div>
+
+                <h3>Fornecedores</h3>
+
+                <p>
+                    Cadastre, consulte e gerencie os fornecedores da adega.
+                </p>
+
+                <button>
+                    Acessar
+                </button>
+
+            </div>
+
+
+            <div class="card" onclick="abrirPagina('produtos.html')">
+
+                <div class="icone">🍷</div>
+
+                <h3>Produtos</h3>
+
+                <p>
+                    Consulte e gerencie os produtos cadastrados no sistema.
+                </p>
+
+                <button>
+                    Acessar
+                </button>
+
+            </div>
+
+
+            <div class="card destaque" onclick="abrirPagina('compras.html')">
+
+                <div class="icone">🛒</div>
+
+                <h3>Compras</h3>
+
+                <p>
+                    Registre novas compras e associe produtos aos fornecedores.
+                </p>
+
+                <button>
+                    Registrar compra
+                </button>
+
+            </div>
+
+
+            <div class="card" onclick="abrirPagina('historico.html')">
+
+                <div class="icone">📋</div>
+
+                <h3>Histórico</h3>
+
+                <p>
+                    Consulte as compras realizadas anteriormente.
+                </p>
+
+                <button>
+                    Consultar
+                </button>
+
+            </div>
+
+
+            <div class="card" onclick="abrirPagina('relatorios.html')">
+
+                <div class="icone">📊</div>
+
+                <h3>Relatórios</h3>
+
+                <p>
+                    Visualize informações e relatórios das compras.
+                </p>
+
+                <button>
+                    Visualizar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Sistema de Controle de Compras da Adega
+        </p>
+
+    </footer>
+
+
+    <script src="../js/index.js"></script>
+
+</body>
+
+</html>
