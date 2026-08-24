@@ -1,0 +1,66 @@
+# 1. Plano de teste – TechInova
+
+**CT:** Caso de Teste
+
+## Cadastro de compra
+
+**Funcionalidade:** Testar se o cadastro de mercadoria feito com o fornecedor funciona como esperado.
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-001 | Selecionar fornecedor | Escolher fornecedor | Selecionar o fornecedor com sucesso |
+| CT-002 | Selecionar produto | Escolher produto conquistado | Produto deve ser salvo no registro |
+| CT-003 | Escrever quantidade | Escrever a quantidade da mercadoria | Registrar o número |
+| CT-004 | Escrever valor total | Escrever valor da compra | Registrar o preço feito para ter a mercadoria |
+| CT-005 | Selecionar data | Selecionar data da compra | Ser capaz de escolher qualquer data |
+| CT-006 | Registrar compra | Salvar dados da compra | Salvar todos os dados corretamente da compra |
+| CT-007 | Editar compra | Editar dados da compra | Capacidade de editar uma compra já feita |
+| CT-008 | Excluir compra | Apagar dados da compra | Capacidade de excluir a compra corretamente |
+| CT-009 | Salvar no histórico | Os dados aparecerem salvos no histórico da compra | Assim que salvar o registro da compra, ela ira aparecer no histórico da compra |
+
+## Cadastro de produto
+
+**Funcionalidade:** Testar se o cadastro de um novo produto funciona como esperado.
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-0010 | Escrever nome do produto | Escreve qual o novo produto | Ser possível escrever na aba |
+| CT-0011 | Escolher a categoria do produto | Escolher qual categoria o produto se encaixa | Selecionar apenas 1 categoria por produto |
+| CT-0012 | Cadastrar novo produto | Salvar as informações do novo produto | O novo produto aparecer automaticamente como opção de “seleção de produto” após o registro |
+| CT-0013 | Editar cadastro | Ser capaz de editar o novo produto | O produto mudar na aba de “seleção de produto” |
+| CT-0014 | Excluir cadastro | Excluir o produto anteriormente criado | O produto não aparecer mais na “seleção de produto” após a exclusão |
+
+## Registrar Fornecedor
+
+**Funcionalidade:** Testar se o cadastro de um novo fornecedor funciona como esperado.
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-0015 | Cadastrar novo fornecedor | Escrever novo fornecedor | Adicionar nome da empresa no sistema |
+| CT-0016 | Cadastrar data de cadastro | Registrar data do cadastro | Registrar o dia em que o registro foi feito |
+| CT-0017 | Cadastrar CNPJ da empresa | Registrar CNPJ da empresa | Registrar CNPJ do fornecedor |
+| CT-0018 | Escrever Telefone do fornecedor | Registrar telefone para contato | Registrar telefone da empresa para contato |
+| CT-0019 | Registrar consultor de venda do fornecedor | Registrar nome do consultor responsável da empresa | Saber com quem vai ser comunicado a compra da mercadoria |
+| CT-0020 | Telefone do consultor | Registrar número de telefone do consultor | Registrar o número do consultor para facilitar contato |
+| CT-0021 | E-mail do fornecedor | Registrar e-mail do fornecedor | Registrar e-mail para termos mais uma forma de comunicação |
+| CT-0022 | Mostrar Produtos fornecidos do fornecedor | Visualizar quais produtos o fornecedor fornece | Ser possível ver o que esse fornecedor oferece |
+| CT-0023 | Cadastrar novo fornecedor | Salvar dados do fornecedor | Salvar os dados importantes do fornecedor |
+| CT-0024 | Editar fornecedor | Editar dados do fornecedor | Conseguir editar dados do fornecedor |
+| CT-0025 | Excluir fornecedor | Apagar dados do fornecedor | Ser capaz de excluir tudo do fornecedor |
+
+## Histórico de compras
+
+**Funcionalidade:** Testar se o histórico das compras feitas com o fornecedor funciona como esperado.
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-0026 | Selecionar fornecedores | Escolher apenas um fornecedor | Selecionar um fornecedor para facilitar a procura de registros |
+| CT-0027 | Selecionar uma data início | Escolher uma data de início | Colocar um início a procura dos registros |
+| CT-0028 | Selecionar uma data final | Escolher uma data inicial de procura | Colocar um limite a procura do registro |
+| CT-0029 | Mostrar data | Escolher uma data final de procura | Colocar um início a procura dos registros |
+| CT-0030 | Mostrar fornecedor | Mostrar o fornecedor escolhido | Mostrar o fornecedor selecionado |
+| CT-0031 | Mostrar produto | Mostrar produtos comprados do fornecedor | Mostrar os produtos que se conseguiu com ele |
+| CT-0032 | Mostrar quantidade | Mostrar a quantidade comprada do produto comprado | Ver a quantidade comprada desse produto |
+| CT-0033 | Mostrar valores | Valor feito para conseguir o produto | Ver o valor pedido pelo produto |
+| CT-0034 | Mostrar opção de edição | Possibilitar edição do registro | Editar registro da compra |
+| CT-0035 | Mostrar opção de exclusão | Possibilitar exclusão do registro | Excluir registro da compra |
