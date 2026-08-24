@@ -2,7 +2,7 @@
 
 **CT:** Caso de Teste
 
-## Cadastro de compra
+## Tela de cadastro de compra
 
 **Funcionalidade:** Testar se o cadastro de mercadoria feito com o fornecedor funciona como esperado.
 
@@ -18,7 +18,7 @@
 | CT-008 | Excluir compra | Apagar dados da compra | Capacidade de excluir a compra corretamente |
 | CT-009 | Salvar no histórico | Os dados aparecerem salvos no histórico da compra | Assim que salvar o registro da compra, ela ira aparecer no histórico da compra |
 
-## Cadastro de produto
+## Tela de cadastro de produto
 
 **Funcionalidade:** Testar se o cadastro de um novo produto funciona como esperado.
 
@@ -30,7 +30,7 @@
 | CT-0013 | Editar cadastro | Ser capaz de editar o novo produto | O produto mudar na aba de “seleção de produto” |
 | CT-0014 | Excluir cadastro | Excluir o produto anteriormente criado | O produto não aparecer mais na “seleção de produto” após a exclusão |
 
-## Registrar Fornecedor
+## Tela de registrar Fornecedor
 
 **Funcionalidade:** Testar se o cadastro de um novo fornecedor funciona como esperado.
 
@@ -48,7 +48,7 @@
 | CT-0024 | Editar fornecedor | Editar dados do fornecedor | Conseguir editar dados do fornecedor |
 | CT-0025 | Excluir fornecedor | Apagar dados do fornecedor | Ser capaz de excluir tudo do fornecedor |
 
-## Histórico de compras
+## Tela de histórico de compras
 
 **Funcionalidade:** Testar se o histórico das compras feitas com o fornecedor funciona como esperado.
 
