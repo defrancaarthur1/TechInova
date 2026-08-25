@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="../css/style.css">
+
+
+<!-- REGISTRAR COMPRA -->
+    <section class="card">
+
+        <h2>Registrar Compra</h2>
+
+        <!--Fornecedor-->
+        <label for="fornecedorSelect">Fornecedor</label>
+
+        <button class="btn" type="button">Cadastrar novo Fornecedo </button>
+
+        <select id="fornecedorSelect">
+
+            <option value="">Selecione</option>
+            <option value="coca">Coca-Cola</option>
+            <option value="gelo"> Distribuidora de Gelo</option>
+
+        </select>
+
+        <button class="btn" onclick="mostrarFornecedor()"> Mais informações</button>
+
+        <!--Produto-->
+        <label for="produtoSelect">Produto</label>
+        <select id="produtoSelect">
+            <option value="">Selecione</option>
+            <option value="refrigerante">Refrigerante</option>
+            <option value="suco">Suco</option>
+        </select>
+
+        <!--Quantidade-->
+        <label for="quantidade">Quantidade</label>
+        <input type="number" id="quantidade" min="1" placeholder="Ex:30">
+
+        <!--Valor Unitário-->
+        <label for="valorUnitario">Valor Unitário</label>
+        <input type="number" id="valorUnitario" min="0" step="0.01" placeholder="Ex:5.99">
+
+        <!--Data da Compra-->
+        <label for="dataCompra">Data da Compra</label>
+        <input type="date" id="dataCompra">
+
+        <!--Ações-->
+            <button class="btn" type="button">Registar</button>
+            <button class="btn edit" type="button">Editar</button>
+            <button class="btn delete" type="reset">Excluir</button>
+</section>
