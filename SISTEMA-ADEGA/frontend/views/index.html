@@ -3,11 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Sistema de Controle de Compras</title>
 
@@ -16,15 +12,11 @@
 
 <body>
 
-    <!-- =========================================
-         CABEÇALHO / MENU
-    ========================================== -->
+    <!-- CABEÇALHO / MENU -->
 
     <header class="cabecalho">
 
-        <h1>
-            Sistema de Controle de Compras
-        </h1>
+        <h1>Sistema de Controle de Compras</h1>
 
         <nav class="menu-navegacao">
 
@@ -44,7 +36,8 @@
                 Fornecedores
             </a>
 
-            <a href="historico.html">
+            <!-- HISTÓRICO NA PRÓPRIA PÁGINA -->
+            <a href="#historico">
                 Histórico
             </a>
 
@@ -52,10 +45,7 @@
                 Relatórios
             </a>
 
-            <a
-                href="login.html"
-                class="botao-sair"
-            >
+            <a href="login.html" class="botao-sair">
                 Sair
             </a>
 
@@ -64,32 +54,21 @@
     </header>
 
 
-    <!-- =========================================
-         CONTEÚDO DO SISTEMA
-    ========================================== -->
-
     <main class="conteudo-sistema">
 
 
-        <!-- =====================================
-             ÁREA SUPERIOR
-        ====================================== -->
+        <!-- ÁREA SUPERIOR -->
 
         <section class="area-superior">
 
 
-            <!-- =================================
-                 CADASTRO DE PRODUTO
-            ================================== -->
+            <!-- CADASTRO DE PRODUTO -->
 
             <section class="card">
 
-                <h2>
-                    Cadastro de Produto
-                </h2>
+                <h2>Cadastro de Produto</h2>
 
                 <form>
-
 
                     <div class="campo">
 
@@ -235,14 +214,12 @@
                             Cadastrar Produto
                         </button>
 
-
                         <button
                             type="button"
                             class="btn btn-editar"
                         >
                             Editar Cadastro
                         </button>
-
 
                         <button
                             type="button"
@@ -258,18 +235,13 @@
             </section>
 
 
-            <!-- =================================
-                 REGISTRAR COMPRA
-            ================================== -->
+            <!-- REGISTRAR COMPRA -->
 
             <section class="card">
 
-                <h2>
-                    Registrar Compra
-                </h2>
+                <h2>Registrar Compra</h2>
 
                 <form>
-
 
                     <div class="campo">
 
@@ -280,10 +252,10 @@
                         <button
                             type="button"
                             class="btn btn-preto botao-fornecedor"
+                            onclick="window.location.href='fornecedores.html'"
                         >
                             Cadastrar novo Fornecedor
                         </button>
-
 
                         <select
                             id="fornecedor"
@@ -334,12 +306,16 @@
                                 Selecione
                             </option>
 
-                            <option value="refrigerante">
-                                Refrigerante
-                            </option>
-
                             <option value="coca2l">
                                 Coca-Cola 2L
+                            </option>
+
+                            <option value="cerveja">
+                                Cerveja
+                            </option>
+
+                            <option value="vinho">
+                                Vinho
                             </option>
 
                             <option value="gelo">
@@ -410,14 +386,12 @@
                             Registrar
                         </button>
 
-
                         <button
                             type="button"
                             class="btn btn-editar"
                         >
                             Editar
                         </button>
-
 
                         <button
                             type="button"
@@ -436,18 +410,19 @@
 
 
         <!-- =====================================
-             HISTÓRICO DE COMPRAS
+             HISTÓRICO
+             IMPORTANTE: id="historico"
         ====================================== -->
 
-        <section class="card historico">
+        <section
+            class="card historico"
+            id="historico"
+        >
 
-            <h2>
-                Histórico de Compras
-            </h2>
+            <h2>Histórico de Compras</h2>
 
 
             <form class="form-filtro">
-
 
                 <div class="campo">
 
@@ -521,10 +496,6 @@
             </form>
 
 
-            <!-- =================================
-                 TABELA DO HISTÓRICO
-            ================================== -->
-
             <div class="container-tabela">
 
                 <table>
@@ -547,25 +518,15 @@
 
                         <tr>
 
-                            <td>
-                                10/03
-                            </td>
+                            <td>10/03</td>
 
-                            <td>
-                                Coca-Cola
-                            </td>
+                            <td>Coca-Cola</td>
 
-                            <td>
-                                Coca 2L
-                            </td>
+                            <td>Coca 2L</td>
 
-                            <td>
-                                30
-                            </td>
+                            <td>30</td>
 
-                            <td>
-                                R$ 200,00
-                            </td>
+                            <td>R$ 200,00</td>
 
                             <td>
 
@@ -577,7 +538,6 @@
                                     >
                                         Editar
                                     </button>
-
 
                                     <button
                                         type="button"
@@ -595,25 +555,17 @@
 
                         <tr>
 
-                            <td>
-                                12/03
-                            </td>
+                            <td>12/03</td>
 
                             <td>
                                 Distribuidora de Gelo
                             </td>
 
-                            <td>
-                                Gelo
-                            </td>
+                            <td>Gelo</td>
 
-                            <td>
-                                10
-                            </td>
+                            <td>10</td>
 
-                            <td>
-                                R$ 80,00
-                            </td>
+                            <td>R$ 80,00</td>
 
                             <td>
 
@@ -625,7 +577,6 @@
                                     >
                                         Editar
                                     </button>
-
 
                                     <button
                                         type="button"
