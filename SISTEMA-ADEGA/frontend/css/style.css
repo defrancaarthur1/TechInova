@@ -9,6 +9,11 @@
 }
 
 
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
     font-family: Arial, Helvetica, sans-serif;
 
@@ -44,7 +49,7 @@ body {
 
 
 /* ==========================================
-   MENU DE NAVEGAÇÃO
+   MENU
 ========================================== */
 
 .menu-navegacao {
@@ -85,8 +90,6 @@ body {
 }
 
 
-/* SAIR */
-
 .menu-navegacao .botao-sair {
     margin-left: auto;
 
@@ -100,7 +103,7 @@ body {
 
 
 /* ==========================================
-   ÁREA PRINCIPAL
+   PÁGINA INICIAL
 ========================================== */
 
 .conteudo-sistema {
@@ -109,10 +112,6 @@ body {
     padding: 14px 8px 25px;
 }
 
-
-/* ==========================================
-   ÁREA SUPERIOR
-========================================== */
 
 .area-superior {
     display: grid;
@@ -151,7 +150,7 @@ body {
 
 
 /* ==========================================
-   CAMPOS
+   CAMPOS DA PÁGINA INICIAL
 ========================================== */
 
 .campo {
@@ -243,6 +242,11 @@ select:focus {
 }
 
 
+.btn-cancelar {
+    background-color: #333333;
+}
+
+
 .botoes {
     display: flex;
 
@@ -257,19 +261,17 @@ select:focus {
 
 
 /* ==========================================
-   REGISTRO DE COMPRA
+   COMPRA
 ========================================== */
 
 .botao-fornecedor {
     width: fit-content;
 
-    margin-bottom: 0;
+    margin-bottom: 8px;
 }
 
 
 .botao-informacoes {
-    margin-top: 0;
-
     margin-bottom: 12px;
 }
 
@@ -280,6 +282,8 @@ select:focus {
 
 .historico {
     width: 100%;
+
+    scroll-margin-top: 20px;
 }
 
 
@@ -360,68 +364,6 @@ td {
 
 
 /* ==========================================
-   RESPONSIVIDADE
-========================================== */
-
-@media (max-width: 900px) {
-
-    .area-superior {
-        grid-template-columns: 1fr;
-    }
-
-
-    .menu-navegacao .botao-sair {
-        margin-left: 0;
-    }
-
-}
-
-
-@media (max-width: 650px) {
-
-    .cabecalho h1 {
-        font-size: 20px;
-    }
-
-
-    .menu-navegacao {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-
-    .menu-navegacao a {
-        width: 100%;
-
-        text-align: center;
-    }
-
-
-    .conteudo-sistema {
-        padding: 8px;
-    }
-
-
-    .botoes {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-
-    .botoes .btn {
-        width: 100%;
-    }
-
-
-    .acoes-tabela {
-        flex-direction: column;
-    }
-
-}
-
-/* ==========================================
    PÁGINAS DE CADASTRO
 ========================================== */
 
@@ -431,14 +373,10 @@ td {
     min-height: calc(100vh - 105px);
 
     padding: 45px 30px;
-
-    background-color: #f3f3f3;
 }
 
 
-/* ==========================================
-   FORMULÁRIO DE PRODUTO
-========================================== */
+/* PRODUTOS E COMPRAS */
 
 .formulario-grande {
     width: 100%;
@@ -465,9 +403,7 @@ td {
 }
 
 
-/* ==========================================
-   FORMULÁRIO DE FORNECEDOR
-========================================== */
+/* FORNECEDOR */
 
 .formulario-fornecedor {
     width: 100%;
@@ -494,9 +430,7 @@ td {
 }
 
 
-/* ==========================================
-   CAMPOS
-========================================== */
+/* CAMPOS DAS PÁGINAS */
 
 .campo-formulario {
     margin-bottom: 22px;
@@ -540,9 +474,7 @@ td {
 }
 
 
-/* ==========================================
-   BOTÕES DOS FORMULÁRIOS
-========================================== */
+/* BOTÕES DOS FORMULÁRIOS */
 
 .botoes-formulario {
     display: flex;
@@ -566,16 +498,49 @@ td {
 }
 
 
-.btn-cancelar {
-    background-color: #333333;
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .area-superior {
+        grid-template-columns: 1fr;
+    }
+
+
+    .menu-navegacao .botao-sair {
+        margin-left: 0;
+    }
+
 }
 
 
-/* ==========================================
-   RESPONSIVIDADE DOS CADASTROS
-========================================== */
-
 @media (max-width: 700px) {
+
+    .cabecalho {
+        padding: 14px;
+    }
+
+
+    .cabecalho h1 {
+        font-size: 20px;
+    }
+
+
+    .menu-navegacao {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .menu-navegacao a {
+        width: 100%;
+
+        text-align: center;
+    }
+
 
     .pagina-formulario {
         padding: 20px 12px;
@@ -605,6 +570,7 @@ td {
     }
 
 
+    .botoes,
     .botoes-formulario {
         flex-direction: column;
 
@@ -612,8 +578,14 @@ td {
     }
 
 
+    .botoes .btn,
     .botoes-formulario .btn {
         width: 100%;
+    }
+
+
+    .acoes-tabela {
+        flex-direction: column;
     }
 
 }
