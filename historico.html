@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Histórico de Compras</title>
+
+    <link rel="stylesheet" href="adegastyle.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>Sistema de Controle de Compras</h1>
+
+    <nav>
+
+        <a href="index.html">Registrar Compra</a>
+        <a href="cadastros.html">Cadastros</a>
+        <a href="historico.html">Histórico</a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+    <section class="card full">
+
+        <h2>Histórico de Compras</h2>
+
+
+        <div class="filtros">
+
+            <div>
+
+                <label for="filtroFornecedor">
+                    Fornecedor
+                </label>
+
+                <select id="filtroFornecedor">
+
+                    <option>
+                        Todos os fornecedores
+                    </option>
+
+                    <option>
+                        Coca-Cola
+                    </option>
+
+                    <option>
+                        Distribuidora de Gelo
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="dataInicial">
+                    Data inicial
+                </label>
+
+                <input
+                    type="date"
+                    id="dataInicial">
+
+            </div>
+
+
+            <div>
+
+                <label for="dataFinal">
+                    Data final
+                </label>
+
+                <input
+                    type="date"
+                    id="dataFinal">
+
+            </div>
+
+        </div>
+
+
+        <button class="btn">
+            Filtrar
+        </button>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Data</th>
+                    <th>Fornecedor</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>10/03/2026</td>
+                    <td>Coca-Cola</td>
+                    <td>Coca-Cola 2L</td>
+                    <td>30</td>
+                    <td>R$ 200,00</td>
+
+                    <td>
+
+                        <button class="btn edit">
+                            Editar
+                        </button>
+
+                        <button class="btn delete">
+                            Excluir
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>12/03/2026</td>
+                    <td>Distribuidora de Gelo</td>
+                    <td>Gelo</td>
+                    <td>10</td>
+                    <td>R$ 80,00</td>
+
+                    <td>
+
+                        <button class="btn edit">
+                            Editar
+                        </button>
+
+                        <button class="btn delete">
+                            Excluir
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

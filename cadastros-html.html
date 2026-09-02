@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastros - Sistema de Controle de Compras</title>
+
+    <link rel="stylesheet" href="adegastyle.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>Sistema de Controle de Compras</h1>
+
+    <nav>
+
+        <a href="index.html">
+            Registrar Compra
+        </a>
+
+        <a href="cadastros.html">
+            Cadastros
+        </a>
+
+        <a href="historico.html">
+            Histórico
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+    <!-- PRODUTO -->
+
+    <section class="card">
+
+        <h2>Cadastro de Produto</h2>
+
+        <label for="nomeProduto">
+            Nome do produto
+        </label>
+
+        <input
+            type="text"
+            id="nomeProduto"
+            placeholder="Ex: Coca-Cola 2L">
+
+
+        <label for="categoria">
+            Categoria
+        </label>
+
+        <select id="categoria">
+
+            <option>
+                Selecione
+            </option>
+
+            <option>
+                Refrigerante
+            </option>
+
+            <option>
+                Suco
+            </option>
+
+            <option>
+                Destilado
+            </option>
+
+            <option>
+                Gelo
+            </option>
+
+        </select>
+
+
+        <label for="unidade">
+            Unidade de medida
+        </label>
+
+        <select id="unidade">
+
+            <option>
+                Selecione
+            </option>
+
+            <option>
+                Unidade
+            </option>
+
+            <option>
+                Caixa
+            </option>
+
+            <option>
+                Fardo
+            </option>
+
+            <option>
+                Quilograma
+            </option>
+
+            <option>
+                Litro
+            </option>
+
+        </select>
+
+
+        <div class="acoes">
+
+            <button class="btn">
+                Cadastrar produto
+            </button>
+
+            <button class="btn edit">
+                Editar produto
+            </button>
+
+            <button class="btn delete">
+                Excluir produto
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- FORNECEDOR -->
+
+    <section class="card">
+
+        <h2>Cadastro de Fornecedor</h2>
+
+
+        <label for="empresa">
+            Nome da empresa
+        </label>
+
+        <input
+            type="text"
+            id="empresa"
+            placeholder="Ex: Coca-Cola">
+
+
+        <label for="cnpj">
+            CNPJ
+        </label>
+
+        <input
+            type="text"
+            id="cnpj"
+            placeholder="00.000.000/0000-00">
+
+
+        <label for="telefone">
+            Telefone
+        </label>
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="(11) 00000-0000">
+
+
+        <label for="consultor">
+            Consultor de vendas
+        </label>
+
+        <input
+            type="text"
+            id="consultor"
+            placeholder="Nome do consultor">
+
+
+        <label for="email">
+            E-mail
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="contato@empresa.com">
+
+
+        <label for="dataCadastro">
+            Data de cadastro
+        </label>
+
+        <input
+            type="date"
+            id="dataCadastro">
+
+
+        <div class="acoes">
+
+            <button class="btn">
+                Cadastrar fornecedor
+            </button>
+
+            <button class="btn edit">
+                Editar fornecedor
+            </button>
+
+            <button class="btn delete">
+                Excluir fornecedor
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

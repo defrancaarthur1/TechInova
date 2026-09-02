@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    padding: 15px;
+    color: #222;
+}
+
+
+/* CABEÇALHO */
+
+.topbar {
+    background: #222;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+
+/* NAVEGAÇÃO */
+
+nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    background: #333;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    background: #555;
+}
+
+
+/* CONTAINER */
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    width: 100%;
+}
+
+
+/* CARDS */
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+.card.full {
+    grid-column: 1 / -1;
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+
+/* CAMPOS */
+
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background: white;
+}
+
+
+/* BOTÕES */
+
+.btn {
+    padding: 9px 13px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+    color: white;
+    background: #333;
+    font-size: 13px;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.success {
+    background: green;
+}
+
+.edit {
+    background: orange;
+}
+
+.delete {
+    background: red;
+}
+
+
+/* AÇÕES */
+
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+
+/* INFORMAÇÕES DO FORNECEDOR */
+
+.info-box {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    line-height: 1.7;
+}
+
+.info-box.ativo {
+    display: block;
+}
+
+
+/* CADASTRO RÁPIDO */
+
+.form-extra {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f8f8f8;
+}
+
+.form-extra.ativo {
+    display: block;
+}
+
+
+/* BOTÕES DO FORNECEDOR */
+
+.acoes-fornecedor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+
+/* ITENS DA COMPRA */
+
+.itens-compra {
+    margin-top: 20px;
+}
+
+.itens-compra table {
+    margin-top: 10px;
+}
+
+
+/* TABELAS */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 9px;
+    text-align: center;
+}
+
+table th {
+    background: #222;
+    color: white;
+}
+
+
+/* FILTROS */
+
+.filtros {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+}
+
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .card.full {
+        grid-column: auto;
+    }
+
+    .filtros {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .topbar h1 {
+        font-size: 22px;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        text-align: center;
+    }
+
+    .acoes,
+    .acoes-fornecedor {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+}
