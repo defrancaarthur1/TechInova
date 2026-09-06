@@ -589,3 +589,145 @@ td {
     }
 
 }
+
+/* ========================================= */
+/* TELA DE REGISTRO DE COMPRA */
+/* ========================================= */
+
+.pagina-compra {
+    width: 100%;
+    min-height: calc(100vh - 110px);
+
+    background-color: #f3f3f3;
+
+    padding: 18px 30px 35px;
+}
+
+
+/* CARD PRINCIPAL */
+
+.card-compra {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    background-color: #ffffff;
+
+    padding: 20px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.12);
+}
+
+
+.card-compra h2 {
+    font-size: 22px;
+
+    margin-bottom: 18px;
+
+    color: #111111;
+}
+
+
+/* CAMPOS */
+
+.campo-compra {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 16px;
+}
+
+
+.campo-compra label {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+    color: #111111;
+}
+
+
+.campo-compra input,
+.campo-compra select {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 4px;
+
+    background-color: #ffffff;
+
+    color: #111111;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+
+.campo-compra input:focus,
+.campo-compra select:focus {
+    border-color: #777777;
+}
+
+
+/* BOTÃO CADASTRAR FORNECEDOR */
+
+.botao-auxiliar {
+    width: fit-content;
+
+    margin-bottom: 8px;
+}
+
+
+/* MAIS INFORMAÇÕES */
+
+.botao-informacoes {
+    margin-bottom: 12px;
+}
+
+
+/* BOTÕES INFERIORES */
+
+.botoes-compra {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 5px;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+
+    .pagina-compra {
+        padding: 15px 10px;
+    }
+
+    .card-compra {
+        padding: 16px;
+    }
+
+    .botoes-compra {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .botoes-compra .btn {
+        width: 100%;
+    }
+
+}
