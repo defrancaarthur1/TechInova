@@ -1,0 +1,27 @@
+{
+  "name": "sistema-adega",
+  "version": "1.0.0",
+  "description": "Sistema de Controle de Compras da Adega - Projeto Techinova",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "test": "echo \"Testes ainda não configurados\""
+  },
+  "keywords": [
+    "adega",
+    "compras",
+    "estoque",
+    "nodejs",
+    "mysql",
+    "mvc"
+  ],
+  "author": "Techinova",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^5.0.0",
+    "mysql2": "^3.0.0"
+  }
+}
+}
