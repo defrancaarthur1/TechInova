@@ -3,49 +3,67 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sistema de Controle de Compras</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="../css/style.css">
+    <title>
+        Sistema de Controle de Compras
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
 </head>
 
 <body>
 
-    <!-- CABEÇALHO / MENU -->
+    <!-- ===================================== -->
+    <!-- CABEÇALHO -->
+    <!-- ===================================== -->
 
     <header class="cabecalho">
 
-        <h1>Sistema de Controle de Compras</h1>
+        <h1>
+            Sistema de Controle de Compras
+        </h1>
 
         <nav class="menu-navegacao">
 
-            <a href="index.html" class="menu-ativo">
+            <a
+                href="/views/index.html"
+                class="menu-ativo"
+            >
                 Início
             </a>
 
-            <a href="compras.html">
+            <a href="/views/compras.html">
                 Registrar Compra
             </a>
 
-            <a href="produtos.html">
+            <a href="/views/produtos.html">
                 Produtos
             </a>
 
-            <a href="fornecedores.html">
+            <a href="/views/fornecedores.html">
                 Fornecedores
             </a>
 
-            <!-- HISTÓRICO NA PRÓPRIA PÁGINA -->
-            <a href="#historico">
+            <a href="/views/index.html#historico">
                 Histórico
             </a>
 
-            <a href="relatorios.html">
+            <a href="/views/relatorios.html">
                 Relatórios
             </a>
 
-            <a href="login.html" class="botao-sair">
+            <a
+                href="/views/login.html"
+                class="botao-sair"
+            >
                 Sair
             </a>
 
@@ -54,47 +72,63 @@
     </header>
 
 
+    <!-- ===================================== -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ===================================== -->
+
     <main class="conteudo-sistema">
 
-
+        <!-- ===================================== -->
         <!-- ÁREA SUPERIOR -->
+        <!-- ===================================== -->
 
         <section class="area-superior">
 
 
-            <!-- CADASTRO DE PRODUTO -->
+            <!-- ===================================== -->
+            <!-- CADASTRO RÁPIDO DE PRODUTO -->
+            <!-- ===================================== -->
 
             <section class="card">
 
-                <h2>Cadastro de Produto</h2>
+                <h2>
+                    Cadastro de Produto
+                </h2>
 
-                <form>
+                <form id="formProdutoInicio">
+
+
+                    <!-- NOME DO PRODUTO -->
 
                     <div class="campo">
 
-                        <label for="nomeProduto">
+                        <label for="nomeProdutoInicio">
                             Nome do Produto
                         </label>
 
                         <input
                             type="text"
-                            id="nomeProduto"
-                            name="nomeProduto"
+                            id="nomeProdutoInicio"
+                            name="nomeProdutoInicio"
                             placeholder="Ex: Coca-Cola 2L"
+                            required
                         >
 
                     </div>
 
 
+                    <!-- CATEGORIA -->
+
                     <div class="campo">
 
-                        <label for="categoriaProduto">
+                        <label for="categoriaProdutoInicio">
                             Categoria
                         </label>
 
                         <select
-                            id="categoriaProduto"
-                            name="categoriaProduto"
+                            id="categoriaProdutoInicio"
+                            name="categoriaProdutoInicio"
+                            required
                         >
 
                             <option value="">
@@ -130,15 +164,17 @@
                     </div>
 
 
+                    <!-- UNIDADE DE MEDIDA -->
+
                     <div class="campo">
 
-                        <label for="unidadeMedida">
+                        <label for="unidadeMedidaInicio">
                             Unidade de Medida
                         </label>
 
                         <select
-                            id="unidadeMedida"
-                            name="unidadeMedida"
+                            id="unidadeMedidaInicio"
+                            name="unidadeMedidaInicio"
                         >
 
                             <option value="">
@@ -170,56 +206,64 @@
                     </div>
 
 
+                    <!-- QUANTIDADE -->
+
                     <div class="campo">
 
-                        <label for="quantidadeProduto">
+                        <label for="quantidadeProdutoInicio">
                             Quantidade
                         </label>
 
                         <input
                             type="number"
-                            id="quantidadeProduto"
-                            name="quantidadeProduto"
+                            id="quantidadeProdutoInicio"
+                            name="quantidadeProdutoInicio"
                             min="0"
                             placeholder="Ex: 30"
+                            required
                         >
 
                     </div>
 
 
+                    <!-- VALOR UNITÁRIO -->
+
                     <div class="campo">
 
-                        <label for="valorProduto">
+                        <label for="valorProdutoInicio">
                             Valor Unitário
                         </label>
 
                         <input
                             type="number"
-                            id="valorProduto"
-                            name="valorProduto"
+                            id="valorProdutoInicio"
+                            name="valorProdutoInicio"
                             min="0"
                             step="0.01"
                             placeholder="Ex: 5,00"
+                            required
                         >
 
                     </div>
 
 
+                    <!-- BOTÕES DO PRODUTO -->
+
                     <div class="botoes">
 
                         <button
-                            type="button"
+                            type="submit"
                             class="btn btn-preto"
                         >
                             Cadastrar Produto
                         </button>
 
-                        <button
-                            type="button"
-                            class="btn btn-editar"
+                        <a
+                            href="/views/produtos.html"
+                            class="btn btn-editar link-botao"
                         >
-                            Editar Cadastro
-                        </button>
+                            Gerenciar Produtos
+                        </a>
 
                         <button
                             type="button"
@@ -235,13 +279,20 @@
             </section>
 
 
+            <!-- ===================================== -->
             <!-- REGISTRAR COMPRA -->
+            <!-- ===================================== -->
 
             <section class="card">
 
-                <h2>Registrar Compra</h2>
+                <h2>
+                    Registrar Compra
+                </h2>
 
                 <form>
+
+
+                    <!-- FORNECEDOR -->
 
                     <div class="campo">
 
@@ -252,7 +303,7 @@
                         <button
                             type="button"
                             class="btn btn-preto botao-fornecedor"
-                            onclick="window.location.href='fornecedores.html'"
+                            onclick="window.location.href='/views/fornecedores.html'"
                         >
                             Cadastrar novo Fornecedor
                         </button>
@@ -283,6 +334,8 @@
                     </div>
 
 
+                    <!-- MAIS INFORMAÇÕES -->
+
                     <button
                         type="button"
                         class="btn btn-preto botao-informacoes"
@@ -290,6 +343,8 @@
                         Mais informações
                     </button>
 
+
+                    <!-- PRODUTO -->
 
                     <div class="campo">
 
@@ -306,26 +361,12 @@
                                 Selecione
                             </option>
 
-                            <option value="coca2l">
-                                Coca-Cola 2L
-                            </option>
-
-                            <option value="cerveja">
-                                Cerveja
-                            </option>
-
-                            <option value="vinho">
-                                Vinho
-                            </option>
-
-                            <option value="gelo">
-                                Gelo
-                            </option>
-
                         </select>
 
                     </div>
 
+
+                    <!-- QUANTIDADE -->
 
                     <div class="campo">
 
@@ -343,6 +384,8 @@
 
                     </div>
 
+
+                    <!-- VALOR UNITÁRIO -->
 
                     <div class="campo">
 
@@ -362,6 +405,8 @@
                     </div>
 
 
+                    <!-- DATA DA COMPRA -->
+
                     <div class="campo">
 
                         <label for="dataCompra">
@@ -377,14 +422,16 @@
                     </div>
 
 
+                    <!-- BOTÕES DA COMPRA -->
+
                     <div class="botoes">
 
-                        <button
-                            type="button"
-                            class="btn btn-preto"
+                        <a
+                            href="/views/compras.html"
+                            class="btn btn-preto link-botao"
                         >
                             Registrar
-                        </button>
+                        </a>
 
                         <button
                             type="button"
@@ -409,18 +456,21 @@
         </section>
 
 
-        <!-- =====================================
-             HISTÓRICO
-             IMPORTANTE: id="historico"
-        ====================================== -->
+        <!-- ===================================== -->
+        <!-- HISTÓRICO DE COMPRAS -->
+        <!-- ===================================== -->
 
         <section
             class="card historico"
             id="historico"
         >
 
-            <h2>Histórico de Compras</h2>
+            <h2>
+                Histórico de Compras
+            </h2>
 
+
+            <!-- FILTROS -->
 
             <form class="form-filtro">
 
@@ -496,6 +546,10 @@
             </form>
 
 
+            <!-- ===================================== -->
+            <!-- TABELA DO HISTÓRICO -->
+            <!-- ===================================== -->
+
             <div class="container-tabela">
 
                 <table>
@@ -503,12 +557,31 @@
                     <thead>
 
                         <tr>
-                            <th>Data</th>
-                            <th>Fornecedor</th>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Valor</th>
-                            <th>Ações</th>
+
+                            <th>
+                                Data
+                            </th>
+
+                            <th>
+                                Fornecedor
+                            </th>
+
+                            <th>
+                                Produto
+                            </th>
+
+                            <th>
+                                Quantidade
+                            </th>
+
+                            <th>
+                                Valor
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
                         </tr>
 
                     </thead>
@@ -516,17 +589,29 @@
 
                     <tbody>
 
+                        <!-- EXEMPLO 1 -->
+
                         <tr>
 
-                            <td>10/03</td>
+                            <td>
+                                10/03
+                            </td>
 
-                            <td>Coca-Cola</td>
+                            <td>
+                                Coca-Cola
+                            </td>
 
-                            <td>Coca 2L</td>
+                            <td>
+                                Coca 2L
+                            </td>
 
-                            <td>30</td>
+                            <td>
+                                30
+                            </td>
 
-                            <td>R$ 200,00</td>
+                            <td>
+                                R$ 200,00
+                            </td>
 
                             <td>
 
@@ -553,19 +638,29 @@
                         </tr>
 
 
+                        <!-- EXEMPLO 2 -->
+
                         <tr>
 
-                            <td>12/03</td>
+                            <td>
+                                12/03
+                            </td>
 
                             <td>
                                 Distribuidora de Gelo
                             </td>
 
-                            <td>Gelo</td>
+                            <td>
+                                Gelo
+                            </td>
 
-                            <td>10</td>
+                            <td>
+                                10
+                            </td>
 
-                            <td>R$ 80,00</td>
+                            <td>
+                                R$ 80,00
+                            </td>
 
                             <td>
 
@@ -600,6 +695,18 @@
         </section>
 
     </main>
+
+
+    <!-- ===================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ===================================== -->
+
+    <!--
+        O mesmo produtos.js é utilizado
+        tanto em produtos.html quanto na Home.
+    -->
+
+    <script src="../js/produtos.js"></script>
 
 </body>
 
