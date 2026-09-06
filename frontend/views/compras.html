@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registrar Compra</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="cabecalho">
+
+    <h1>Sistema de Controle de Compras</h1>
+
+    <nav class="menu-navegacao">
+
+        <a href="/views/index.html">
+            Início
+        </a>
+
+        <a href="/views/compras.html" class="menu-ativo">
+            Registrar Compra
+        </a>
+
+        <a href="/views/produtos.html">
+            Produtos
+        </a>
+
+        <a href="/views/fornecedores.html">
+            Fornecedores
+        </a>
+
+        <a href="/views/index.html#historico">
+            Histórico
+        </a>
+
+        <a href="/views/relatorios.html">
+            Relatórios
+        </a>
+
+        <a href="/views/login.html" class="botao-sair">
+            Sair
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="pagina-compra">
+
+    <section class="card-compra">
+
+        <h2>Registrar Compra</h2>
+
+        <form id="formCompra">
+
+            <div class="campo-compra">
+
+                <label for="fornecedor">
+                    Fornecedor
+                </label>
+
+                <a
+                    href="/views/fornecedores.html"
+                    class="btn btn-preto link-botao botao-auxiliar"
+                >
+                    Cadastrar novo Fornecedor
+                </a>
+
+                <select
+                    id="fornecedor"
+                    name="fornecedor"
+                    required
+                >
+                    <option value="">Selecione</option>
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn btn-preto botao-informacoes"
+            >
+                Mais informações
+            </button>
+
+
+            <div class="campo-compra">
+
+                <label for="produto">
+                    Produto
+                </label>
+
+                <select
+                    id="produto"
+                    name="produto"
+                    required
+                >
+                    <option value="">Selecione</option>
+                </select>
+
+            </div>
+
+
+            <div class="campo-compra">
+
+                <label for="quantidade">
+                    Quantidade
+                </label>
+
+                <input
+                    type="number"
+                    id="quantidade"
+                    name="quantidade"
+                    min="1"
+                    placeholder="Ex:30"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo-compra">
+
+                <label for="valorUnitario">
+                    Valor Unitário
+                </label>
+
+                <input
+                    type="number"
+                    id="valorUnitario"
+                    name="valorUnitario"
+                    step="0.01"
+                    min="0"
+                    placeholder="Ex:5.99"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo-compra">
+
+                <label for="dataCompra">
+                    Data da Compra
+                </label>
+
+                <input
+                    type="date"
+                    id="dataCompra"
+                    name="dataCompra"
+                    required
+                >
+
+            </div>
+
+
+            <div class="botoes-compra">
+
+                <button
+                    type="submit"
+                    class="btn btn-preto"
+                >
+                    Registrar
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-editar"
+                >
+                    Editar
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-excluir"
+                >
+                    Excluir
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<script src="../js/compras.js"></script>
+
+</body>
+
+</html>

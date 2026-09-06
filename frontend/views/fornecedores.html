@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cadastro de Fornecedor</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+</head>
+
+<body>
+
+    <header class="cabecalho">
+
+        <h1>
+            Sistema de Controle de Compras
+        </h1>
+
+       <nav class="menu-navegacao">
+    <a href="/views/index.html">Início</a>
+    <a href="/views/compras.html">Registrar Compra</a>
+    <a href="/views/produtos.html">Produtos</a>
+    <a href="/views/fornecedores.html" class="menu-ativo">Fornecedores</a>
+    <a href="/views/index.html#historico">Histórico</a>
+    <a href="/views/relatorios.html">Relatórios</a>
+    <a href="/views/login.html" class="botao-sair">Sair</a>
+</nav>
+
+          
+
+    </header>
+
+
+    <main class="pagina-formulario">
+
+        <section class="formulario-fornecedor">
+
+            <h2>
+                Registrar Fornecedor
+            </h2>
+
+
+            <form>
+
+                <div class="campo-formulario">
+
+                    <label for="nomeEmpresa">
+                        Nome da empresa
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nomeEmpresa"
+                        name="nomeEmpresa"
+                        placeholder="Digite o nome da empresa"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="dataCadastro">
+                        Data de cadastro
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dataCadastro"
+                        name="dataCadastro"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="cnpj">
+                        CNPJ
+                    </label>
+
+                    <input
+                        type="text"
+                        id="cnpj"
+                        name="cnpj"
+                        placeholder="Digite o CNPJ"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="telefone">
+                        Telefone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefone"
+                        name="telefone"
+                        placeholder="Digite o telefone"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="consultorVenda">
+                        Consultor de Vendas
+                    </label>
+
+                    <input
+                        type="text"
+                        id="consultorVenda"
+                        name="consultorVenda"
+                        placeholder="Nome do consultor"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="telefoneConsultor">
+                        Telefone do consultor
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="telefoneConsultor"
+                        name="telefoneConsultor"
+                        placeholder="Telefone do consultor"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="emailFornecedor">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailFornecedor"
+                        name="emailFornecedor"
+                        placeholder="exemplo@email.com"
+                    >
+
+                </div>
+
+
+                <div class="campo-formulario">
+
+                    <label for="produtosFornecidos">
+                        Produtos Fornecidos
+                    </label>
+
+                    <input
+                        type="text"
+                        id="produtosFornecidos"
+                        name="produtosFornecidos"
+                        placeholder="Informe os produtos fornecidos"
+                    >
+
+                </div>
+
+
+                <div class="botoes-formulario">
+
+                    <button
+                        type="button"
+                        class="btn btn-preto"
+                    >
+                        Salvar Fornecedor
+                    </button>
+
+                    <button
+                        type="reset"
+                        class="btn btn-cancelar"
+                    >
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
