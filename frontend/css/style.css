@@ -1,0 +1,733 @@
+/* ==========================================
+   CONFIGURAÇÕES GERAIS
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #f3f3f3;
+
+    color: #111111;
+}
+
+
+/* ==========================================
+   CABEÇALHO
+========================================== */
+
+.cabecalho {
+    width: 100%;
+
+    background-color: #1f1f1f;
+
+    color: white;
+
+    padding: 14px 22px;
+
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+
+.cabecalho h1 {
+    font-size: 24px;
+
+    margin-bottom: 14px;
+}
+
+
+/* ==========================================
+   MENU
+========================================== */
+
+.menu-navegacao {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+.menu-navegacao a {
+    background-color: #333333;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 9px 14px;
+
+    border-radius: 4px;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+
+.menu-navegacao a:hover {
+    background-color: #505050;
+}
+
+
+.menu-navegacao .menu-ativo {
+    background-color: #555555;
+}
+
+
+.menu-navegacao .botao-sair {
+    margin-left: auto;
+
+    background-color: #e00000;
+}
+
+
+.menu-navegacao .botao-sair:hover {
+    background-color: #b00000;
+}
+
+
+/* ==========================================
+   PÁGINA INICIAL
+========================================== */
+
+.conteudo-sistema {
+    width: 100%;
+
+    padding: 14px 8px 25px;
+}
+
+
+.area-superior {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 13px;
+}
+
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.card {
+    width: 100%;
+
+    background-color: white;
+
+    border-radius: 8px;
+
+    padding: 14px;
+
+    box-shadow:
+        0 2px 9px rgba(0, 0, 0, 0.12);
+}
+
+
+.card h2 {
+    font-size: 18px;
+
+    margin-bottom: 12px;
+}
+
+
+/* ==========================================
+   CAMPOS DA PÁGINA INICIAL
+========================================== */
+
+.campo {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 12px;
+}
+
+
+.campo label {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+
+input,
+select {
+    width: 100%;
+
+    min-height: 31px;
+
+    padding: 5px 9px;
+
+    border: 1px solid #c9c9c9;
+
+    border-radius: 4px;
+
+    background-color: white;
+
+    color: black;
+
+    font-size: 12px;
+
+    outline: none;
+}
+
+
+input:focus,
+select:focus {
+    border-color: #777777;
+}
+
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.btn {
+    border: none;
+
+    border-radius: 3px;
+
+    padding: 8px 12px;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.btn:hover {
+    opacity: 0.82;
+}
+
+
+.btn-preto {
+    background-color: #292929;
+}
+
+
+.btn-editar {
+    background-color: #ff9800;
+}
+
+
+.btn-excluir {
+    background-color: #ff0000;
+}
+
+
+.btn-cancelar {
+    background-color: #333333;
+}
+
+
+.botoes {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+    margin-top: 4px;
+}
+
+
+/* ==========================================
+   COMPRA
+========================================== */
+
+.botao-fornecedor {
+    width: fit-content;
+
+    margin-bottom: 8px;
+}
+
+
+.botao-informacoes {
+    margin-bottom: 12px;
+}
+
+
+/* ==========================================
+   HISTÓRICO
+========================================== */
+
+.historico {
+    width: 100%;
+
+    scroll-margin-top: 20px;
+}
+
+
+.form-filtro {
+    width: 100%;
+}
+
+
+.botao-filtrar {
+    margin-bottom: 15px;
+}
+
+
+/* ==========================================
+   TABELA
+========================================== */
+
+.container-tabela {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background-color: white;
+}
+
+
+thead {
+    background-color: #1f1f1f;
+
+    color: white;
+}
+
+
+th {
+    background-color: #1f1f1f;
+
+    color: white;
+
+    padding: 8px;
+
+    font-size: 12px;
+
+    text-align: center;
+
+    border-right: 1px solid #777777;
+}
+
+
+td {
+    height: 49px;
+
+    padding: 8px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    border: 1px solid #d2d2d2;
+}
+
+
+.acoes-tabela {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+/* ==========================================
+   PÁGINAS DE CADASTRO
+========================================== */
+
+.pagina-formulario {
+    width: 100%;
+
+    min-height: calc(100vh - 105px);
+
+    padding: 45px 30px;
+}
+
+
+/* PRODUTOS E COMPRAS */
+
+.formulario-grande {
+    width: 100%;
+
+    max-width: 1320px;
+
+    margin: 0 auto;
+
+    padding: 28px;
+
+    background-color: white;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+
+.formulario-grande h2 {
+    margin-bottom: 24px;
+
+    font-size: 30px;
+}
+
+
+/* FORNECEDOR */
+
+.formulario-fornecedor {
+    width: 100%;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 28px;
+
+    background-color: white;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+
+.formulario-fornecedor h2 {
+    margin-bottom: 24px;
+
+    font-size: 28px;
+}
+
+
+/* CAMPOS DAS PÁGINAS */
+
+.campo-formulario {
+    margin-bottom: 22px;
+}
+
+
+.campo-formulario label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.campo-formulario input,
+.campo-formulario select {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding: 10px 13px;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 5px;
+
+    background-color: white;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+    border-color: #666666;
+}
+
+
+/* BOTÕES DOS FORMULÁRIOS */
+
+.botoes-formulario {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
+}
+
+
+.botoes-formulario .btn {
+    padding: 13px 20px;
+
+    font-size: 16px;
+
+    font-weight: normal;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .area-superior {
+        grid-template-columns: 1fr;
+    }
+
+
+    .menu-navegacao .botao-sair {
+        margin-left: 0;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .cabecalho {
+        padding: 14px;
+    }
+
+
+    .cabecalho h1 {
+        font-size: 20px;
+    }
+
+
+    .menu-navegacao {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .menu-navegacao a {
+        width: 100%;
+
+        text-align: center;
+    }
+
+
+    .pagina-formulario {
+        padding: 20px 12px;
+    }
+
+
+    .formulario-grande,
+    .formulario-fornecedor {
+        padding: 20px;
+    }
+
+
+    .formulario-grande h2,
+    .formulario-fornecedor h2 {
+        font-size: 24px;
+    }
+
+
+    .campo-formulario label {
+        font-size: 15px;
+    }
+
+
+    .campo-formulario input,
+    .campo-formulario select {
+        font-size: 14px;
+    }
+
+
+    .botoes,
+    .botoes-formulario {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .botoes .btn,
+    .botoes-formulario .btn {
+        width: 100%;
+    }
+
+
+    .acoes-tabela {
+        flex-direction: column;
+    }
+
+}
+
+/* ========================================= */
+/* TELA DE REGISTRO DE COMPRA */
+/* ========================================= */
+
+.pagina-compra {
+    width: 100%;
+    min-height: calc(100vh - 110px);
+
+    background-color: #f3f3f3;
+
+    padding: 18px 30px 35px;
+}
+
+
+/* CARD PRINCIPAL */
+
+.card-compra {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    background-color: #ffffff;
+
+    padding: 20px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.12);
+}
+
+
+.card-compra h2 {
+    font-size: 22px;
+
+    margin-bottom: 18px;
+
+    color: #111111;
+}
+
+
+/* CAMPOS */
+
+.campo-compra {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 16px;
+}
+
+
+.campo-compra label {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+    color: #111111;
+}
+
+
+.campo-compra input,
+.campo-compra select {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 4px;
+
+    background-color: #ffffff;
+
+    color: #111111;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+
+.campo-compra input:focus,
+.campo-compra select:focus {
+    border-color: #777777;
+}
+
+
+/* BOTÃO CADASTRAR FORNECEDOR */
+
+.botao-auxiliar {
+    width: fit-content;
+
+    margin-bottom: 8px;
+}
+
+
+/* MAIS INFORMAÇÕES */
+
+.botao-informacoes {
+    margin-bottom: 12px;
+}
+
+
+/* BOTÕES INFERIORES */
+
+.botoes-compra {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 5px;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+
+    .pagina-compra {
+        padding: 15px 10px;
+    }
+
+    .card-compra {
+        padding: 16px;
+    }
+
+    .botoes-compra {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .botoes-compra .btn {
+        width: 100%;
+    }
+
+}

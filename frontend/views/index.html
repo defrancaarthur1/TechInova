@@ -3,135 +3,692 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sistema Adega</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="../css/style.css">
+    <title>
+        Sistema de Controle de Compras
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
 </head>
 
 <body>
 
+    <!-- ===================================== -->
+    <!-- CABEÇALHO -->
+    <!-- ===================================== -->
+
     <header class="cabecalho">
 
-        <div class="logo">
-            <h1>Sistema Adega</h1>
-            <span>Controle de Compras</span>
-        </div>
+        <h1>
+            Sistema de Controle de Compras
+        </h1>
 
-        <nav class="menu">
-            <a href="index.html">Início</a>
-            <a href="fornecedores.html">Fornecedores</a>
-            <a href="produtos.html">Produtos</a>
-            <a href="compras.html">Compras</a>
-            <a href="historico.html">Histórico</a>
-            <a href="relatorios.html">Relatórios</a>
+        <nav class="menu-navegacao">
+
+            <a
+                href="/views/index.html"
+                class="menu-ativo"
+            >
+                Início
+            </a>
+
+            <a href="/views/compras.html">
+                Registrar Compra
+            </a>
+
+            <a href="/views/produtos.html">
+                Produtos
+            </a>
+
+            <a href="/views/fornecedores.html">
+                Fornecedores
+            </a>
+
+            <a href="/views/index.html#historico">
+                Histórico
+            </a>
+
+            <a href="/views/relatorios.html">
+                Relatórios
+            </a>
+
+            <a
+                href="/views/login.html"
+                class="botao-sair"
+            >
+                Sair
+            </a>
+
         </nav>
-
-        <button class="botao-sair" id="btnSair">
-            Sair
-        </button>
 
     </header>
 
 
-    <main>
+    <!-- ===================================== -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ===================================== -->
 
-        <section class="boas-vindas">
+    <main class="conteudo-sistema">
 
-            <h2>Bem-vindo ao Sistema de Controle de Compras</h2>
+        <!-- ===================================== -->
+        <!-- ÁREA SUPERIOR -->
+        <!-- ===================================== -->
 
-            <p>
-                Gerencie fornecedores, produtos, compras e relatórios
-                de forma simples e organizada.
-            </p>
+        <section class="area-superior">
+
+
+            <!-- ===================================== -->
+            <!-- CADASTRO RÁPIDO DE PRODUTO -->
+            <!-- ===================================== -->
+
+            <section class="card">
+
+                <h2>
+                    Cadastro de Produto
+                </h2>
+
+                <form id="formProdutoInicio">
+
+
+                    <!-- NOME DO PRODUTO -->
+
+                    <div class="campo">
+
+                        <label for="nomeProdutoInicio">
+                            Nome do Produto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeProdutoInicio"
+                            name="nomeProdutoInicio"
+                            placeholder="Ex: Coca-Cola 2L"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORIA -->
+
+                    <div class="campo">
+
+                        <label for="categoriaProdutoInicio">
+                            Categoria
+                        </label>
+
+                        <select
+                            id="categoriaProdutoInicio"
+                            name="categoriaProdutoInicio"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="refrigerante">
+                                Refrigerante
+                            </option>
+
+                            <option value="cerveja">
+                                Cerveja
+                            </option>
+
+                            <option value="vinho">
+                                Vinho
+                            </option>
+
+                            <option value="destilado">
+                                Destilado
+                            </option>
+
+                            <option value="agua">
+                                Água
+                            </option>
+
+                            <option value="suco">
+                                Suco
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- UNIDADE DE MEDIDA -->
+
+                    <div class="campo">
+
+                        <label for="unidadeMedidaInicio">
+                            Unidade de Medida
+                        </label>
+
+                        <select
+                            id="unidadeMedidaInicio"
+                            name="unidadeMedidaInicio"
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="caixa">
+                                Caixa
+                            </option>
+
+                            <option value="unidade">
+                                Unidade
+                            </option>
+
+                            <option value="fardo">
+                                Fardo
+                            </option>
+
+                            <option value="garrafa">
+                                Garrafa
+                            </option>
+
+                            <option value="litro">
+                                Litro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- QUANTIDADE -->
+
+                    <div class="campo">
+
+                        <label for="quantidadeProdutoInicio">
+                            Quantidade
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantidadeProdutoInicio"
+                            name="quantidadeProdutoInicio"
+                            min="0"
+                            placeholder="Ex: 30"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- VALOR UNITÁRIO -->
+
+                    <div class="campo">
+
+                        <label for="valorProdutoInicio">
+                            Valor Unitário
+                        </label>
+
+                        <input
+                            type="number"
+                            id="valorProdutoInicio"
+                            name="valorProdutoInicio"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 5,00"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- BOTÕES DO PRODUTO -->
+
+                    <div class="botoes">
+
+                        <button
+                            type="submit"
+                            class="btn btn-preto"
+                        >
+                            Cadastrar Produto
+                        </button>
+
+                        <a
+                            href="/views/produtos.html"
+                            class="btn btn-editar link-botao"
+                        >
+                            Gerenciar Produtos
+                        </a>
+
+                        <button
+                            type="button"
+                            class="btn btn-excluir"
+                        >
+                            Excluir Cadastro
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- ===================================== -->
+            <!-- REGISTRAR COMPRA -->
+            <!-- ===================================== -->
+
+            <section class="card">
+
+                <h2>
+                    Registrar Compra
+                </h2>
+
+                <form>
+
+
+                    <!-- FORNECEDOR -->
+
+                    <div class="campo">
+
+                        <label for="fornecedor">
+                            Fornecedor
+                        </label>
+
+                        <button
+                            type="button"
+                            class="btn btn-preto botao-fornecedor"
+                            onclick="window.location.href='/views/fornecedores.html'"
+                        >
+                            Cadastrar novo Fornecedor
+                        </button>
+
+                        <select
+                            id="fornecedor"
+                            name="fornecedor"
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="coca-cola">
+                                Coca-Cola
+                            </option>
+
+                            <option value="gelo">
+                                Distribuidora de Gelo
+                            </option>
+
+                            <option value="ambev">
+                                Ambev
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- MAIS INFORMAÇÕES -->
+
+                    <button
+                        type="button"
+                        class="btn btn-preto botao-informacoes"
+                    >
+                        Mais informações
+                    </button>
+
+
+                    <!-- PRODUTO -->
+
+                    <div class="campo">
+
+                        <label for="produtoCompra">
+                            Produto
+                        </label>
+
+                        <select
+                            id="produtoCompra"
+                            name="produtoCompra"
+                        >
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- QUANTIDADE -->
+
+                    <div class="campo">
+
+                        <label for="quantidadeCompra">
+                            Quantidade
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantidadeCompra"
+                            name="quantidadeCompra"
+                            min="1"
+                            placeholder="Ex: 30"
+                        >
+
+                    </div>
+
+
+                    <!-- VALOR UNITÁRIO -->
+
+                    <div class="campo">
+
+                        <label for="valorCompra">
+                            Valor Unitário
+                        </label>
+
+                        <input
+                            type="number"
+                            id="valorCompra"
+                            name="valorCompra"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 5,99"
+                        >
+
+                    </div>
+
+
+                    <!-- DATA DA COMPRA -->
+
+                    <div class="campo">
+
+                        <label for="dataCompra">
+                            Data da Compra
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dataCompra"
+                            name="dataCompra"
+                        >
+
+                    </div>
+
+
+                    <!-- BOTÕES DA COMPRA -->
+
+                    <div class="botoes">
+
+                        <a
+                            href="/views/compras.html"
+                            class="btn btn-preto link-botao"
+                        >
+                            Registrar
+                        </a>
+
+                        <button
+                            type="button"
+                            class="btn btn-editar"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-excluir"
+                        >
+                            Excluir
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
 
         </section>
 
 
-        <section class="painel">
+        <!-- ===================================== -->
+        <!-- HISTÓRICO DE COMPRAS -->
+        <!-- ===================================== -->
 
-            <div class="card" onclick="abrirPagina('fornecedores.html')">
+        <section
+            class="card historico"
+            id="historico"
+        >
 
-                <div class="icone">🏢</div>
+            <h2>
+                Histórico de Compras
+            </h2>
 
-                <h3>Fornecedores</h3>
 
-                <p>
-                    Cadastre, consulte e gerencie os fornecedores da adega.
-                </p>
+            <!-- FILTROS -->
 
-                <button>
-                    Acessar
+            <form class="form-filtro">
+
+                <div class="campo">
+
+                    <label for="filtroFornecedor">
+                        Fornecedor
+                    </label>
+
+                    <select
+                        id="filtroFornecedor"
+                        name="filtroFornecedor"
+                    >
+
+                        <option value="">
+                            Todos
+                        </option>
+
+                        <option value="coca-cola">
+                            Coca-Cola
+                        </option>
+
+                        <option value="gelo">
+                            Distribuidora de Gelo
+                        </option>
+
+                        <option value="ambev">
+                            Ambev
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="dataInicial">
+                        Data inicial
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dataInicial"
+                        name="dataInicial"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="dataFinal">
+                        Data final
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dataFinal"
+                        name="dataFinal"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-preto botao-filtrar"
+                >
+                    Filtrar
                 </button>
 
-            </div>
+            </form>
 
 
-            <div class="card" onclick="abrirPagina('produtos.html')">
+            <!-- ===================================== -->
+            <!-- TABELA DO HISTÓRICO -->
+            <!-- ===================================== -->
 
-                <div class="icone">🍷</div>
+            <div class="container-tabela">
 
-                <h3>Produtos</h3>
+                <table>
 
-                <p>
-                    Consulte e gerencie os produtos cadastrados no sistema.
-                </p>
+                    <thead>
 
-                <button>
-                    Acessar
-                </button>
+                        <tr>
 
-            </div>
+                            <th>
+                                Data
+                            </th>
 
+                            <th>
+                                Fornecedor
+                            </th>
 
-            <div class="card destaque" onclick="abrirPagina('compras.html')">
+                            <th>
+                                Produto
+                            </th>
 
-                <div class="icone">🛒</div>
+                            <th>
+                                Quantidade
+                            </th>
 
-                <h3>Compras</h3>
+                            <th>
+                                Valor
+                            </th>
 
-                <p>
-                    Registre novas compras e associe produtos aos fornecedores.
-                </p>
+                            <th>
+                                Ações
+                            </th>
 
-                <button>
-                    Registrar compra
-                </button>
+                        </tr>
 
-            </div>
-
-
-            <div class="card" onclick="abrirPagina('historico.html')">
-
-                <div class="icone">📋</div>
-
-                <h3>Histórico</h3>
-
-                <p>
-                    Consulte as compras realizadas anteriormente.
-                </p>
-
-                <button>
-                    Consultar
-                </button>
-
-            </div>
+                    </thead>
 
 
-            <div class="card" onclick="abrirPagina('relatorios.html')">
+                    <tbody>
 
-                <div class="icone">📊</div>
+                        <!-- EXEMPLO 1 -->
 
-                <h3>Relatórios</h3>
+                        <tr>
 
-                <p>
-                    Visualize informações e relatórios das compras.
-                </p>
+                            <td>
+                                10/03
+                            </td>
 
-                <button>
-                    Visualizar
-                </button>
+                            <td>
+                                Coca-Cola
+                            </td>
+
+                            <td>
+                                Coca 2L
+                            </td>
+
+                            <td>
+                                30
+                            </td>
+
+                            <td>
+                                R$ 200,00
+                            </td>
+
+                            <td>
+
+                                <div class="acoes-tabela">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-editar"
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-excluir"
+                                    >
+                                        Excluir
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- EXEMPLO 2 -->
+
+                        <tr>
+
+                            <td>
+                                12/03
+                            </td>
+
+                            <td>
+                                Distribuidora de Gelo
+                            </td>
+
+                            <td>
+                                Gelo
+                            </td>
+
+                            <td>
+                                10
+                            </td>
+
+                            <td>
+                                R$ 80,00
+                            </td>
+
+                            <td>
+
+                                <div class="acoes-tabela">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-editar"
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-excluir"
+                                    >
+                                        Excluir
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
 
             </div>
 
@@ -140,16 +697,16 @@
     </main>
 
 
-    <footer>
+    <!-- ===================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ===================================== -->
 
-        <p>
-            Sistema de Controle de Compras da Adega
-        </p>
+    <!--
+        O mesmo produtos.js é utilizado
+        tanto em produtos.html quanto na Home.
+    -->
 
-    </footer>
-
-
-    <script src="../js/index.js"></script>
+    <script src="../js/produtos.js"></script>
 
 </body>
 
