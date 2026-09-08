@@ -42,4 +42,6 @@ O sistema será utilizado por um único responsável pela adega, não sendo nece
 Finalidade
 
 Projeto desenvolvido para fins acadêmicos no curso de Gestão da Tecnologia da Informação — Fatec Barueri.
+
+ LINK MONOGRAFIA { https://teams.microsoft.com/l/message/48:notes/1788887725380?context=%7B%22contextType%22%3A%22chat%22%2C%22oid%22%3A%228%3Aorgid%3Aaa136923-954c-4ffc-a4eb-5d1a8619c1df%22%7D ]
  
