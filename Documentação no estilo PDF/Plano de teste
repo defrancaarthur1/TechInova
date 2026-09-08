@@ -1,6 +1,6 @@
 # Plano de Teste – Sprint 2
 
-Objetivo: Testar as funcionalidades desenvolvidas na Sprint 2, incluindo cadastro, consulta, edição, exclusão, busca, filtros, validações e persistência dos dados.
+Objetivo: Testar as funcionalidades desenvolvidas na Sprint 1, incluindo cadastro, consulta, edição, exclusão, busca, filtros, validações e persistência dos dados.
 
 ## 1. Cadastro de produto
 
