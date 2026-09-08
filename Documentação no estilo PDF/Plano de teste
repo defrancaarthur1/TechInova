@@ -1,0 +1,58 @@
+# Plano de Teste – Sprint 2
+
+Objetivo: Testar as funcionalidades desenvolvidas na Sprint 2, incluindo cadastro, consulta, edição, exclusão, busca, filtros, validações e persistência dos dados.
+
+## 1. Cadastro de produto
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-001 | Informar nome do produto | Escrever o nome do produto no campo de cadastro | Ser possível informar o nome do produto |
+| CT-002 | Selecionar categoria | Escolher a categoria do produto | Ser possível selecionar uma categoria |
+| CT-003 | Validar nome obrigatório | Tentar cadastrar o produto sem informar o nome | O sistema deve informar que o nome é obrigatório |
+| CT-004 | Cadastrar produto | Preencher os dados e clicar em cadastrar | O produto deve ser cadastrado com sucesso |
+| CT-005 | Salvar produto | Cadastrar um novo produto e consultar os registros | O produto deve permanecer salvo no sistema |
+| CT-006 | Consultar produto | Abrir a lista de produtos cadastrados | Os produtos cadastrados devem aparecer na lista |
+| CT-007 | Buscar produto | Informar o nome de um produto no campo de busca | O sistema deve mostrar o produto encontrado |
+| CT-008 | Editar produto | Selecionar um produto e alterar seus dados | Ser possível editar os dados do produto |
+| CT-009 | Salvar edição | Alterar os dados e salvar | As alterações devem ser salvas corretamente |
+| CT-010 | Excluir produto | Selecionar a opção de excluir um produto | O sistema deve solicitar confirmação |
+| CT-011 | Confirmar exclusão | Confirmar a exclusão do produto | O produto deve ser excluído do sistema |
+| CT-012 | Cancelar exclusão | Selecionar excluir e cancelar a operação | O produto deve continuar cadastrado |
+
+## 2. Cadastro de fornecedor
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-013 | Informar nome do fornecedor | Escrever o nome da empresa | Ser possível informar o nome do fornecedor |
+| CT-014 | Informar CNPJ | Registrar o CNPJ da empresa | O CNPJ deve ser aceito no cadastro |
+| CT-015 | Informar telefone | Registrar o telefone do fornecedor | O telefone deve ser registrado corretamente |
+| CT-016 | Informar e-mail | Registrar o e-mail do fornecedor | O e-mail deve ser registrado corretamente |
+| CT-017 | Validar nome obrigatório | Tentar cadastrar o fornecedor sem informar o nome | O sistema deve informar que o nome é obrigatório |
+| CT-018 | Cadastrar fornecedor | Preencher os dados e clicar em cadastrar | O fornecedor deve ser cadastrado com sucesso |
+| CT-019 | Salvar fornecedor | Cadastrar um fornecedor e consultar os registros | O fornecedor deve permanecer salvo no sistema |
+| CT-020 | Consultar fornecedor | Abrir a lista de fornecedores cadastrados | Os fornecedores cadastrados devem aparecer na lista |
+| CT-021 | Buscar fornecedor | Informar o nome de um fornecedor no campo de busca | O sistema deve mostrar o fornecedor encontrado |
+| CT-022 | Editar fornecedor | Selecionar um fornecedor e alterar seus dados | Ser possível editar os dados do fornecedor |
+| CT-023 | Salvar edição | Alterar os dados e salvar | As alterações devem ser salvas corretamente |
+| CT-024 | Excluir fornecedor | Selecionar a opção de excluir um fornecedor | O sistema deve solicitar confirmação |
+| CT-025 | Confirmar exclusão | Confirmar a exclusão do fornecedor | O fornecedor deve ser excluído do sistema |
+| CT-026 | Cancelar exclusão | Selecionar excluir e cancelar a operação | O fornecedor deve continuar cadastrado |
+
+## 3. Busca e filtros
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-027 | Buscar produto existente | Pesquisar pelo nome de um produto cadastrado | O produto pesquisado deve aparecer |
+| CT-028 | Buscar produto inexistente | Pesquisar por um produto que não está cadastrado | O sistema deve informar que nenhum produto foi encontrado |
+| CT-029 | Buscar fornecedor existente | Pesquisar pelo nome de um fornecedor cadastrado | O fornecedor pesquisado deve aparecer |
+| CT-030 | Buscar fornecedor inexistente | Pesquisar por um fornecedor que não está cadastrado | O sistema deve informar que nenhum fornecedor foi encontrado |
+| CT-031 | Filtrar produtos por categoria | Selecionar uma categoria no filtro | O sistema deve mostrar apenas produtos da categoria selecionada |
+| CT-032 | Limpar filtro | Selecionar a opção para limpar o filtro | A lista deve voltar a mostrar os registros normalmente |
+
+## 4. Validações e persistência
+
+| ID | Cenário | Ação | Resultado Esperado |
+|---|---|---|---|
+| CT-033 | Validar campo obrigatório | Tentar salvar um cadastro com campo obrigatório vazio | O sistema deve impedir o cadastro e mostrar uma mensagem |
+| CT-034 | Validar dados inválidos | Informar dados em formato inválido | O sistema deve informar o erro e impedir o salvamento |
+| CT-035 | Verificar persistência | Salvar um cadastro, sair da tela e consultar novamente | Os dados devem continuar salvos no sistema |
