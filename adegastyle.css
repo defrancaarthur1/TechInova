@@ -1,0 +1,345 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  }
+
+html,
+body {
+width: 100%;
+min-height: 100%;
+}
+
+body {
+background: #f4f4f4;
+padding: 15px;
+color: #222;
+}
+
+/* CABEÇALHO */
+
+.topbar {
+width: 100%;
+background: #222;
+color: white;
+padding: 15px;
+border-radius: 8px;
+margin-bottom: 15px;
+}
+
+.topbar h1 {
+font-size: 28px;
+margin-bottom: 12px;
+}
+
+/* NAVEGAÇÃO */
+
+nav {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+}
+
+nav a {
+color: white;
+text-decoration: none;
+background: #333;
+padding: 8px 12px;
+border-radius: 5px;
+font-size: 14px;
+}
+
+nav a:hover {
+background: #555;
+}
+
+/* CONTAINER */
+
+.container {
+width: 100%;
+min-height: calc(100vh - 120px);
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+}
+
+/* CARD */
+
+.card {
+width: 100%;
+background: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+.card.principal {
+grid-column: 1 / -1;
+}
+
+.card.full {
+grid-column: 1 / -1;
+}
+
+.card h2 {
+margin-bottom: 15px;
+font-size: 21px;
+}
+
+.card h3 {
+margin-bottom: 10px;
+}
+
+/* CAMPOS */
+
+.campo {
+width: 100%;
+}
+
+label {
+display: block;
+margin-top: 10px;
+margin-bottom: 5px;
+font-weight: bold;
+font-size: 14px;
+}
+
+input,
+select {
+width: 100%;
+max-width: 100%;
+padding: 9px;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-bottom: 5px;
+background: white;
+font-size: 14px;
+}
+
+/* BOTÕES */
+
+.btn {
+padding: 9px 13px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 10px;
+margin-right: 5px;
+color: white;
+background: #333;
+font-size: 13px;
+}
+
+.btn:hover {
+opacity: 0.85;
+}
+
+.success {
+background: green;
+}
+
+.edit {
+background: orange;
+}
+
+.delete {
+background: red;
+}
+
+/* AÇÕES */
+
+.acoes {
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+}
+
+.acoes-fornecedor {
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+}
+
+/* INFORMAÇÕES DO FORNECEDOR */
+
+.info-box {
+display: none;
+width: 100%;
+margin-top: 15px;
+padding: 15px;
+border-radius: 8px;
+background: #f4f4f4;
+border: 1px solid #ccc;
+line-height: 1.7;
+}
+
+.info-box.ativo {
+display: block;
+}
+
+/* CADASTRO RÁPIDO */
+
+.form-extra {
+display: none;
+width: 100%;
+margin-top: 15px;
+padding: 15px;
+border: 1px solid #ccc;
+border-radius: 8px;
+background: #f8f8f8;
+}
+
+.form-extra.ativo {
+display: block;
+}
+
+/* ITENS DA COMPRA */
+
+.itens-compra {
+width: 100%;
+margin-top: 20px;
+}
+
+/* ÁREA RESPONSIVA DAS TABELAS */
+
+.itens-compra {
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+}
+
+/* TABELAS */
+
+table {
+width: 100%;
+min-width: 650px;
+border-collapse: collapse;
+margin-top: 20px;
+}
+
+table th,
+table td {
+border: 1px solid #ccc;
+padding: 9px;
+text-align: center;
+white-space: nowrap;
+}
+
+table th {
+background: #222;
+color: white;
+}
+
+table tr:hover {
+background: #f5f5f5;
+}
+
+/* FILTROS */
+
+.filtros {
+width: 100%;
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+gap: 10px;
+}
+
+/* TABELA DO HISTÓRICO */
+
+.card.full {
+overflow: hidden;
+}
+
+.card.full table {
+width: 100%;
+}
+
+/* TELAS MÉDIAS */
+
+@media (max-width: 900px) {
+
+.container {
+    grid-template-columns: 1fr;
+}
+
+.card.full,
+.card.principal {
+    grid-column: auto;
+}
+
+.filtros {
+    grid-template-columns: 1fr;
+}
+
+
+}
+
+/* TABLETS E CELULARES */
+
+@media (max-width: 600px) {
+
+
+body {
+    padding: 8px;
+}
+
+.topbar {
+    padding: 12px;
+}
+
+.topbar h1 {
+    font-size: 21px;
+}
+
+nav {
+    flex-direction: column;
+}
+
+nav a {
+    width: 100%;
+    text-align: center;
+}
+
+.container {
+    min-height: auto;
+    gap: 10px;
+}
+
+.card {
+    padding: 15px;
+}
+
+.acoes,
+.acoes-fornecedor {
+    flex-direction: column;
+    width: 100%;
+}
+
+.btn {
+    width: 100%;
+    margin-right: 0;
+}
+
+/*
+   A tabela continua com suas colunas e ganha rolagem horizontal, evitando quebrar o layout.
+*/
+
+.itens-compra {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.card.full {
+    overflow-x: auto;
+}
+
+table {
+    min-width: 650px;
+}
+
+input,
+select {
+    font-size: 16px;
+}
+
+
+}

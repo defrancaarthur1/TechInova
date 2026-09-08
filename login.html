@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Controle de Fornecedores</title>
+
+     <link rel="stylesheet" href="adegastyle.css">
+</head>
+<body class="pagina-login">
+
+    <main class="container">
+
+        <section class="login-card">
+
+            <h1>Controle de Fornecedores</h1>
+
+            <p class="login-subtitulo">Acesso ao sistema</p>
+            <form id="formLogin">
+
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail"required>
+                </div>
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+                <button type="submit" class="bnt">Entrar</button>
+
+                <p id="mensagemDeErro" class="mensagem-de-erro"></p>
+
+                <p id="mensagemLogin" class="mensagem-login"></p>
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="login.js"></script>
+
+</body>
+</html>
