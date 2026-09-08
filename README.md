@@ -1,10 +1,12 @@
 Sistema de Controle de Compras da Adega
 
 Sobre o Projeto
+
 O Sistema de Controle de Compras da Adega tem como objetivo facilitar o registro e o controle das compras realizadas pela adega com seus fornecedores.
 Por exemplo, quando a adega realiza uma compra de produtos da Coca-Cola, o sistema permite registrar o fornecedor, os produtos adquiridos, suas respectivas quantidades e os valores da compra.
 
 Objetivo
+
 Organizar as informações das compras realizadas pela adega, facilitando o controle dos produtos adquiridos, suas quantidades, valores e fornecedores.
 
 Funcionalidades
