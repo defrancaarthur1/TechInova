@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -45,6 +46,24 @@
 
         <h2>Cadastro de Produto</h2>
 
+
+        <!-- PRODUTO CADASTRADO -->
+
+        <label for="produtoSelecionado">
+            Produto cadastrado
+        </label>
+
+        <select id="produtoSelecionado">
+
+            <option value="">
+                Selecione um produto
+            </option>
+
+        </select>
+
+
+        <!-- NOME DO PRODUTO -->
+
         <label for="nomeProduto">
             Nome do produto
         </label>
@@ -55,34 +74,38 @@
             placeholder="Ex: Coca-Cola 2L">
 
 
+        <!-- CATEGORIA -->
+
         <label for="categoria">
             Categoria
         </label>
 
         <select id="categoria">
 
-            <option>
+            <option value="Selecione">
                 Selecione
             </option>
 
-            <option>
+            <option value="Refrigerante">
                 Refrigerante
             </option>
 
-            <option>
+            <option value="Suco">
                 Suco
             </option>
 
-            <option>
+            <option value="Destilado">
                 Destilado
             </option>
 
-            <option>
+            <option value="Gelo">
                 Gelo
             </option>
 
         </select>
 
+
+        <!-- UNIDADE -->
 
         <label for="unidade">
             Unidade de medida
@@ -90,44 +113,52 @@
 
         <select id="unidade">
 
-            <option>
+            <option value="Selecione">
                 Selecione
             </option>
 
-            <option>
+            <option value="Unidade">
                 Unidade
             </option>
 
-            <option>
+            <option value="Caixa">
                 Caixa
             </option>
 
-            <option>
+            <option value="Fardo">
                 Fardo
             </option>
 
-            <option>
+            <option value="Quilograma">
                 Quilograma
             </option>
 
-            <option>
+            <option value="Litro">
                 Litro
             </option>
 
         </select>
 
 
+        <!-- BOTÕES PRODUTO -->
+
         <div class="acoes">
 
-            <button class="btn">
+            <button
+                class="btn"
+                id="btnCadastrarProduto">
                 Cadastrar produto
             </button>
 
-            <button class="btn edit">
+            <button
+                class="btn edit"
+                id="btnEditarProduto">
                 Editar produto
             </button>
 
-            <button class="btn delete">
+            <button
+                class="btn delete"
+                id="btnExcluirProduto">
                 Excluir produto
             </button>
 
@@ -202,17 +233,23 @@
             id="dataCadastro">
 
 
+        <!-- BOTÕES FORNECEDOR -->
+
         <div class="acoes">
 
-            <button class="btn" id="btnCadastrarFornecedor">
+            <button
+                class="btn"
+                id="btnCadastrarFornecedor">
                 Cadastrar fornecedor
             </button>
 
-            <button class="btn edit">
+            <button
+                class="btn edit">
                 Editar fornecedor
             </button>
 
-            <button class="btn delete">
+            <button
+                class="btn delete">
                 Excluir fornecedor
             </button>
 
@@ -222,7 +259,10 @@
 
 </main>
 
+
 <script src="cadastro.js"></script>
+
 </body>
 
 </html>
+```
