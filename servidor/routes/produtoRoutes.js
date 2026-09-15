@@ -1,12 +1,14 @@
 const express = require('express');
+
 const router = express.Router();
 
 const banco = require('../banco');
 
 
-// ==============================
+// ========================================
 // CADASTRAR PRODUTO
-// ==============================
+// POST /api/produtos
+// ========================================
 
 router.post('/', async (req, res) => {
 
@@ -18,29 +20,43 @@ router.post('/', async (req, res) => {
             unidade
         } = req.body;
 
-        console.log('Dados recebidos:', req.body);
 
         if (!nome || !categoria || !unidade) {
 
             return res.status(400).json({
+
                 sucesso: false,
-                mensagem: 'Preencha todos os campos do produto.'
+
+                mensagem:
+                    'Preencha todos os campos do produto.'
+
             });
 
         }
 
-        const [resultado] = await banco.query(
-            `
-            INSERT INTO produtos
-            (nome, categoria, unidade)
-            VALUES (?, ?, ?)
-            `,
-            [
-                nome,
-                categoria,
-                unidade
-            ]
-        );
+
+        const [resultado] =
+            await banco.query(
+
+                `
+                INSERT INTO produtos
+                (
+                    nome,
+                    categoria,
+                    unidade
+                )
+
+                VALUES (?, ?, ?)
+                `,
+
+                [
+                    nome,
+                    categoria,
+                    unidade
+                ]
+
+            );
+
 
         res.status(201).json({
 
@@ -53,12 +69,14 @@ router.post('/', async (req, res) => {
 
         });
 
+
     } catch (erro) {
 
         console.error(
             'Erro ao cadastrar produto:',
             erro
         );
+
 
         res.status(500).json({
 
@@ -67,7 +85,8 @@ router.post('/', async (req, res) => {
             mensagem:
                 'Erro ao cadastrar produto.',
 
-            erro: erro.message
+            erro:
+                erro.message
 
         });
 
@@ -76,9 +95,10 @@ router.post('/', async (req, res) => {
 });
 
 
-// ==============================
+// ========================================
 // LISTAR PRODUTOS
-// ==============================
+// GET /api/produtos
+// ========================================
 
 router.get('/', async (req, res) => {
 
@@ -86,12 +106,15 @@ router.get('/', async (req, res) => {
 
         const [produtos] =
             await banco.query(
+
                 `
                 SELECT *
                 FROM produtos
-                ORDER BY id DESC
+                ORDER BY nome ASC
                 `
+
             );
+
 
         res.json({
 
@@ -101,12 +124,14 @@ router.get('/', async (req, res) => {
 
         });
 
+
     } catch (erro) {
 
         console.error(
-            'Erro ao listar produtos:',
+            'Erro ao buscar produtos:',
             erro
         );
+
 
         res.status(500).json({
 
@@ -115,7 +140,8 @@ router.get('/', async (req, res) => {
             mensagem:
                 'Erro ao buscar produtos.',
 
-            erro: erro.message
+            erro:
+                erro.message
 
         });
 
@@ -124,9 +150,10 @@ router.get('/', async (req, res) => {
 });
 
 
-// ==============================
-// BUSCAR UM PRODUTO
-// ==============================
+// ========================================
+// BUSCAR PRODUTO PELO ID
+// GET /api/produtos/:id
+// ========================================
 
 router.get('/:id', async (req, res) => {
 
@@ -134,15 +161,20 @@ router.get('/:id', async (req, res) => {
 
         const { id } = req.params;
 
+
         const [produtos] =
             await banco.query(
+
                 `
                 SELECT *
                 FROM produtos
                 WHERE id = ?
                 `,
+
                 [id]
+
             );
+
 
         if (produtos.length === 0) {
 
@@ -157,17 +189,24 @@ router.get('/:id', async (req, res) => {
 
         }
 
+
         res.json({
 
             sucesso: true,
 
-            produto: produtos[0]
+            produto:
+                produtos[0]
 
         });
 
+
     } catch (erro) {
 
-        console.error(erro);
+        console.error(
+            'Erro ao buscar produto:',
+            erro
+        );
+
 
         res.status(500).json({
 
@@ -176,7 +215,8 @@ router.get('/:id', async (req, res) => {
             mensagem:
                 'Erro ao buscar produto.',
 
-            erro: erro.message
+            erro:
+                erro.message
 
         });
 
@@ -185,21 +225,25 @@ router.get('/:id', async (req, res) => {
 });
 
 
-// ==============================
+// ========================================
 // EDITAR PRODUTO
-// ==============================
+// PUT /api/produtos/:id
+// ========================================
 
 router.put('/:id', async (req, res) => {
 
     try {
 
-        const { id } = req.params;
+        const { id } =
+            req.params;
+
 
         const {
             nome,
             categoria,
             unidade
         } = req.body;
+
 
         if (!nome || !categoria || !unidade) {
 
@@ -208,14 +252,16 @@ router.put('/:id', async (req, res) => {
                 sucesso: false,
 
                 mensagem:
-                    'Preencha todos os campos.'
+                    'Preencha todos os campos do produto.'
 
             });
 
         }
 
+
         const [resultado] =
             await banco.query(
+
                 `
                 UPDATE produtos
 
@@ -226,13 +272,16 @@ router.put('/:id', async (req, res) => {
 
                 WHERE id = ?
                 `,
+
                 [
                     nome,
                     categoria,
                     unidade,
                     id
                 ]
+
             );
+
 
         if (resultado.affectedRows === 0) {
 
@@ -246,6 +295,7 @@ router.put('/:id', async (req, res) => {
             });
 
         }
+
 
         res.json({
 
@@ -256,12 +306,14 @@ router.put('/:id', async (req, res) => {
 
         });
 
+
     } catch (erro) {
 
         console.error(
             'Erro ao editar produto:',
             erro
         );
+
 
         res.status(500).json({
 
@@ -270,7 +322,8 @@ router.put('/:id', async (req, res) => {
             mensagem:
                 'Erro ao editar produto.',
 
-            erro: erro.message
+            erro:
+                erro.message
 
         });
 
@@ -279,24 +332,31 @@ router.put('/:id', async (req, res) => {
 });
 
 
-// ==============================
+// ========================================
 // EXCLUIR PRODUTO
-// ==============================
+// DELETE /api/produtos/:id
+// ========================================
 
 router.delete('/:id', async (req, res) => {
 
     try {
 
-        const { id } = req.params;
+        const { id } =
+            req.params;
+
 
         const [resultado] =
             await banco.query(
+
                 `
                 DELETE FROM produtos
                 WHERE id = ?
                 `,
+
                 [id]
+
             );
+
 
         if (resultado.affectedRows === 0) {
 
@@ -311,6 +371,7 @@ router.delete('/:id', async (req, res) => {
 
         }
 
+
         res.json({
 
             sucesso: true,
@@ -320,12 +381,14 @@ router.delete('/:id', async (req, res) => {
 
         });
 
+
     } catch (erro) {
 
         console.error(
             'Erro ao excluir produto:',
             erro
         );
+
 
         res.status(500).json({
 
@@ -334,7 +397,8 @@ router.delete('/:id', async (req, res) => {
             mensagem:
                 'Erro ao excluir produto.',
 
-            erro: erro.message
+            erro:
+                erro.message
 
         });
 
