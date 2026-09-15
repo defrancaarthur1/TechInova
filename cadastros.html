@@ -1,268 +1,283 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Cadastros - Sistema de Controle de Compras</title>
 
     <link rel="stylesheet" href="adegastyle.css">
-
 </head>
 
 <body>
 
-<header class="topbar">
+    <header class="topbar">
 
-    <h1>Sistema de Controle de Compras</h1>
+        <h1>Sistema de Controle de Compras</h1>
 
-    <nav>
+        <nav>
+            <a href="index.html">
+                Registrar Compra
+            </a>
 
-        <a href="index.html">
-            Registrar Compra
-        </a>
+            <a href="cadastros.html">
+                Cadastros
+            </a>
 
-        <a href="cadastros.html">
-            Cadastros
-        </a>
+            <a href="historico.html">
+                Histórico
+            </a>
+        </nav>
 
-        <a href="historico.html">
-            Histórico
-        </a>
+    </header>
 
-    </nav>
 
-</header>
+    <main class="container">
 
+        <!-- ============================= -->
+        <!-- CADASTRO DE PRODUTO -->
+        <!-- ============================= -->
 
-<main class="container">
+        <section class="card">
 
-    <!-- PRODUTO -->
+            <h2>Cadastro de Produto</h2>
 
-    <section class="card">
 
-        <h2>Cadastro de Produto</h2>
+            <!-- PRODUTOS JÁ CADASTRADOS -->
 
+            <label for="produtoSelecionado">
+                Produto cadastrado
+            </label>
 
-        <!-- PRODUTO CADASTRADO -->
+            <select id="produtoSelecionado">
 
-        <label for="produtoSelecionado">
-            Produto cadastrado
-        </label>
+                <option value="">
+                    Selecione um produto
+                </option>
 
-        <select id="produtoSelecionado">
+            </select>
 
-            <option value="">
-                Selecione um produto
-            </option>
 
-        </select>
+            <!-- NOME -->
 
+            <label for="nomeProduto">
+                Nome do produto
+            </label>
 
-        <!-- NOME DO PRODUTO -->
+            <input
+                type="text"
+                id="nomeProduto"
+                placeholder="Ex: Coca-Cola 2L"
+            >
 
-        <label for="nomeProduto">
-            Nome do produto
-        </label>
 
-        <input
-            type="text"
-            id="nomeProduto"
-            placeholder="Ex: Coca-Cola 2L">
+            <!-- CATEGORIA -->
 
+            <label for="categoria">
+                Categoria
+            </label>
 
-        <!-- CATEGORIA -->
+            <select id="categoria">
 
-        <label for="categoria">
-            Categoria
-        </label>
+                <option value="Selecione">
+                    Selecione
+                </option>
 
-        <select id="categoria">
+                <option value="Refrigerante">
+                    Refrigerante
+                </option>
 
-            <option value="Selecione">
-                Selecione
-            </option>
+                <option value="Suco">
+                    Suco
+                </option>
 
-            <option value="Refrigerante">
-                Refrigerante
-            </option>
+                <option value="Destilado">
+                    Destilado
+                </option>
 
-            <option value="Suco">
-                Suco
-            </option>
+                <option value="Gelo">
+                    Gelo
+                </option>
 
-            <option value="Destilado">
-                Destilado
-            </option>
+            </select>
 
-            <option value="Gelo">
-                Gelo
-            </option>
 
-        </select>
+            <!-- UNIDADE -->
 
+            <label for="unidade">
+                Unidade de medida
+            </label>
 
-        <!-- UNIDADE -->
+            <select id="unidade">
 
-        <label for="unidade">
-            Unidade de medida
-        </label>
+                <option value="Selecione">
+                    Selecione
+                </option>
 
-        <select id="unidade">
+                <option value="Unidade">
+                    Unidade
+                </option>
 
-            <option value="Selecione">
-                Selecione
-            </option>
+                <option value="Caixa">
+                    Caixa
+                </option>
 
-            <option value="Unidade">
-                Unidade
-            </option>
+                <option value="Fardo">
+                    Fardo
+                </option>
 
-            <option value="Caixa">
-                Caixa
-            </option>
+                <option value="Quilograma">
+                    Quilograma
+                </option>
 
-            <option value="Fardo">
-                Fardo
-            </option>
+                <option value="Litro">
+                    Litro
+                </option>
 
-            <option value="Quilograma">
-                Quilograma
-            </option>
+            </select>
 
-            <option value="Litro">
-                Litro
-            </option>
 
-        </select>
+            <!-- BOTÕES -->
 
+            <div class="acoes">
 
-        <!-- BOTÕES PRODUTO -->
+                <button
+                    class="btn"
+                    id="btnCadastrarProduto"
+                    type="button"
+                >
+                    Cadastrar produto
+                </button>
 
-        <div class="acoes">
+                <button
+                    class="btn edit"
+                    id="btnEditarProduto"
+                    type="button"
+                >
+                    Editar produto
+                </button>
 
-            <button
-                class="btn"
-                id="btnCadastrarProduto">
-                Cadastrar produto
-            </button>
+                <button
+                    class="btn delete"
+                    id="btnExcluirProduto"
+                    type="button"
+                >
+                    Excluir produto
+                </button>
 
-            <button
-                class="btn edit"
-                id="btnEditarProduto">
-                Editar produto
-            </button>
+            </div>
 
-            <button
-                class="btn delete"
-                id="btnExcluirProduto">
-                Excluir produto
-            </button>
+        </section>
 
-        </div>
 
-    </section>
+        <!-- ============================= -->
+        <!-- CADASTRO DE FORNECEDOR -->
+        <!-- ============================= -->
 
+        <section class="card">
 
-    <!-- FORNECEDOR -->
+            <h2>Cadastro de Fornecedor</h2>
 
-    <section class="card">
 
-        <h2>Cadastro de Fornecedor</h2>
+            <label for="empresa">
+                Nome da empresa
+            </label>
 
+            <input
+                type="text"
+                id="empresa"
+                placeholder="Ex: Coca-Cola"
+            >
 
-        <label for="empresa">
-            Nome da empresa
-        </label>
 
-        <input
-            type="text"
-            id="empresa"
-            placeholder="Ex: Coca-Cola">
+            <label for="cnpj">
+                CNPJ
+            </label>
 
+            <input
+                type="text"
+                id="cnpj"
+                placeholder="00.000.000/0000-00"
+            >
 
-        <label for="cnpj">
-            CNPJ
-        </label>
 
-        <input
-            type="text"
-            id="cnpj"
-            placeholder="00.000.000/0000-00">
+            <label for="telefone">
+                Telefone
+            </label>
 
+            <input
+                type="tel"
+                id="telefone"
+                placeholder="(11) 00000-0000"
+            >
 
-        <label for="telefone">
-            Telefone
-        </label>
 
-        <input
-            type="tel"
-            id="telefone"
-            placeholder="(11) 00000-0000">
+            <label for="consultor">
+                Consultor de vendas
+            </label>
 
+            <input
+                type="text"
+                id="consultor"
+                placeholder="Nome do consultor"
+            >
 
-        <label for="consultor">
-            Consultor de vendas
-        </label>
 
-        <input
-            type="text"
-            id="consultor"
-            placeholder="Nome do consultor">
+            <label for="email">
+                E-mail
+            </label>
 
+            <input
+                type="email"
+                id="email"
+                placeholder="contato@empresa.com"
+            >
 
-        <label for="email">
-            E-mail
-        </label>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="contato@empresa.com">
+            <label for="dataCadastro">
+                Data de cadastro
+            </label>
 
+            <input
+                type="date"
+                id="dataCadastro"
+            >
 
-        <label for="dataCadastro">
-            Data de cadastro
-        </label>
 
-        <input
-            type="date"
-            id="dataCadastro">
+            <div class="acoes">
 
+                <button
+                    class="btn"
+                    id="btnCadastrarFornecedor"
+                    type="button"
+                >
+                    Cadastrar fornecedor
+                </button>
 
-        <!-- BOTÕES FORNECEDOR -->
+                <button
+                    class="btn edit"
+                    type="button"
+                >
+                    Editar fornecedor
+                </button>
 
-        <div class="acoes">
+                <button
+                    class="btn delete"
+                    type="button"
+                >
+                    Excluir fornecedor
+                </button>
 
-            <button
-                class="btn"
-                id="btnCadastrarFornecedor">
-                Cadastrar fornecedor
-            </button>
+            </div>
 
-            <button
-                class="btn edit">
-                Editar fornecedor
-            </button>
+        </section>
 
-            <button
-                class="btn delete">
-                Excluir fornecedor
-            </button>
+    </main>
 
-        </div>
 
-    </section>
-
-</main>
-
-
-<script src="cadastro.js"></script>
+    <script src="cadastro.js"></script>
 
 </body>
 
 </html>
-```
