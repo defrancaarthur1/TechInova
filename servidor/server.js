@@ -1,9 +1,13 @@
 const express = require('express');
+
 const cors = require('cors');
+
 const session = require('express-session');
+
 const path = require('path');
 
 const banco = require('./banco');
+
 
 const fornecedorRoutes =
     require('./routes/fornecedorRoutes');
@@ -18,27 +22,41 @@ const usuarioRoutes =
 const app = express();
 
 
-// ==============================
-// MIDDLEWARES
-// ==============================
+// ========================================
+// CORS
+// ========================================
 
 app.use(cors({
+
     origin: true,
+
     credentials: true
+
 }));
 
+
+// ========================================
+// JSON
+// ========================================
 
 app.use(express.json());
 
 
 app.use(express.urlencoded({
+
     extended: true
+
 }));
 
 
+// ========================================
+// SESSÃO
+// ========================================
+
 app.use(session({
 
-    secret: 'controle-fornecedores-adega',
+    secret:
+        'controle-fornecedores-adega',
 
     resave: false,
 
@@ -56,42 +74,58 @@ app.use(session({
 }));
 
 
-// ==============================
-// ARQUIVOS FRONT-END
-// ==============================
+// ========================================
+// FRONT-END
+// ========================================
 
 app.use(
+
     express.static(
-        path.join(__dirname, '..')
+
+        path.join(
+            __dirname,
+            '..'
+        )
+
     )
+
 );
 
 
-// ==============================
+// ========================================
 // ROTAS
-// ==============================
+// ========================================
 
 app.use(
+
     '/api/fornecedores',
+
     fornecedorRoutes
+
 );
 
 
 app.use(
+
     '/api/produtos',
+
     produtoRoutes
+
 );
 
 
 app.use(
+
     '/api/usuarios',
+
     usuarioRoutes
+
 );
 
 
-// ==============================
-// TESTE DO BANCO
-// ==============================
+// ========================================
+// TESTAR BANCO
+// ========================================
 
 app.get(
     '/api/teste-banco',
@@ -105,6 +139,7 @@ app.get(
                     'SELECT 1 AS conectado'
                 );
 
+
             res.json({
 
                 sucesso: true,
@@ -116,9 +151,11 @@ app.get(
 
             });
 
+
         } catch (erro) {
 
             console.error(erro);
+
 
             res.status(500).json({
 
@@ -138,9 +175,9 @@ app.get(
 );
 
 
-// ==============================
+// ========================================
 // SERVIDOR
-// ==============================
+// ========================================
 
 const PORT = 3000;
 
@@ -148,7 +185,9 @@ const PORT = 3000;
 app.listen(PORT, () => {
 
     console.log(
+
         `Servidor iniciado em http://localhost:${PORT}`
+
     );
 
 });
