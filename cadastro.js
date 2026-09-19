@@ -32,9 +32,11 @@ async function carregarProdutos() {
 
     try {
 
-        const resposta = await fetch('/api/produtos');
+        const resposta =
+            await fetch('/api/produtos');
 
-        const dados = await resposta.json();
+        const dados =
+            await resposta.json();
 
 
         produtoSelecionado.innerHTML = `
@@ -52,6 +54,7 @@ async function carregarProdutos() {
             );
 
             return;
+
         }
 
 
@@ -60,13 +63,18 @@ async function carregarProdutos() {
             const option =
                 document.createElement('option');
 
-            option.value = produto.id;
+            option.value =
+                produto.id;
 
-            option.textContent = produto.nome;
+            option.textContent =
+                produto.nome;
 
-            produtoSelecionado.appendChild(option);
+            produtoSelecionado.appendChild(
+                option
+            );
 
         });
+
 
     } catch (erro) {
 
@@ -88,7 +96,8 @@ produtoSelecionado.addEventListener(
     'change',
     async () => {
 
-        const id = produtoSelecionado.value;
+        const id =
+            produtoSelecionado.value;
 
 
         if (!id) {
@@ -102,11 +111,13 @@ produtoSelecionado.addEventListener(
 
         try {
 
-            const resposta = await fetch(
-                `/api/produtos/${id}`
-            );
+            const resposta =
+                await fetch(
+                    `/api/produtos/${id}`
+                );
 
-            const dados = await resposta.json();
+            const dados =
+                await resposta.json();
 
 
             if (!dados.sucesso) {
@@ -118,17 +129,18 @@ produtoSelecionado.addEventListener(
             }
 
 
-            const produto = dados.produto;
+            const produto =
+                dados.produto;
 
 
             nomeProduto.value =
-                produto.nome;
+                produto.nome || '';
 
             categoria.value =
-                produto.categoria;
+                produto.categoria || 'Selecione';
 
             unidade.value =
-                produto.unidade;
+                produto.unidade || 'Selecione';
 
 
         } catch (erro) {
@@ -183,31 +195,32 @@ btnCadastrarProduto.addEventListener(
 
         try {
 
-            const resposta = await fetch(
-                '/api/produtos',
-                {
+            const resposta =
+                await fetch(
+                    '/api/produtos',
+                    {
 
-                    method: 'POST',
+                        method: 'POST',
 
-                    headers: {
-                        'Content-Type':
-                            'application/json'
-                    },
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
 
-                    body: JSON.stringify({
+                        body: JSON.stringify({
 
-                        nome: nome,
+                            nome: nome,
 
-                        categoria:
-                            categoriaValor,
+                            categoria:
+                                categoriaValor,
 
-                        unidade:
-                            unidadeValor
+                            unidade:
+                                unidadeValor
 
-                    })
+                        })
 
-                }
-            );
+                    }
+                );
 
 
             const dados =
@@ -229,7 +242,6 @@ btnCadastrarProduto.addEventListener(
 
 
             limparProduto();
-
 
             await carregarProdutos();
 
@@ -301,31 +313,32 @@ btnEditarProduto.addEventListener(
 
         try {
 
-            const resposta = await fetch(
-                `/api/produtos/${id}`,
-                {
+            const resposta =
+                await fetch(
+                    `/api/produtos/${id}`,
+                    {
 
-                    method: 'PUT',
+                        method: 'PUT',
 
-                    headers: {
-                        'Content-Type':
-                            'application/json'
-                    },
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
 
-                    body: JSON.stringify({
+                        body: JSON.stringify({
 
-                        nome: nome,
+                            nome: nome,
 
-                        categoria:
-                            categoriaValor,
+                            categoria:
+                                categoriaValor,
 
-                        unidade:
-                            unidadeValor
+                            unidade:
+                                unidadeValor
 
-                    })
+                        })
 
-                }
-            );
+                    }
+                );
 
 
             const dados =
@@ -347,7 +360,6 @@ btnEditarProduto.addEventListener(
 
 
             limparProduto();
-
 
             await carregarProdutos();
 
@@ -381,7 +393,6 @@ btnExcluirProduto.addEventListener(
             produtoSelecionado.value;
 
 
-        // Verifica se existe produto selecionado
         if (!id) {
 
             alert(
@@ -393,18 +404,16 @@ btnExcluirProduto.addEventListener(
         }
 
 
-        // Nome utilizado na confirmação
         const nome =
             nomeProduto.value;
 
 
-        // Confirmação antes de excluir
-        const confirmar = confirm(
-            `Tem certeza que deseja excluir o produto "${nome}"?`
-        );
+        const confirmar =
+            confirm(
+                `Tem certeza que deseja excluir o produto "${nome}"?`
+            );
 
 
-        // Usuário clicou em cancelar
         if (!confirmar) {
 
             return;
@@ -414,14 +423,13 @@ btnExcluirProduto.addEventListener(
 
         try {
 
-            const resposta = await fetch(
-                `/api/produtos/${id}`,
-                {
-
-                    method: 'DELETE'
-
-                }
-            );
+            const resposta =
+                await fetch(
+                    `/api/produtos/${id}`,
+                    {
+                        method: 'DELETE'
+                    }
+                );
 
 
             const dados =
@@ -442,11 +450,8 @@ btnExcluirProduto.addEventListener(
             );
 
 
-            // Limpa os campos
             limparProduto();
 
-
-            // Atualiza a lista
             await carregarProdutos();
 
 
@@ -493,36 +498,331 @@ function limparCamposProduto() {
 
 
 // ========================================
-// FORNECEDOR
+// ELEMENTOS - FORNECEDORES
 // ========================================
+
+const fornecedorSelecionado =
+    document.querySelector(
+        '#fornecedorSelecionado'
+    );
+
+const empresa =
+    document.querySelector(
+        '#empresa'
+    );
+
+const cnpj =
+    document.querySelector(
+        '#cnpj'
+    );
+
+const telefone =
+    document.querySelector(
+        '#telefone'
+    );
+
+const consultor =
+    document.querySelector(
+        '#consultor'
+    );
+
+const email =
+    document.querySelector(
+        '#email'
+    );
+
+const dataCadastro =
+    document.querySelector(
+        '#dataCadastro'
+    );
 
 const btnCadastrarFornecedor =
     document.querySelector(
         '#btnCadastrarFornecedor'
     );
 
+const btnEditarFornecedor =
+    document.querySelector(
+        '#btnEditarFornecedor'
+    );
 
-if (btnCadastrarFornecedor) {
-
-    btnCadastrarFornecedor.addEventListener(
-        'click',
-        () => {
-
-            const empresa =
-                document.querySelector(
-                    '#empresa'
-                ).value.trim();
-
-            const cnpj =
-                document.querySelector(
-                    '#cnpj'
-                ).value.trim();
+const btnExcluirFornecedor =
+    document.querySelector(
+        '#btnExcluirFornecedor'
+    );
 
 
-            if (!empresa || !cnpj) {
+// ========================================
+// CARREGAR FORNECEDORES
+// ========================================
+
+async function carregarFornecedores() {
+
+    try {
+
+        const resposta =
+            await fetch(
+                '/api/fornecedores'
+            );
+
+
+        const dados =
+            await resposta.json();
+
+
+        fornecedorSelecionado.innerHTML = `
+            <option value="">
+                Selecione um fornecedor
+            </option>
+        `;
+
+
+        if (!dados.sucesso) {
+
+            console.error(
+                'Erro ao carregar fornecedores:',
+                dados.mensagem
+            );
+
+            return;
+
+        }
+
+
+        dados.fornecedores.forEach(
+            fornecedor => {
+
+                const option =
+                    document.createElement(
+                        'option'
+                    );
+
+
+                option.value =
+                    fornecedor.id;
+
+
+                option.textContent =
+                    fornecedor.empresa;
+
+
+                fornecedorSelecionado.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            'Erro ao carregar fornecedores:',
+            erro
+        );
+
+    }
+
+}
+
+
+// ========================================
+// SELECIONAR FORNECEDOR
+// ========================================
+
+fornecedorSelecionado.addEventListener(
+    'change',
+    async () => {
+
+        const id =
+            fornecedorSelecionado.value;
+
+
+        if (!id) {
+
+            limparCamposFornecedor();
+
+            return;
+
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/fornecedores/${id}`
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
 
                 alert(
-                    'Preencha a empresa e o CNPJ.'
+                    dados.mensagem
+                );
+
+                return;
+
+            }
+
+
+            const fornecedor =
+                dados.fornecedor;
+
+
+            empresa.value =
+                fornecedor.empresa || '';
+
+
+            cnpj.value =
+                fornecedor.CNPJ ||
+                fornecedor.cnpj ||
+                '';
+
+
+            telefone.value =
+                fornecedor.telefone || '';
+
+
+            consultor.value =
+                fornecedor.consultor || '';
+
+
+            email.value =
+                fornecedor.email || '';
+
+
+            // O MySQL pode retornar a data
+            // junto com horário.
+            // O input date precisa de YYYY-MM-DD.
+
+            if (fornecedor.data_cadastro) {
+
+                dataCadastro.value =
+                    String(
+                        fornecedor.data_cadastro
+                    ).substring(0, 10);
+
+            } else {
+
+                dataCadastro.value = '';
+
+            }
+
+
+        } catch (erro) {
+
+            console.error(
+                'Erro ao buscar fornecedor:',
+                erro
+            );
+
+
+            alert(
+                'Erro ao carregar os dados do fornecedor.'
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// CADASTRAR FORNECEDOR
+// ========================================
+
+btnCadastrarFornecedor.addEventListener(
+    'click',
+    async () => {
+
+        const empresaValor =
+            empresa.value.trim();
+
+        const cnpjValor =
+            cnpj.value.trim();
+
+        const telefoneValor =
+            telefone.value.trim();
+
+        const consultorValor =
+            consultor.value.trim();
+
+        const emailValor =
+            email.value.trim();
+
+        const dataCadastroValor =
+            dataCadastro.value;
+
+
+        if (
+            !empresaValor ||
+            !cnpjValor
+        ) {
+
+            alert(
+                'Preencha a empresa e o CNPJ.'
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    '/api/fornecedores',
+                    {
+
+                        method: 'POST',
+
+                        headers: {
+
+                            'Content-Type':
+                                'application/json'
+
+                        },
+
+                        body: JSON.stringify({
+
+                            empresa:
+                                empresaValor,
+
+                            cnpj:
+                                cnpjValor,
+
+                            telefone:
+                                telefoneValor,
+
+                            consultor:
+                                consultorValor,
+
+                            email:
+                                emailValor,
+
+                            data_cadastro:
+                                dataCadastroValor
+
+                        })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
+
+                alert(
+                    dados.mensagem
                 );
 
                 return;
@@ -535,32 +835,297 @@ if (btnCadastrarFornecedor) {
             );
 
 
-            document.querySelector(
-                '#empresa'
-            ).value = '';
+            limparFornecedor();
 
-            document.querySelector(
-                '#cnpj'
-            ).value = '';
 
-            document.querySelector(
-                '#telefone'
-            ).value = '';
+            // Atualiza imediatamente
+            // a lista de fornecedores.
+            await carregarFornecedores();
 
-            document.querySelector(
-                '#consultor'
-            ).value = '';
 
-            document.querySelector(
-                '#email'
-            ).value = '';
+        } catch (erro) {
 
-            document.querySelector(
-                '#dataCadastro'
-            ).value = '';
+            console.error(
+                'Erro ao cadastrar fornecedor:',
+                erro
+            );
+
+
+            alert(
+                'Erro ao cadastrar fornecedor.'
+            );
 
         }
-    );
+
+    }
+);
+
+
+// ========================================
+// EDITAR FORNECEDOR
+// ========================================
+
+btnEditarFornecedor.addEventListener(
+    'click',
+    async () => {
+
+        const id =
+            fornecedorSelecionado.value;
+
+
+        if (!id) {
+
+            alert(
+                'Selecione um fornecedor para editar.'
+            );
+
+            return;
+
+        }
+
+
+        const empresaValor =
+            empresa.value.trim();
+
+        const cnpjValor =
+            cnpj.value.trim();
+
+        const telefoneValor =
+            telefone.value.trim();
+
+        const consultorValor =
+            consultor.value.trim();
+
+        const emailValor =
+            email.value.trim();
+
+        const dataCadastroValor =
+            dataCadastro.value;
+
+
+        if (
+            !empresaValor ||
+            !cnpjValor
+        ) {
+
+            alert(
+                'Preencha a empresa e o CNPJ.'
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/fornecedores/${id}`,
+                    {
+
+                        method: 'PUT',
+
+                        headers: {
+
+                            'Content-Type':
+                                'application/json'
+
+                        },
+
+                        body: JSON.stringify({
+
+                            empresa:
+                                empresaValor,
+
+                            cnpj:
+                                cnpjValor,
+
+                            telefone:
+                                telefoneValor,
+
+                            consultor:
+                                consultorValor,
+
+                            email:
+                                emailValor,
+
+                            data_cadastro:
+                                dataCadastroValor
+
+                        })
+
+                    }
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
+
+                alert(
+                    dados.mensagem
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                'Fornecedor editado com sucesso!'
+            );
+
+
+            limparFornecedor();
+
+
+            await carregarFornecedores();
+
+
+        } catch (erro) {
+
+            console.error(
+                'Erro ao editar fornecedor:',
+                erro
+            );
+
+
+            alert(
+                'Erro ao editar fornecedor.'
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// EXCLUIR FORNECEDOR
+// ========================================
+
+btnExcluirFornecedor.addEventListener(
+    'click',
+    async () => {
+
+        const id =
+            fornecedorSelecionado.value;
+
+
+        if (!id) {
+
+            alert(
+                'Selecione um fornecedor para excluir.'
+            );
+
+            return;
+
+        }
+
+
+        const nomeEmpresa =
+            empresa.value;
+
+
+        const confirmar =
+            confirm(
+                `Tem certeza que deseja excluir o fornecedor "${nomeEmpresa}"?`
+            );
+
+
+        if (!confirmar) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const resposta =
+                await fetch(
+                    `/api/fornecedores/${id}`,
+                    {
+
+                        method: 'DELETE'
+
+                    }
+                );
+
+
+            const dados =
+                await resposta.json();
+
+
+            if (!dados.sucesso) {
+
+                alert(
+                    dados.mensagem
+                );
+
+                return;
+
+            }
+
+
+            alert(
+                'Fornecedor excluído com sucesso!'
+            );
+
+
+            limparFornecedor();
+
+
+            await carregarFornecedores();
+
+
+        } catch (erro) {
+
+            console.error(
+                'Erro ao excluir fornecedor:',
+                erro
+            );
+
+
+            alert(
+                'Erro ao excluir fornecedor.'
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// LIMPAR FORNECEDOR
+// ========================================
+
+function limparFornecedor() {
+
+    fornecedorSelecionado.value = '';
+
+    limparCamposFornecedor();
+
+}
+
+
+function limparCamposFornecedor() {
+
+    empresa.value = '';
+
+    cnpj.value = '';
+
+    telefone.value = '';
+
+    consultor.value = '';
+
+    email.value = '';
+
+    dataCadastro.value = '';
 
 }
 
@@ -569,6 +1134,10 @@ if (btnCadastrarFornecedor) {
 // INICIALIZAÇÃO
 // ========================================
 
-// Busca os produtos do MySQL quando
-// cadastros.html é aberto.
+// Busca produtos e fornecedores
+// no MySQL quando cadastros.html
+// é aberto.
+
 carregarProdutos();
+
+carregarFornecedores();
