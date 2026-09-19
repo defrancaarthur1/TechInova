@@ -138,7 +138,7 @@
             </select>
 
 
-            <!-- BOTÕES -->
+            <!-- BOTÕES PRODUTO -->
 
             <div class="acoes">
 
@@ -180,6 +180,23 @@
             <h2>Cadastro de Fornecedor</h2>
 
 
+            <!-- FORNECEDORES JÁ CADASTRADOS -->
+
+            <label for="fornecedorSelecionado">
+                Fornecedor cadastrado
+            </label>
+
+            <select id="fornecedorSelecionado">
+
+                <option value="">
+                    Selecione um fornecedor
+                </option>
+
+            </select>
+
+
+            <!-- EMPRESA -->
+
             <label for="empresa">
                 Nome da empresa
             </label>
@@ -190,6 +207,8 @@
                 placeholder="Ex: Coca-Cola"
             >
 
+
+            <!-- CNPJ -->
 
             <label for="cnpj">
                 CNPJ
@@ -202,6 +221,8 @@
             >
 
 
+            <!-- TELEFONE -->
+
             <label for="telefone">
                 Telefone
             </label>
@@ -212,6 +233,8 @@
                 placeholder="(11) 00000-0000"
             >
 
+
+            <!-- CONSULTOR -->
 
             <label for="consultor">
                 Consultor de vendas
@@ -224,6 +247,8 @@
             >
 
 
+            <!-- EMAIL -->
+
             <label for="email">
                 E-mail
             </label>
@@ -235,6 +260,8 @@
             >
 
 
+            <!-- DATA -->
+
             <label for="dataCadastro">
                 Data de cadastro
             </label>
@@ -244,6 +271,8 @@
                 id="dataCadastro"
             >
 
+
+            <!-- BOTÕES FORNECEDOR -->
 
             <div class="acoes">
 
@@ -257,6 +286,7 @@
 
                 <button
                     class="btn edit"
+                    id="btnEditarFornecedor"
                     type="button"
                 >
                     Editar fornecedor
@@ -264,6 +294,7 @@
 
                 <button
                     class="btn delete"
+                    id="btnExcluirFornecedor"
                     type="button"
                 >
                     Excluir fornecedor
