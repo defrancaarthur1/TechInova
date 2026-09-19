@@ -5,37 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Registrar Compra - Sistema de Controle de Compras</title>
+    <title>Sistema de Controle de Compras</title>
 
     <link rel="stylesheet" href="adegastyle.css">
 </head>
 
 <body>
 
-<header class="topbar">
+    <!-- ========================================= -->
+    <!-- CABEÇALHO -->
+    <!-- ========================================= -->
 
-    <h1>Sistema de Controle de Compras</h1>
+    <header class="topbar">
 
-    <nav>
-        <a href="index.html">Registrar Compra</a>
-        <a href="cadastros.html">Cadastros</a>
-        <a href="historico.html">Histórico</a>
-    </nav>
+        <h1>Sistema de Controle de Compras</h1>
 
-</header>
+        <nav>
+            <a href="index.html">Registrar Compra</a>
+            <a href="cadastros.html">Cadastros</a>
+            <a href="historico.html">Histórico</a>
+        </nav>
+
+    </header>
 
 
-<main class="container">
+    <!-- ========================================= -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ========================================= -->
 
-    <!-- REGISTRAR COMPRA -->
+    <main class="container">
 
-    <section class="card principal">
+        <section class="card principal">
 
-        <h2>Registrar Compra</h2>
+            <h2>Registrar Compra</h2>
 
-        <!-- FORNECEDOR -->
 
-        <div class="campo">
+            <!-- ================================= -->
+            <!-- FORNECEDOR -->
+            <!-- ================================= -->
 
             <label for="fornecedor">
                 Fornecedor
@@ -47,170 +54,12 @@
                     Selecione o fornecedor
                 </option>
 
-                <option value="coca">
-                    Coca-Cola
-                </option>
-
-                <option value="gelo">
-                    Distribuidora de Gelo
-                </option>
-
             </select>
 
-        </div>
 
-
-        <div class="acoes-fornecedor">
-
-            <button
-                class="btn"
-                type="button"
-                onclick="mostrarInformacoesFornecedor()">
-
-                Mais informações
-
-            </button>
-
-        </div>
-
-
-        <!-- INFORMAÇÕES DO FORNECEDOR -->
-
-        <div
-            id="informacoesFornecedor"
-            class="info-box">
-
-            <h3>Informações do Fornecedor</h3>
-
-            <p>
-                <strong>Empresa:</strong>
-                <span id="infoEmpresa">
-                    Selecione um fornecedor
-                </span>
-            </p>
-
-            <p>
-                <strong>CNPJ:</strong>
-                <span id="infoCnpj">
-                    -
-                </span>
-            </p>
-
-            <p>
-                <strong>Telefone:</strong>
-                <span id="infoTelefone">
-                    -
-                </span>
-            </p>
-
-            <p>
-                <strong>Consultor de vendas:</strong>
-                <span id="infoConsultor">
-                    -
-                </span>
-            </p>
-
-            <p>
-                <strong>Data de cadastro:</strong>
-                <span id="infoCadastro">
-                    -
-                </span>
-            </p>
-
-            <p>
-                <strong>E-mail:</strong>
-                <span id="infoEmail">
-                    -
-                </span>
-            </p>
-
-        </div>
-
-        <!-- CADASTRO RÁPIDO DO FORNECEDOR -->
-
-        <div
-            id="cadastroFornecedor"
-            class="form-extra">
-
-            <h3>Cadastrar novo fornecedor</h3>
-
-            <label for="nomeFornecedor">
-                Nome da empresa
-            </label>
-
-            <input
-                type="text"
-                id="nomeFornecedor"
-                placeholder="Ex: Distribuidora XYZ">
-
-
-            <label for="cnpjFornecedor">
-                CNPJ
-            </label>
-
-            <input
-                type="text"
-                id="cnpjFornecedor"
-                placeholder="00.000.000/0000-00">
-
-
-            <label for="telefoneFornecedor">
-                Telefone
-            </label>
-
-            <input
-                type="tel"
-                id="telefoneFornecedor"
-                placeholder="(11) 00000-0000">
-
-
-            <label for="consultorFornecedor">
-                Consultor de vendas
-            </label>
-
-            <input
-                type="text"
-                id="consultorFornecedor"
-                placeholder="Nome do consultor">
-
-
-            <label for="emailFornecedor">
-                E-mail
-            </label>
-
-            <input
-                type="email"
-                id="emailFornecedor"
-                placeholder="contato@empresa.com">
-
-
-            <div class="acoes">
-
-                <button
-                    class="btn success"
-                    type="button"
-                    onclick="cadastrarFornecedor()">
-
-                    Cadastrar fornecedor
-
-                </button>
-
-                <button
-                    class="btn"
-                    type="button"
-                    onclick="fecharCadastroFornecedor()">
-
-                    Cancelar
-
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- PRODUTO -->
-
-        <div class="campo">
+            <!-- ================================= -->
+            <!-- PRODUTO -->
+            <!-- ================================= -->
 
             <label for="produto">
                 Produto
@@ -222,21 +71,12 @@
                     Selecione o produto
                 </option>
 
-                <option value="coca2l">
-                    Coca-Cola 2L
-                </option>
-
-                <option value="gelo">
-                    Gelo
-                </option>
-
             </select>
 
-        </div>
 
-        <!-- QUANTIDADE -->
-
-        <div class="campo">
+            <!-- ================================= -->
+            <!-- QUANTIDADE -->
+            <!-- ================================= -->
 
             <label for="quantidade">
                 Quantidade
@@ -246,13 +86,13 @@
                 type="number"
                 id="quantidade"
                 min="1"
-                placeholder="Ex: 30">
+                placeholder="Ex: 30"
+            >
 
-        </div>
 
-        <!-- VALOR -->
-
-        <div class="campo">
+            <!-- ================================= -->
+            <!-- VALOR UNITÁRIO -->
+            <!-- ================================= -->
 
             <label for="valor">
                 Valor unitário
@@ -263,14 +103,13 @@
                 id="valor"
                 min="0"
                 step="0.01"
-                placeholder="Ex: 5,00">
+                placeholder="Ex: 5,00"
+            >
 
-        </div>
 
-
-        <!-- DATA -->
-
-        <div class="campo">
+            <!-- ================================= -->
+            <!-- DATA DA COMPRA -->
+            <!-- ================================= -->
 
             <label for="data">
                 Data da compra
@@ -278,28 +117,29 @@
 
             <input
                 type="date"
-                id="data">
-
-        </div>
-
-
-        <!-- ADICIONAR PRODUTO -->
-
-        <button
-            class="btn"
-            type="button"
-            onclick="adicionarProduto()">
-
-            Adicionar produto
-
-        </button>
+                id="data"
+            >
 
 
-        <!-- ITENS DA COMPRA -->
+            <!-- ================================= -->
+            <!-- ADICIONAR PRODUTO -->
+            <!-- ================================= -->
 
-        <div class="itens-compra">
+            <button
+                class="btn"
+                id="btnAdicionarProduto"
+                type="button"
+            >
+                Adicionar produto
+            </button>
+
+
+            <!-- ================================= -->
+            <!-- ITENS DA COMPRA -->
+            <!-- ================================= -->
 
             <h3>Itens da compra</h3>
+
 
             <table>
 
@@ -307,14 +147,26 @@
 
                     <tr>
 
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Valor unitário</th>
-                        <th>Subtotal</th>
+                        <th>
+                            Produto
+                        </th>
+
+                        <th>
+                            Quantidade
+                        </th>
+
+                        <th>
+                            Valor unitário
+                        </th>
+
+                        <th>
+                            Subtotal
+                        </th>
 
                     </tr>
 
                 </thead>
+
 
                 <tbody id="listaItens">
 
@@ -330,42 +182,639 @@
 
             </table>
 
-        </div>
+
+            <!-- ================================= -->
+            <!-- BOTÕES DA COMPRA -->
+            <!-- ================================= -->
+
+            <div class="acoes">
+
+                <button
+                    class="btn success"
+                    id="btnRegistrarCompra"
+                    type="button"
+                >
+                    Registrar compra
+                </button>
 
 
-        <!-- BOTÕES -->
-
-        <div class="acoes">
-
-            <button class="btn success" type="button">
-                            Registrar compra
-
-            </button>
-
-            <button
-                class="btn edit"
-                type="button">
-
-                Editar compra
-
-            </button>
-
-            <button
-                class="btn delete"
-                type="button">
-
-                Excluir compra
-
-            </button>
-
-        </div>
-
-    </section>
-
-</main>
+                <button
+                    class="btn edit"
+                    id="btnEditarCompra"
+                    type="button"
+                >
+                    Editar compra
+                </button>
 
 
-<script src="script.js"></script>
+                <button
+                    class="btn delete"
+                    id="btnExcluirCompra"
+                    type="button"
+                >
+                    Excluir compra
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT DA PÁGINA -->
+    <!-- ========================================= -->
+
+    <script>
+
+        // ========================================
+        // ELEMENTOS DA PÁGINA
+        // ========================================
+
+        const selectFornecedor =
+            document.querySelector('#fornecedor');
+
+        const selectProduto =
+            document.querySelector('#produto');
+
+        const quantidade =
+            document.querySelector('#quantidade');
+
+        const valor =
+            document.querySelector('#valor');
+
+        const dataCompra =
+            document.querySelector('#data');
+
+        const listaItens =
+            document.querySelector('#listaItens');
+
+        const btnAdicionarProduto =
+            document.querySelector('#btnAdicionarProduto');
+
+
+        // ========================================
+        // ITENS TEMPORÁRIOS DA COMPRA
+        // ========================================
+
+        let itensCompra = [];
+
+
+        // ========================================
+        // CARREGAR FORNECEDORES DO MYSQL
+        // ========================================
+
+        async function carregarFornecedores() {
+
+            try {
+
+                const resposta =
+                    await fetch('/api/fornecedores');
+
+
+                const dados =
+                    await resposta.json();
+
+
+                // Limpa completamente o select.
+                // Dessa forma fornecedores excluídos
+                // não permanecem na tela.
+
+                selectFornecedor.innerHTML = '';
+
+
+                const opcaoInicial =
+                    document.createElement('option');
+
+
+                opcaoInicial.value = '';
+
+                opcaoInicial.textContent =
+                    'Selecione o fornecedor';
+
+
+                selectFornecedor.appendChild(
+                    opcaoInicial
+                );
+
+
+                if (!resposta.ok || !dados.sucesso) {
+
+                    console.error(
+                        'Erro ao carregar fornecedores:',
+                        dados.mensagem
+                    );
+
+                    return;
+
+                }
+
+
+                dados.fornecedores.forEach(
+                    fornecedor => {
+
+                        const option =
+                            document.createElement(
+                                'option'
+                            );
+
+
+                        option.value =
+                            fornecedor.id;
+
+
+                        option.textContent =
+                            fornecedor.empresa;
+
+
+                        selectFornecedor.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao buscar fornecedores:',
+                    erro
+                );
+
+            }
+
+        }
+
+
+        // ========================================
+        // CARREGAR PRODUTOS DO MYSQL
+        // ========================================
+
+        async function carregarProdutos() {
+
+            try {
+
+                const resposta =
+                    await fetch('/api/produtos');
+
+
+                const dados =
+                    await resposta.json();
+
+
+                // Limpa completamente os produtos
+                // que estavam anteriormente no select.
+
+                selectProduto.innerHTML = '';
+
+
+                const opcaoInicial =
+                    document.createElement('option');
+
+
+                opcaoInicial.value = '';
+
+                opcaoInicial.textContent =
+                    'Selecione o produto';
+
+
+                selectProduto.appendChild(
+                    opcaoInicial
+                );
+
+
+                if (!resposta.ok || !dados.sucesso) {
+
+                    console.error(
+                        'Erro ao carregar produtos:',
+                        dados.mensagem
+                    );
+
+                    return;
+
+                }
+
+
+                dados.produtos.forEach(
+                    produto => {
+
+                        const option =
+                            document.createElement(
+                                'option'
+                            );
+
+
+                        option.value =
+                            produto.id;
+
+
+                        option.textContent =
+                            produto.nome;
+
+
+                        selectProduto.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao buscar produtos:',
+                    erro
+                );
+
+            }
+
+        }
+
+
+        // ========================================
+        // ADICIONAR PRODUTO À COMPRA
+        // ========================================
+
+        function adicionarProduto() {
+
+            const produtoId =
+                selectProduto.value;
+
+
+            if (!produtoId) {
+
+                alert(
+                    'Selecione um produto.'
+                );
+
+                return;
+
+            }
+
+
+            const produtoNome =
+                selectProduto.options[
+                    selectProduto.selectedIndex
+                ].textContent;
+
+
+            const quantidadeValor =
+                Number(
+                    quantidade.value
+                );
+
+
+            const valorUnitario =
+                Number(
+                    valor.value
+                );
+
+
+            // ====================================
+            // VALIDAÇÃO DA QUANTIDADE
+            // ====================================
+
+            if (
+                !quantidadeValor ||
+                quantidadeValor <= 0
+            ) {
+
+                alert(
+                    'Informe uma quantidade válida.'
+                );
+
+                return;
+
+            }
+
+
+            // ====================================
+            // VALIDAÇÃO DO VALOR
+            // ====================================
+
+            if (
+                !Number.isFinite(valorUnitario) ||
+                valorUnitario <= 0
+            ) {
+
+                alert(
+                    'Informe um valor unitário válido.'
+                );
+
+                return;
+
+            }
+
+
+            // ====================================
+            // CALCULAR SUBTOTAL
+            // ====================================
+
+            const subtotal =
+                quantidadeValor *
+                valorUnitario;
+
+
+            // ====================================
+            // ADICIONAR ITEM
+            // ====================================
+
+            itensCompra.push({
+
+                produtoId:
+                    produtoId,
+
+                produto:
+                    produtoNome,
+
+                quantidade:
+                    quantidadeValor,
+
+                valorUnitario:
+                    valorUnitario,
+
+                subtotal:
+                    subtotal
+
+            });
+
+
+            // ====================================
+            // ATUALIZAR TABELA
+            // ====================================
+
+            atualizarTabelaItens();
+
+
+            // ====================================
+            // LIMPAR CAMPOS
+            // ====================================
+
+            selectProduto.value = '';
+
+            quantidade.value = '';
+
+            valor.value = '';
+
+        }
+
+
+        // ========================================
+        // ATUALIZAR TABELA DE ITENS
+        // ========================================
+
+        function atualizarTabelaItens() {
+
+            listaItens.innerHTML = '';
+
+
+            // ====================================
+            // NENHUM ITEM
+            // ====================================
+
+            if (itensCompra.length === 0) {
+
+                const linha =
+                    document.createElement('tr');
+
+
+                const coluna =
+                    document.createElement('td');
+
+
+                coluna.colSpan = 4;
+
+
+                coluna.textContent =
+                    'Nenhum produto adicionado.';
+
+
+                linha.appendChild(
+                    coluna
+                );
+
+
+                listaItens.appendChild(
+                    linha
+                );
+
+
+                return;
+
+            }
+
+
+            // ====================================
+            // MOSTRAR ITENS
+            // ====================================
+
+            itensCompra.forEach(
+                item => {
+
+                    const linha =
+                        document.createElement('tr');
+
+
+                    // PRODUTO
+
+                    const colunaProduto =
+                        document.createElement('td');
+
+
+                    colunaProduto.textContent =
+                        item.produto;
+
+
+                    // QUANTIDADE
+
+                    const colunaQuantidade =
+                        document.createElement('td');
+
+
+                    colunaQuantidade.textContent =
+                        item.quantidade;
+
+
+                    // VALOR
+
+                    const colunaValor =
+                        document.createElement('td');
+
+
+                    colunaValor.textContent =
+                        item.valorUnitario
+                            .toLocaleString(
+                                'pt-BR',
+                                {
+                                    style:
+                                        'currency',
+
+                                    currency:
+                                        'BRL'
+                                }
+                            );
+
+
+                    // SUBTOTAL
+
+                    const colunaSubtotal =
+                        document.createElement('td');
+
+
+                    colunaSubtotal.textContent =
+                        item.subtotal
+                            .toLocaleString(
+                                'pt-BR',
+                                {
+                                    style:
+                                        'currency',
+
+                                    currency:
+                                        'BRL'
+                                }
+                            );
+
+
+                    // MONTAR LINHA
+
+                    linha.appendChild(
+                        colunaProduto
+                    );
+
+
+                    linha.appendChild(
+                        colunaQuantidade
+                    );
+
+
+                    linha.appendChild(
+                        colunaValor
+                    );
+
+
+                    linha.appendChild(
+                        colunaSubtotal
+                    );
+
+
+                    listaItens.appendChild(
+                        linha
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ========================================
+        // BOTÃO ADICIONAR PRODUTO
+        // ========================================
+
+        btnAdicionarProduto.addEventListener(
+            'click',
+            adicionarProduto
+        );
+
+
+        // ========================================
+        // DATA ATUAL
+        // ========================================
+
+        function preencherDataAtual() {
+
+            if (dataCompra.value) {
+
+                return;
+
+            }
+
+
+            const hoje =
+                new Date();
+
+
+            const ano =
+                hoje.getFullYear();
+
+
+            const mes =
+                String(
+                    hoje.getMonth() + 1
+                ).padStart(
+                    2,
+                    '0'
+                );
+
+
+            const dia =
+                String(
+                    hoje.getDate()
+                ).padStart(
+                    2,
+                    '0'
+                );
+
+
+            dataCompra.value =
+                `${ano}-${mes}-${dia}`;
+
+        }
+
+
+        // ========================================
+        // ATUALIZAR AO VOLTAR PARA A PÁGINA
+        // ========================================
+
+        window.addEventListener(
+            'pageshow',
+            async () => {
+
+                await carregarFornecedores();
+
+                await carregarProdutos();
+
+            }
+        );
+
+
+        // ========================================
+        // ATUALIZAR QUANDO A ABA GANHAR FOCO
+        // ========================================
+
+        window.addEventListener(
+            'focus',
+            async () => {
+
+                await carregarFornecedores();
+
+                await carregarProdutos();
+
+            }
+        );
+
+
+        // ========================================
+        // INICIALIZAÇÃO
+        // ========================================
+
+        async function iniciarPagina() {
+
+            await carregarFornecedores();
+
+            await carregarProdutos();
+
+            preencherDataAtual();
+
+        }
+
+
+        iniciarPagina();
+
+    </script>
 
 </body>
 
