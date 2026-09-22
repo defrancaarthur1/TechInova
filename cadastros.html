@@ -44,7 +44,111 @@
             <h2>Cadastro de Produto</h2>
 
 
+            <!-- ============================= -->
+            <!-- FILTROS DE PRODUTOS -->
+            <!-- ============================= -->
+
+            <div class="filtros-produtos">
+
+                <!-- FILTRO POR NOME -->
+                <div>
+                    <label for="filtroNome">
+                        Buscar produto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="filtroNome"
+                        placeholder="Digite o nome do produto"
+                    >
+                </div>
+
+
+                <!-- FILTRO POR CATEGORIA -->
+                <div>
+                    <label for="filtroCategoria">
+                        Filtrar por categoria
+                    </label>
+
+                    <select id="filtroCategoria">
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        <option value="Bebidas">
+                            Bebidas
+                        </option>
+
+                        <option value="Cervejas">
+                            Cervejas
+                        </option>
+
+                        <option value="Refrigerantes">
+                            Refrigerantes
+                        </option>
+
+                        <option value="Destilados">
+                            Destilados
+                        </option>
+
+                        <option value="Água">
+                            Água
+                        </option>
+
+                        <option value="Gelo">
+                            Gelo
+                        </option>
+
+                        <option value="Outros">
+                            Outros
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <!-- FILTRO POR UNIDADE -->
+                <div>
+                    <label for="filtroUnidade">
+                        Filtrar por unidade
+                    </label>
+
+                    <select id="filtroUnidade">
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        <option value="Unidade">
+                            Unidade
+                        </option>
+
+                        <option value="Caixa">
+                            Caixa
+                        </option>
+
+                        <option value="Fardo">
+                            Fardo
+                        </option>
+
+                        <option value="Quilograma">
+                            Quilograma
+                        </option>
+
+                        <option value="Litro">
+                            Litro
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
             <!-- PRODUTOS JÁ CADASTRADOS -->
+            <!-- ============================= -->
 
             <label for="produtoSelecionado">
                 Produto cadastrado
@@ -59,7 +163,7 @@
             </select>
 
 
-            <!-- NOME -->
+            <!-- NOME DO PRODUTO -->
 
             <label for="nomeProduto">
                 Nome do produto
@@ -80,24 +184,36 @@
 
             <select id="categoria">
 
-                <option value="Selecione">
+                <option value="">
                     Selecione
                 </option>
 
-                <option value="Refrigerante">
-                    Refrigerante
+                <option value="Bebidas">
+                    Bebidas
                 </option>
 
-                <option value="Suco">
-                    Suco
+                <option value="Cervejas">
+                    Cervejas
                 </option>
 
-                <option value="Destilado">
-                    Destilado
+                <option value="Refrigerantes">
+                    Refrigerantes
+                </option>
+
+                <option value="Destilados">
+                    Destilados
+                </option>
+
+                <option value="Água">
+                    Água
                 </option>
 
                 <option value="Gelo">
                     Gelo
+                </option>
+
+                <option value="Outros">
+                    Outros
                 </option>
 
             </select>
@@ -111,7 +227,7 @@
 
             <select id="unidade">
 
-                <option value="Selecione">
+                <option value="">
                     Selecione
                 </option>
 
