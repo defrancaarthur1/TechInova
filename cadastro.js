@@ -25,6 +25,24 @@ const btnExcluirProduto =
 
 
 // ========================================
+// ELEMENTOS - FILTROS DE PRODUTOS
+// ========================================
+
+const filtroNome =
+    document.querySelector('#filtroNome');
+
+const filtroCategoria =
+    document.querySelector('#filtroCategoria');
+
+const filtroUnidade =
+    document.querySelector('#filtroUnidade');
+
+
+// Guarda todos os produtos carregados do banco
+let listaProdutos = [];
+
+
+// ========================================
 // CARREGAR PRODUTOS
 // ========================================
 
@@ -39,13 +57,6 @@ async function carregarProdutos() {
             await resposta.json();
 
 
-        produtoSelecionado.innerHTML = `
-            <option value="">
-                Selecione um produto
-            </option>
-        `;
-
-
         if (!dados.sucesso) {
 
             console.error(
@@ -58,22 +69,14 @@ async function carregarProdutos() {
         }
 
 
-        dados.produtos.forEach(produto => {
+        // Guarda todos os produtos recebidos
+        // do banco de dados.
+        listaProdutos =
+            dados.produtos;
 
-            const option =
-                document.createElement('option');
 
-            option.value =
-                produto.id;
-
-            option.textContent =
-                produto.nome;
-
-            produtoSelecionado.appendChild(
-                option
-            );
-
-        });
+        // Aplica os filtros atuais.
+        filtrarProdutos();
 
 
     } catch (erro) {
@@ -86,6 +89,138 @@ async function carregarProdutos() {
     }
 
 }
+
+
+// ========================================
+// EXIBIR PRODUTOS NO SELECT
+// ========================================
+
+function exibirProdutos(produtos) {
+
+    produtoSelecionado.innerHTML = `
+        <option value="">
+            Selecione um produto
+        </option>
+    `;
+
+
+    produtos.forEach(produto => {
+
+        const option =
+            document.createElement('option');
+
+
+        option.value =
+            produto.id;
+
+
+        option.textContent =
+            produto.nome;
+
+
+        produtoSelecionado.appendChild(
+            option
+        );
+
+    });
+
+}
+
+
+// ========================================
+// FILTRAR PRODUTOS
+// ========================================
+
+function filtrarProdutos() {
+
+    const nomeFiltro =
+        filtroNome.value
+            .trim()
+            .toLowerCase();
+
+
+    const categoriaFiltro =
+        filtroCategoria.value;
+
+
+    const unidadeFiltro =
+        filtroUnidade.value;
+
+
+    const produtosFiltrados =
+        listaProdutos.filter(produto => {
+
+
+            // FILTRO POR NOME
+
+            const correspondeNome =
+                String(produto.nome || '')
+                    .toLowerCase()
+                    .includes(nomeFiltro);
+
+
+            // FILTRO POR CATEGORIA
+
+            const correspondeCategoria =
+                !categoriaFiltro ||
+                produto.categoria ===
+                    categoriaFiltro;
+
+
+            // FILTRO POR UNIDADE
+
+            const correspondeUnidade =
+                !unidadeFiltro ||
+                produto.unidade ===
+                    unidadeFiltro;
+
+
+            // O produto precisa atender
+            // todos os filtros selecionados.
+
+            return (
+                correspondeNome &&
+                correspondeCategoria &&
+                correspondeUnidade
+            );
+
+        });
+
+
+    exibirProdutos(
+        produtosFiltrados
+    );
+
+}
+
+
+// ========================================
+// EVENTOS DOS FILTROS
+// ========================================
+
+// Pesquisa automaticamente enquanto
+// o usuário digita.
+
+filtroNome.addEventListener(
+    'input',
+    filtrarProdutos
+);
+
+
+// Filtra quando a categoria muda.
+
+filtroCategoria.addEventListener(
+    'change',
+    filtrarProdutos
+);
+
+
+// Filtra quando a unidade muda.
+
+filtroUnidade.addEventListener(
+    'change',
+    filtrarProdutos
+);
 
 
 // ========================================
@@ -137,10 +272,12 @@ produtoSelecionado.addEventListener(
                 produto.nome || '';
 
             categoria.value =
-                produto.categoria || 'Selecione';
+                produto.categoria ||
+                'Selecione';
 
             unidade.value =
-                produto.unidade || 'Selecione';
+                produto.unidade ||
+                'Selecione';
 
 
         } catch (erro) {
@@ -203,8 +340,10 @@ btnCadastrarProduto.addEventListener(
                         method: 'POST',
 
                         headers: {
+
                             'Content-Type':
                                 'application/json'
+
                         },
 
                         body: JSON.stringify({
@@ -229,7 +368,9 @@ btnCadastrarProduto.addEventListener(
 
             if (!dados.sucesso) {
 
-                alert(dados.mensagem);
+                alert(
+                    dados.mensagem
+                );
 
                 return;
 
@@ -243,6 +384,8 @@ btnCadastrarProduto.addEventListener(
 
             limparProduto();
 
+
+            // Atualiza a lista após cadastrar.
             await carregarProdutos();
 
 
@@ -252,6 +395,7 @@ btnCadastrarProduto.addEventListener(
                 'Erro ao cadastrar produto:',
                 erro
             );
+
 
             alert(
                 'Erro ao cadastrar produto.'
@@ -321,8 +465,10 @@ btnEditarProduto.addEventListener(
                         method: 'PUT',
 
                         headers: {
+
                             'Content-Type':
                                 'application/json'
+
                         },
 
                         body: JSON.stringify({
@@ -347,7 +493,9 @@ btnEditarProduto.addEventListener(
 
             if (!dados.sucesso) {
 
-                alert(dados.mensagem);
+                alert(
+                    dados.mensagem
+                );
 
                 return;
 
@@ -361,6 +509,9 @@ btnEditarProduto.addEventListener(
 
             limparProduto();
 
+
+            // Atualiza os produtos e
+            // reaplica os filtros.
             await carregarProdutos();
 
 
@@ -370,6 +521,7 @@ btnEditarProduto.addEventListener(
                 'Erro ao editar produto:',
                 erro
             );
+
 
             alert(
                 'Erro ao editar produto.'
@@ -427,7 +579,9 @@ btnExcluirProduto.addEventListener(
                 await fetch(
                     `/api/produtos/${id}`,
                     {
+
                         method: 'DELETE'
+
                     }
                 );
 
@@ -438,7 +592,9 @@ btnExcluirProduto.addEventListener(
 
             if (!dados.sucesso) {
 
-                alert(dados.mensagem);
+                alert(
+                    dados.mensagem
+                );
 
                 return;
 
@@ -452,6 +608,9 @@ btnExcluirProduto.addEventListener(
 
             limparProduto();
 
+
+            // Atualiza a lista depois
+            // da exclusão.
             await carregarProdutos();
 
 
@@ -490,9 +649,11 @@ function limparCamposProduto() {
 
     nomeProduto.value = '';
 
-    categoria.value = 'Selecione';
+    categoria.value =
+        'Selecione';
 
-    unidade.value = 'Selecione';
+    unidade.value =
+        'Selecione';
 
 }
 
@@ -696,11 +857,9 @@ fornecedorSelecionado.addEventListener(
                 fornecedor.email || '';
 
 
-            // O MySQL pode retornar a data
-            // junto com horário.
-            // O input date precisa de YYYY-MM-DD.
-
-            if (fornecedor.data_cadastro) {
+            if (
+                fornecedor.data_cadastro
+            ) {
 
                 dataCadastro.value =
                     String(
@@ -838,8 +997,6 @@ btnCadastrarFornecedor.addEventListener(
             limparFornecedor();
 
 
-            // Atualiza imediatamente
-            // a lista de fornecedores.
             await carregarFornecedores();
 
 
@@ -1135,8 +1292,7 @@ function limparCamposFornecedor() {
 // ========================================
 
 // Busca produtos e fornecedores
-// no MySQL quando cadastros.html
-// é aberto.
+// no MySQL quando cadastros.html é aberto.
 
 carregarProdutos();
 
