@@ -1,13 +1,14 @@
 const banco = require('./banco');
 
-banco.query('SELECT DATABASE() AS banco', (erro, resultado) => {
+async function testarBanco() {
+    try {
+        const [resultado] = await banco.query('SELECT 1');
 
-    if (erro) {
-        console.error('Erro no teste:', erro.message);
-        return;
+        console.log('Conexão com o banco funcionando!');
+        console.log(resultado);
+    } catch (erro) {
+        console.error('Erro no teste:', erro);
     }
+}
 
-    console.log('Banco conectado:', resultado[0].banco);
-
-    banco.end();
-});
+testarBanco();

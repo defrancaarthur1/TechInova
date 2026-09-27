@@ -90,5 +90,25 @@ router.post('/logout', (req, res) => {
 
 });
 
+// ==========================================
+// VERIFICAR SESSÃO
+// ==========================================
+
+router.get('/sessao', (req, res) => {
+
+    if (!req.session.usuario) {
+
+        return res.status(401).json({
+            autenticado: false
+        });
+
+    }
+
+    res.json({
+        autenticado: true,
+        usuario: req.session.usuario
+    });
+
+});
 
 module.exports = router;

@@ -1,40 +1,33 @@
 const bcrypt = require('bcrypt');
 const banco = require('./banco');
 
-async function criarUsuario() {
+async function alterarSenha() {
     try {
-        const nome = 'Administrador';
+
         const email = 'admin@adega.com';
-        const senha = '123456';
+        const novaSenha = 'Adega2026';
 
-        const senhaCriptografada = await bcrypt.hash(senha, 10);
+        const senhaCriptografada = await bcrypt.hash(novaSenha, 10);
 
-        const sql = `
-            INSERT INTO usuarios (nome, email, senha)
-            VALUES (?, ?, ?)
-        `;
+        const [resultado] = await banco.query(`
+            UPDATE usuarios
+            SET senha = ?
+            WHERE email = ? `, [senhaCriptografada, email]);
 
-        banco.query(
-            sql,
-            [nome, email, senhaCriptografada],
-            (erro, resultado) => {
-                if (erro) {
-                    console.error('Erro ao criar usuário:', erro);
-                    return;
-                }
+        if (resultado.affectedRows === 0) {
+            console.log('Usuário não encontrado.');
 
-                console.log('Usuário criado com sucesso!');
-                console.log('ID:', resultado.insertId);
-                console.log('E-mail:', email);
-                console.log('Senha:', senha);
+        } else {
+            console.log('Senha alterada com sucesso!');
+            console.log('E-mail:', email);
+            console.log('Nova senha:', novaSenha);
+        }
 
-                banco.end();
-            }
-        );
+        await banco.end();
 
     } catch (erro) {
-        console.error('Erro:', erro);
+        console.error('Erro ao alterar senha:', erro);
     }
 }
 
-criarUsuario();
+alterarSenha();
