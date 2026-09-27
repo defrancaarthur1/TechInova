@@ -51,7 +51,9 @@
             <div class="filtros-produtos">
 
                 <!-- FILTRO POR NOME -->
+
                 <div>
+
                     <label for="filtroNome">
                         Buscar produto
                     </label>
@@ -61,11 +63,14 @@
                         id="filtroNome"
                         placeholder="Digite o nome do produto"
                     >
+
                 </div>
 
 
                 <!-- FILTRO POR CATEGORIA -->
+
                 <div>
+
                     <label for="filtroCategoria">
                         Filtrar por categoria
                     </label>
@@ -105,11 +110,14 @@
                         </option>
 
                     </select>
+
                 </div>
 
 
                 <!-- FILTRO POR UNIDADE -->
+
                 <div>
+
                     <label for="filtroUnidade">
                         Filtrar por unidade
                     </label>
@@ -141,6 +149,7 @@
                         </option>
 
                     </select>
+
                 </div>
 
             </div>
@@ -163,26 +172,34 @@
             </select>
 
 
+            <!-- ============================= -->
             <!-- NOME DO PRODUTO -->
+            <!-- ============================= -->
 
             <label for="nomeProduto">
-                Nome do produto
+                Nome do produto *
             </label>
 
             <input
                 type="text"
                 id="nomeProduto"
                 placeholder="Ex: Coca-Cola 2L"
+                required
             >
 
 
+            <!-- ============================= -->
             <!-- CATEGORIA -->
+            <!-- ============================= -->
 
             <label for="categoria">
-                Categoria
+                Categoria *
             </label>
 
-            <select id="categoria">
+            <select
+                id="categoria"
+                required
+            >
 
                 <option value="">
                     Selecione
@@ -219,13 +236,18 @@
             </select>
 
 
+            <!-- ============================= -->
             <!-- UNIDADE -->
+            <!-- ============================= -->
 
             <label for="unidade">
-                Unidade de medida
+                Unidade de medida *
             </label>
 
-            <select id="unidade">
+            <select
+                id="unidade"
+                required
+            >
 
                 <option value="">
                     Selecione
@@ -254,7 +276,18 @@
             </select>
 
 
+            <!-- INDICAÇÃO DE CAMPOS OBRIGATÓRIOS -->
+
+            <p>
+                <small>
+                    * Campos obrigatórios
+                </small>
+            </p>
+
+
+            <!-- ============================= -->
             <!-- BOTÕES PRODUTO -->
+            <!-- ============================= -->
 
             <div class="acoes">
 
