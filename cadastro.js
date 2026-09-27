@@ -39,6 +39,7 @@ const filtroUnidade =
 
 
 // Guarda todos os produtos carregados do banco
+
 let listaProdutos = [];
 
 
@@ -52,6 +53,7 @@ async function carregarProdutos() {
 
         const resposta =
             await fetch('/api/produtos');
+
 
         const dados =
             await resposta.json();
@@ -69,13 +71,15 @@ async function carregarProdutos() {
         }
 
 
-        // Guarda todos os produtos recebidos
-        // do banco de dados.
+        // Guarda todos os produtos
+        // recebidos do banco.
+
         listaProdutos =
             dados.produtos;
 
 
         // Aplica os filtros atuais.
+
         filtrarProdutos();
 
 
@@ -124,6 +128,27 @@ function exibirProdutos(produtos) {
 
     });
 
+
+    // Caso nenhum produto seja encontrado.
+
+    if (produtos.length === 0) {
+
+        const option =
+            document.createElement('option');
+
+
+        option.value = '';
+
+        option.textContent =
+            'Nenhum produto encontrado';
+
+
+        produtoSelecionado.appendChild(
+            option
+        );
+
+    }
+
 }
 
 
@@ -154,9 +179,13 @@ function filtrarProdutos() {
             // FILTRO POR NOME
 
             const correspondeNome =
-                String(produto.nome || '')
+                String(
+                    produto.nome || ''
+                )
                     .toLowerCase()
-                    .includes(nomeFiltro);
+                    .includes(
+                        nomeFiltro
+                    );
 
 
             // FILTRO POR CATEGORIA
@@ -175,8 +204,8 @@ function filtrarProdutos() {
                     unidadeFiltro;
 
 
-            // O produto precisa atender
-            // todos os filtros selecionados.
+            // Produto precisa atender
+            // todos os filtros.
 
             return (
                 correspondeNome &&
@@ -198,8 +227,7 @@ function filtrarProdutos() {
 // EVENTOS DOS FILTROS
 // ========================================
 
-// Pesquisa automaticamente enquanto
-// o usuário digita.
+// Pesquisa enquanto o usuário digita.
 
 filtroNome.addEventListener(
     'input',
@@ -207,7 +235,7 @@ filtroNome.addEventListener(
 );
 
 
-// Filtra quando a categoria muda.
+// Filtra quando categoria é alterada.
 
 filtroCategoria.addEventListener(
     'change',
@@ -215,7 +243,7 @@ filtroCategoria.addEventListener(
 );
 
 
-// Filtra quando a unidade muda.
+// Filtra quando unidade é alterada.
 
 filtroUnidade.addEventListener(
     'change',
@@ -251,13 +279,16 @@ produtoSelecionado.addEventListener(
                     `/api/produtos/${id}`
                 );
 
+
             const dados =
                 await resposta.json();
 
 
             if (!dados.sucesso) {
 
-                alert(dados.mensagem);
+                alert(
+                    dados.mensagem
+                );
 
                 return;
 
@@ -271,13 +302,13 @@ produtoSelecionado.addEventListener(
             nomeProduto.value =
                 produto.nome || '';
 
+
             categoria.value =
-                produto.categoria ||
-                'Selecione';
+                produto.categoria || '';
+
 
             unidade.value =
-                produto.unidade ||
-                'Selecione';
+                produto.unidade || '';
 
 
         } catch (erro) {
@@ -286,6 +317,7 @@ produtoSelecionado.addEventListener(
                 'Erro ao buscar produto:',
                 erro
             );
+
 
             alert(
                 'Erro ao carregar os dados do produto.'
@@ -298,12 +330,89 @@ produtoSelecionado.addEventListener(
 
 
 // ========================================
+// VALIDAR CAMPOS DO PRODUTO
+// ========================================
+
+function validarProduto() {
+
+    const nome =
+        nomeProduto.value.trim();
+
+    const categoriaValor =
+        categoria.value;
+
+    const unidadeValor =
+        unidade.value;
+
+
+    // NOME
+
+    if (!nome) {
+
+        alert(
+            'O nome do produto é obrigatório.'
+        );
+
+        nomeProduto.focus();
+
+        return false;
+
+    }
+
+
+    // CATEGORIA
+
+    if (!categoriaValor) {
+
+        alert(
+            'Selecione uma categoria.'
+        );
+
+        categoria.focus();
+
+        return false;
+
+    }
+
+
+    // UNIDADE
+
+    if (!unidadeValor) {
+
+        alert(
+            'Selecione uma unidade de medida.'
+        );
+
+        unidade.focus();
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+// ========================================
 // CADASTRAR PRODUTO
 // ========================================
 
 btnCadastrarProduto.addEventListener(
     'click',
     async () => {
+
+        // ====================================
+        // VALIDAÇÃO
+        // ====================================
+
+        if (!validarProduto()) {
+
+            return;
+
+        }
+
 
         const nome =
             nomeProduto.value.trim();
@@ -315,20 +424,9 @@ btnCadastrarProduto.addEventListener(
             unidade.value;
 
 
-        if (
-            !nome ||
-            categoriaValor === 'Selecione' ||
-            unidadeValor === 'Selecione'
-        ) {
-
-            alert(
-                'Preencha todos os campos do produto.'
-            );
-
-            return;
-
-        }
-
+        // ====================================
+        // ENVIA PARA O BACKEND
+        // ====================================
 
         try {
 
@@ -369,7 +467,8 @@ btnCadastrarProduto.addEventListener(
             if (!dados.sucesso) {
 
                 alert(
-                    dados.mensagem
+                    dados.mensagem ||
+                    'Erro ao cadastrar produto.'
                 );
 
                 return;
@@ -386,6 +485,7 @@ btnCadastrarProduto.addEventListener(
 
 
             // Atualiza a lista após cadastrar.
+
             await carregarProdutos();
 
 
@@ -419,11 +519,28 @@ btnEditarProduto.addEventListener(
             produtoSelecionado.value;
 
 
+        // ====================================
+        // VERIFICAR PRODUTO SELECIONADO
+        // ====================================
+
         if (!id) {
 
             alert(
                 'Selecione um produto para editar.'
             );
+
+            produtoSelecionado.focus();
+
+            return;
+
+        }
+
+
+        // ====================================
+        // VALIDAR CAMPOS
+        // ====================================
+
+        if (!validarProduto()) {
 
             return;
 
@@ -440,20 +557,9 @@ btnEditarProduto.addEventListener(
             unidade.value;
 
 
-        if (
-            !nome ||
-            categoriaValor === 'Selecione' ||
-            unidadeValor === 'Selecione'
-        ) {
-
-            alert(
-                'Preencha todos os campos do produto.'
-            );
-
-            return;
-
-        }
-
+        // ====================================
+        // ATUALIZAR PRODUTO
+        // ====================================
 
         try {
 
@@ -494,7 +600,8 @@ btnEditarProduto.addEventListener(
             if (!dados.sucesso) {
 
                 alert(
-                    dados.mensagem
+                    dados.mensagem ||
+                    'Erro ao editar produto.'
                 );
 
                 return;
@@ -512,6 +619,7 @@ btnEditarProduto.addEventListener(
 
             // Atualiza os produtos e
             // reaplica os filtros.
+
             await carregarProdutos();
 
 
@@ -550,6 +658,8 @@ btnExcluirProduto.addEventListener(
             alert(
                 'Selecione um produto para excluir.'
             );
+
+            produtoSelecionado.focus();
 
             return;
 
@@ -593,7 +703,8 @@ btnExcluirProduto.addEventListener(
             if (!dados.sucesso) {
 
                 alert(
-                    dados.mensagem
+                    dados.mensagem ||
+                    'Erro ao excluir produto.'
                 );
 
                 return;
@@ -611,6 +722,7 @@ btnExcluirProduto.addEventListener(
 
             // Atualiza a lista depois
             // da exclusão.
+
             await carregarProdutos();
 
 
@@ -649,11 +761,9 @@ function limparCamposProduto() {
 
     nomeProduto.value = '';
 
-    categoria.value =
-        'Selecione';
+    categoria.value = '';
 
-    unidade.value =
-        'Selecione';
+    unidade.value = '';
 
 }
 
