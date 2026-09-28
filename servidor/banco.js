@@ -1,10 +1,13 @@
+require('dotenv').config({ path: __dirname + '/.env' });
+
 const mysql = require('mysql2/promise');
 
 const banco = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'Amor1003*',
-    database: 'adega_controle'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 module.exports = banco;

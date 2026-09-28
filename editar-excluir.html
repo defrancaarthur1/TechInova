@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar e Excluir - Sistema de Controle de Compras</title>
+
+    <link rel="stylesheet" href="adegastyle.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>Sistema de Controle de Compras</h1>
+
+    <nav>
+    <a href="index.html">Registrar Compra</a>
+    <a href="cadastros.html">Cadastros</a>
+    <a href="editar-excluir.html">Editar / Excluir</a>
+    <a href="historico.html">Histórico</a>
+    <a href="#" id="btnLogout">Sair</a>
+</nav>
+
+</header>
+
+<main class="container">
+
+    <!-- FORNECEDORES -->
+    <section class="card">
+
+        <h2>Editar / Excluir Fornecedor</h2>
+
+        <label for="fornecedorEditar">Selecione o fornecedor</label>
+
+        <select id="fornecedorEditar">
+            <option value="">Selecione o fornecedor</option>
+        </select>
+
+        <label for="empresa">Nome da empresa</label>
+
+        <input
+            type="text"
+            id="empresa"
+            placeholder="Ex: Coca-Cola">
+
+        <label for="cnpj">CNPJ</label>
+
+        <input
+            type="text"
+            id="cnpj"
+            placeholder="00.000.000/0000-00">
+
+        <label for="telefone">Telefone</label>
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="(11) 00000-0000">
+
+        <label for="consultor">Consultor de vendas</label>
+
+        <input
+            type="text"
+            id="consultor"
+            placeholder="Nome do consultor">
+
+        <label for="email">E-mail</label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="contato@empresa.com">
+
+        <label for="dataCadastro">Data de cadastro</label>
+
+        <input
+            type="date"
+            id="dataCadastro">
+
+        <div class="acoes">
+            <button class="btn edit" id="btnEditarFornecedor">Salvar edição</button>
+
+        </div>
+
+        <hr>
+
+        <h3>Excluir fornecedor</h3>
+
+        <label for="fornecedorExcluir">Selecione o fornecedor</label>
+
+        <select id="fornecedorExcluir">
+            <option value="">Selecione o fornecedor</option>
+        </select>
+
+        <div class="acoes">
+            <button class="btn delete" id="btnExcluirFornecedor">Excluir fornecedor</button>
+        </div>
+
+    </section>
+
+    <!-- PRODUTOS -->
+    <section class="card">
+
+        <h2>Editar / Excluir Produto</h2>
+
+        <label for="produtoEditar">Selecione o produto</label>
+
+        <select id="produtoEditar">
+            <option value="">Selecione o produto</option>
+        </select>
+
+        <label for="nomeProduto">Nome do produto</label>
+
+        <input
+            type="text"
+            id="nomeProduto"
+            placeholder="Ex: Coca-Cola 2L">
+
+        <label for="categoria">Categoria</label>
+
+        <select id="categoria">
+
+            <option value="">Selecione</option>
+            <option value="5">Água</option>
+            <option value="2">Cervejas</option>
+            <option value="4">Destilados</option>
+            <option value="6">Gelo</option>
+            <option value="7">Outros</option>
+            <option value="3">Refrigerantes</option>
+            <option value="1">Sucos</option>
+
+        </select>
+
+        <label for="unidade">Unidade de medida</label>
+        <select id="unidade">
+
+            <option value="">Selecione</option>
+
+            <option value="Unidade">Unidade</option>
+            <option value="Caixa">Caixa</option>
+            <option value="Fardo">Fardo</option>
+            <option value="Litro">Litro</option>
+
+        </select>
+
+        <div class="acoes">
+            <button class="btn edit" id="btnEditarProduto">Salvar edição</button>
+        </div>
+
+        <hr>
+
+        <h3>Excluir produto</h3>
+
+        <label for="produtoExcluir">Selecione o produto</label>
+
+        <select id="produtoExcluir">
+            <option value="">Selecione o produto</option>
+        </select>
+
+        <div class="acoes">
+            <button class="btn delete" id="btnExcluirProduto">Excluir produto</button>
+        </div>
+
+    </section>
+
+</main>
+
+<script src="editar-excluir.js"></script>
+<script src="auth.js"></script>
+
+</body>
+
+</html>
