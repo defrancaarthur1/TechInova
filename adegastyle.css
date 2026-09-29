@@ -318,6 +318,116 @@ table tr:hover {
 
 
 /* ========================================
+   LOGIN
+======================================== */
+
+.pagina-login {
+    min-height: calc(100vh - 30px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    grid-template-columns: 1fr;
+}
+
+
+/* CARD DO LOGIN */
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 30px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+
+/* TÍTULO DO LOGIN */
+
+.login-card h1 {
+    font-size: 25px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+/* SUBTÍTULO */
+
+.login-subtitulo {
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* CAMPOS DO LOGIN */
+
+.login-card label {
+    margin-top: 12px;
+}
+
+.login-card input {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+
+/* BOTÃO ENTRAR */
+
+.login-card .btn {
+    width: 100%;
+
+    margin-top: 15px;
+    margin-right: 0;
+
+    padding: 11px;
+
+    font-size: 14px;
+}
+
+
+/* MENSAGEM DE ERRO */
+
+.mensagem-de-erro {
+    margin-top: 12px;
+
+    text-align: center;
+
+    color: #c62828;
+
+    font-size: 14px;
+
+    min-height: 18px;
+}
+
+
+/* MENSAGEM DE LOGIN */
+
+.mensagem-login {
+    margin-top: 10px;
+
+    text-align: center;
+
+    color: #333;
+
+    font-size: 14px;
+
+    min-height: 18px;
+}
+
+
+/* ========================================
    TELAS MÉDIAS
 ======================================== */
 
@@ -417,6 +527,139 @@ table tr:hover {
     input,
     select {
         font-size: 16px;
+    }
+
+
+    /* ==============================
+       LOGIN NO CELULAR
+    ============================== */
+
+    .pagina-login {
+        min-height: calc(100vh - 16px);
+
+        padding: 5px;
+    }
+
+    .login-card {
+        max-width: 100%;
+
+        padding: 22px 18px;
+    }
+
+    .login-card h1 {
+        font-size: 21px;
+    }
+
+    .login-subtitulo {
+        font-size: 14px;
+    }
+
+}
+
+/* ========================================
+   MENU RESPONSIVO
+======================================== */
+
+/* Botão hambúrguer escondido no notebook */
+.menu-mobile {
+    display: none;
+}
+
+.btn-menu {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+
+/* ========================================
+   MENU NO NOTEBOOK
+======================================== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.topbar nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.topbar nav a {
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   TABLET E CELULAR
+======================================== */
+
+@media (max-width: 900px) {
+
+    .topbar {
+        position: relative;
+    }
+
+    /* Mostra o botão ☰ */
+    .menu-mobile {
+        display: block;
+        margin-left: auto;
+    }
+
+    /* Esconde o menu inicialmente */
+    .topbar nav {
+        display: none;
+
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+
+        margin-top: 10px;
+        padding-top: 10px;
+
+        border-top: 1px solid #ddd;
+    }
+
+    /* Quando estiver aberto */
+    .topbar nav.menu-aberto {
+        display: flex;
+    }
+
+    .topbar nav a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 10px;
+    }
+}
+
+
+/* ========================================
+   CELULAR
+======================================== */
+
+@media (max-width: 600px) {
+
+    .topbar {
+        padding: 10px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+        max-width: calc(100% - 55px);
+    }
+
+    .btn-menu {
+        font-size: 27px;
     }
 
 }
