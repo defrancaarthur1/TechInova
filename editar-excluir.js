@@ -181,8 +181,9 @@ const btnExcluirProduto = document.querySelector('#btnExcluirProduto');
 // CARREGAR PRODUTOS
 async function carregarProdutos() {
     try {
-        const resposta = await fetch('/api/produtos');
-        const produtos = await resposta.json();
+       const resposta = await fetch('/api/produtos');
+const dados = await resposta.json();
+const produtos = dados.produtos || [];
 
         // SELECT PARA EDITAR
         selectProdutoEditar.innerHTML = `
@@ -228,8 +229,9 @@ selectProdutoEditar.addEventListener('change', async () => {
 
         try {
             const resposta = await fetch('/api/produtos');
-            const produtos = await resposta.json();
-            const produto = produtos.find(item => item.id == id);
+const dados = await resposta.json();
+const produtos = dados.produtos || [];
+const produto = produtos.find(item => item.id == id);
 
             if (!produto) {
                 return;
@@ -257,6 +259,12 @@ btnEditarProduto.addEventListener('click', async () => {
         const nome = document.querySelector('#nomeProduto').value.trim();
         const categoria_id = document.querySelector('#categoria').value;
         const unidade = document.querySelector('#unidade').value;
+
+        console.log('DADOS PARA EDITAR:', {
+    nome,
+    categoria_id,
+    unidade
+});
 
         if (!nome || !categoria_id || !unidade) {
             alert('Preencha o nome, a categoria e a unidade do produto.');

@@ -240,12 +240,12 @@ router.put('/:id', async (req, res) => {
 
         const {
             nome,
-            categoria,
+            categoria_id,
             unidade
         } = req.body;
 
 
-        if (!nome || !categoria || !unidade) {
+        if (!nome || !categoria_id || !unidade) {
 
             return res.status(400).json({
 
@@ -267,7 +267,7 @@ router.put('/:id', async (req, res) => {
 
                 SET
                     nome = ?,
-                    categoria = ?,
+                    categoria_id = ?,
                     unidade = ?
 
                 WHERE id = ?
@@ -275,7 +275,7 @@ router.put('/:id', async (req, res) => {
 
                 [
                     nome,
-                    categoria,
+                    categoria_id,
                     unidade,
                     id
                 ]

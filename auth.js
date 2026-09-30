@@ -65,5 +65,26 @@ if (btnLogout) {
     btnLogout.addEventListener('click', fazerLogout);
 }
 
+// MENU RESPONSIVO
+
+const btnMenu = document.querySelector('#btnMenu');
+const menuPrincipal = document.querySelector('#menuPrincipal');
+
+if (btnMenu && menuPrincipal) {
+
+    btnMenu.addEventListener('click', () => {
+
+        menuPrincipal.classList.toggle('menu-aberto');
+
+        if (menuPrincipal.classList.contains('menu-aberto')) {
+            btnMenu.textContent = '✕';
+        } else {
+            btnMenu.textContent = '☰';
+        }
+
+    });
+
+}
+
 // INICIAR VERIFICAÇÃO
 verificarSessao();
