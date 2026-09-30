@@ -35,3 +35,30 @@ CREATE TABLE IF NOT EXISTS fornecedores (
 USE adega_controle;
 
 SELECT * FROM fornecedores;
+SELECT * FROM produtos;
+
+Show tables ;
+
+USE adega_controle;
+
+
+INSERT INTO usuarios (nome, email, senha)
+VALUES ('Administrador', 'admin@adega.com', 'TEMPORARIA');
+
+SELECT id, nome, email, senha
+FROM usuarios;
+
+SELECT 
+    nome,
+    categoria,
+    unidade,
+    COUNT(*) AS quantidade
+FROM produtos
+GROUP BY nome, categoria, unidade
+HAVING COUNT(*) > 1;
+
+ALTER TABLE produtos
+ADD CONSTRAINT uq_produto_nome_categoria_unidade
+UNIQUE (nome, categoria, unidade);
+
+DESCRIBE produtos;
