@@ -5,6 +5,8 @@ Sistema web desenvolvido como projeto acadêmico da FATEC para auxiliar no contr
 O sistema permite realizar o cadastro e gerenciamento de produtos e fornecedores, além do registro e consulta das compras realizadas.
 
 link de acesso: https://defrancaarthur1.github.io/TechInova/login.html
+acessar com: e-mail: admin@adega.com
+senha: Adega2026
 
 ---
 
