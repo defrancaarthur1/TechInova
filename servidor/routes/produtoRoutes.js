@@ -1,3 +1,5 @@
+const tratarErroBanco =
+    require('../utils/tratarErroBanco');
 const express = require('express');
 const router = express.Router();
 const banco = require('../banco');
