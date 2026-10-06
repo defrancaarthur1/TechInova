@@ -17,16 +17,16 @@
         <h1>Sistema de Controle de Compras</h1>
 
         <div class="menu-mobile">
-    <button id="btnMenu" class="btn-menu">☰</button>
-</div>
+            <button id="btnMenu" class="btn-menu">☰</button>
+        </div>
 
-<nav id="menuPrincipal">
-    <a href="index.html">Registrar Compra</a>
-    <a href="cadastros.html">Cadastros</a>
-    <a href="editar-excluir.html">Editar / Excluir</a>
-    <a href="historico.html">Histórico</a>
-    <a href="#" id="btnLogout">Sair</a>
-</nav>
+        <nav id="menuPrincipal">
+            <a href="index.html">Registrar Compra</a>
+            <a href="cadastros.html">Cadastros</a>
+            <a href="editar-excluir.html">Editar / Excluir</a>
+            <a href="historico.html">Histórico</a>
+            <a href="#" id="btnLogout">Sair</a>
+        </nav>
 
     </header>
 
@@ -39,7 +39,6 @@
 
             <h2>Cadastro de Produto</h2>
 
-
             <label for="nomeProduto">
                 Nome do produto *
             </label>
@@ -48,43 +47,55 @@
                 type="text"
                 id="nomeProduto"
                 placeholder="Ex: Coca-Cola 2L"
+                maxlength="100"
+                autocomplete="off"
+                autofocus
                 required
             >
-
 
             <label for="categoria">
                 Categoria *
             </label>
 
             <select id="categoria" required>
-                <option value="">Todas as categorias</option>
-<option value="5">Água</option>
-<option value="2">Cervejas</option>
-<option value="4">Destilados</option>
-<option value="6">Gelo</option>
-<option value="7">Outros</option>
-<option value="3">Refrigerantes</option>
-<option value="1">Sucos</option>
 
-</select>
+                <option value="">
+                    Selecione uma categoria
+                </option>
 
-
-
-            <label for="unidade">Unidade de medida *</label>
-
-            <select id="unidade" required>
-
-                <option value="">Selecione</option>
-
-                <option value="Unidade">Unidade</option>
-
-                <option value="Caixa">Caixa</option>
-
-                <option value="Fardo">Fardo</option>
-
+                <option value="5">Água</option>
+                <option value="2">Cervejas</option>
+                <option value="4">Destilados</option>
+                <option value="6">Gelo</option>
+                <option value="7">Outros</option>
+                <option value="3">Refrigerantes</option>
+                <option value="1">Sucos</option>
 
             </select>
 
+            <label for="unidade">
+                Unidade de medida *
+            </label>
+
+            <select id="unidade" required>
+
+                <option value="">
+                    Selecione uma unidade
+                </option>
+
+                <option value="Unidade">
+                    Unidade
+                </option>
+
+                <option value="Caixa">
+                    Caixa
+                </option>
+
+                <option value="Fardo">
+                    Fardo
+                </option>
+
+            </select>
 
             <p>
                 <small>
@@ -92,10 +103,15 @@
                 </small>
             </p>
 
-
             <div class="acoes">
 
-                <button class="btn" id="btnCadastrarProduto" type="button">Cadastrar produto</button>
+                <button
+                    class="btn"
+                    id="btnCadastrarProduto"
+                    type="button"
+                >
+                    Cadastrar produto
+                </button>
 
             </div>
 
@@ -109,37 +125,43 @@
 
                 <div>
 
-                    <label for="filtroNome">Buscar produto</label>
+                    <label for="filtroNome">
+                        Buscar produto
+                    </label>
 
                     <input
                         type="text"
                         id="filtroNome"
-                        placeholder="Digite o nome do produto">
+                        placeholder="Digite o nome do produto"
+                    >
 
                 </div>
-
 
                 <!-- FILTRO POR CATEGORIA -->
 
                 <div>
 
-                    <label for="filtroCategoria">Filtrar por categoria</label>
+                    <label for="filtroCategoria">
+                        Filtrar por categoria
+                    </label>
 
                     <select id="filtroCategoria">
 
-                        <option value="">Todas as categorias</option>
-<option value="5">Água</option>
-<option value="2">Cervejas</option>
-<option value="4">Destilados</option>
-<option value="6">Gelo</option>
-<option value="7">Outros</option>
-<option value="3">Refrigerantes</option>
-<option value="1">Sucos</option>
+                        <option value="">
+                            Todas as categorias
+                        </option>
+
+                        <option value="5">Água</option>
+                        <option value="2">Cervejas</option>
+                        <option value="4">Destilados</option>
+                        <option value="6">Gelo</option>
+                        <option value="7">Outros</option>
+                        <option value="3">Refrigerantes</option>
+                        <option value="1">Sucos</option>
 
                     </select>
 
                 </div>
-
 
                 <!-- FILTRO POR UNIDADE -->
 
@@ -228,28 +250,32 @@
 
             <h2>Cadastro de Fornecedor</h2>
 
-
             <label for="empresa">
-                Nome da empresa
+                Nome da empresa *
             </label>
 
             <input
                 type="text"
                 id="empresa"
                 placeholder="Ex: Coca-Cola"
+                maxlength="120"
+                autocomplete="organization"
+                required
             >
 
-
             <label for="cnpj">
-                CNPJ
+                CNPJ *
             </label>
 
             <input
                 type="text"
                 id="cnpj"
                 placeholder="00.000.000/0000-00"
+                inputmode="numeric"
+                maxlength="18"
+                autocomplete="off"
+                required
             >
-
 
             <label for="telefone">
                 Telefone
@@ -259,8 +285,10 @@
                 type="tel"
                 id="telefone"
                 placeholder="(11) 00000-0000"
+                inputmode="tel"
+                maxlength="15"
+                autocomplete="tel"
             >
-
 
             <label for="consultor">
                 Consultor de vendas
@@ -270,8 +298,9 @@
                 type="text"
                 id="consultor"
                 placeholder="Nome do consultor"
+                maxlength="100"
+                autocomplete="name"
             >
-
 
             <label for="email">
                 E-mail
@@ -281,18 +310,25 @@
                 type="email"
                 id="email"
                 placeholder="contato@empresa.com"
+                maxlength="120"
+                autocomplete="email"
             >
 
-
             <label for="dataCadastro">
-                Data de cadastro
+                Data de cadastro *
             </label>
 
             <input
                 type="date"
                 id="dataCadastro"
+                required
             >
 
+            <p>
+                <small>
+                    * Campos obrigatórios
+                </small>
+            </p>
 
             <div class="acoes">
 
@@ -310,9 +346,9 @@
 
     </main>
 
-
     <script src="cadastro.js"></script>
     <script src="auth.js"></script>
+
 </body>
 
 </html>
