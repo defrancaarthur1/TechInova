@@ -717,6 +717,91 @@ router.put('/:id', async (req, res) => {
 
     }
 
+    // ==================================================
+// VALIDAR QUANTIDADE E VALOR DOS ITENS
+// ==================================================
+
+for (const item of itens) {
+
+    const quantidade =
+        Number(
+            item.quantidade
+        );
+
+
+    const valor_unitario =
+        Number(
+            item.valor_unitario
+        );
+
+
+    // ==============================================
+    // VALIDAR PRODUTO
+    // ==============================================
+
+    if (
+        !item.produto_id
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'Produto inválido na compra.'
+
+        });
+
+    }
+
+
+    // ==============================================
+    // VALIDAR QUANTIDADE
+    // ==============================================
+
+    if (
+        !Number.isFinite(
+            quantidade
+        ) ||
+        quantidade <= 0
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'A quantidade dos produtos deve ser maior que zero.'
+
+        });
+
+    }
+
+
+    // ==============================================
+    // VALIDAR VALOR UNITÁRIO
+    // ==============================================
+
+    if (
+        !Number.isFinite(
+            valor_unitario
+        ) ||
+        valor_unitario <= 0
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'O valor unitário dos produtos deve ser maior que zero.'
+
+        });
+
+    }
+
+}
+
 
     try {
 
