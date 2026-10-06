@@ -16,6 +16,10 @@
 
         <h1>Sistema de Controle de Compras</h1>
 
+        <div class="menu-mobile">
+            <button id="btnMenu" class="btn-menu" type="button">☰</button>
+        </div>
+
         <nav id="menuPrincipal">
             <a href="index.html">Registrar Compra</a>
             <a href="cadastros.html">Cadastros</a>
@@ -35,14 +39,23 @@
                 Registrar Compra
             </h2>
 
+            <p class="orientacao-formulario">
+                Preencha os dados abaixo e adicione os produtos da compra.
+                Os campos marcados com * são obrigatórios.
+            </p>
+
 
             <!-- FORNECEDOR -->
 
             <label for="fornecedor">
-                Fornecedor
+                Fornecedor *
             </label>
 
-            <select id="fornecedor">
+            <select
+                id="fornecedor"
+                required
+                autofocus
+            >
 
                 <option value="">
                     Selecione o fornecedor
@@ -54,10 +67,13 @@
             <!-- PRODUTO -->
 
             <label for="produto">
-                Produto
+                Produto *
             </label>
 
-            <select id="produto">
+            <select
+                id="produto"
+                required
+            >
 
                 <option value="">
                     Selecione o produto
@@ -69,21 +85,24 @@
             <!-- QUANTIDADE -->
 
             <label for="quantidade">
-                Quantidade
+                Quantidade *
             </label>
 
             <input
                 type="number"
                 id="quantidade"
                 min="1"
+                step="1"
+                inputmode="numeric"
                 placeholder="Ex: 30"
+                required
             >
 
 
             <!-- VALOR UNITÁRIO -->
 
             <label for="valor">
-                Valor unitário
+                Valor unitário *
             </label>
 
             <input
@@ -91,20 +110,28 @@
                 id="valor"
                 min="0.01"
                 step="0.01"
+                inputmode="decimal"
                 placeholder="Ex: 5,00"
+                required
             >
 
 
             <!-- DATA -->
 
             <label for="data">
-                Data da compra
+                Data da compra *
             </label>
 
             <input
                 type="date"
                 id="data"
+                required
             >
+
+
+            <p class="campos-obrigatorios">
+                * Campos obrigatórios
+            </p>
 
 
             <!-- ADICIONAR PRODUTO -->
@@ -118,45 +145,51 @@
             </button>
 
 
-            <h3>Itens da compra</h3>
+            <h3 class="titulo-itens">
+                Itens da compra
+            </h3>
 
 
             <!-- TABELA -->
 
-            <table>
+            <div class="itens-compra">
 
-                <thead>
+                <table>
 
-                    <tr>
+                    <thead>
 
-                        <th>Produto</th>
+                        <tr>
 
-                        <th>Quantidade</th>
+                            <th>Produto</th>
 
-                        <th>Valor unitário</th>
+                            <th>Quantidade</th>
 
-                        <th>Subtotal</th>
+                            <th>Valor unitário</th>
 
-                        <th>Ações</th>
+                            <th>Subtotal</th>
 
-                    </tr>
+                            <th>Ações</th>
 
-                </thead>
+                        </tr>
+
+                    </thead>
 
 
-                <tbody id="listaItens">
+                    <tbody id="listaItens">
 
-                    <tr>
+                        <tr>
 
-                        <td colspan="5">
-                            Nenhum produto adicionado.
-                        </td>
+                            <td colspan="5">
+                                Nenhum produto adicionado.
+                            </td>
 
-                    </tr>
+                        </tr>
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+
+            </div>
 
 
             <!-- BOTÕES -->
@@ -272,6 +305,67 @@
                 {
                     style: 'currency',
                     currency: 'BRL'
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // MARCAR CAMPO INVÁLIDO
+        // ==================================================
+
+        function marcarCampoInvalido(campo) {
+
+            if (!campo) {
+                return;
+            }
+
+            campo.classList.add(
+                'campo-invalido'
+            );
+
+            campo.focus();
+
+        }
+
+
+        // ==================================================
+        // REMOVER MARCAÇÃO DE ERRO
+        // ==================================================
+
+        function limparCampoInvalido(campo) {
+
+            if (!campo) {
+                return;
+            }
+
+            campo.classList.remove(
+                'campo-invalido'
+            );
+
+        }
+
+
+        // ==================================================
+        // LIMPAR TODAS AS MARCAÇÕES
+        // ==================================================
+
+        function limparMarcacoesFormulario() {
+
+            [
+                selectFornecedor,
+                selectProduto,
+                quantidade,
+                valor,
+                dataCompra
+            ].forEach(
+                campo => {
+
+                    limparCampoInvalido(
+                        campo
+                    );
+
                 }
             );
 
@@ -428,6 +522,9 @@
 
         function adicionarProduto() {
 
+            limparMarcacoesFormulario();
+
+
             const produtoId =
                 Number(
                     selectProduto.value
@@ -438,6 +535,10 @@
 
                 alert(
                     'Selecione um produto.'
+                );
+
+                marcarCampoInvalido(
+                    selectProduto
                 );
 
                 return;
@@ -474,6 +575,10 @@
                     'Informe uma quantidade válida.'
                 );
 
+                marcarCampoInvalido(
+                    quantidade
+                );
+
                 return;
 
             }
@@ -488,6 +593,10 @@
 
                 alert(
                     'Informe um valor unitário válido.'
+                );
+
+                marcarCampoInvalido(
+                    valor
                 );
 
                 return;
@@ -510,6 +619,10 @@
 
                 alert(
                     'Este produto já está na compra. Altere a quantidade ou o valor diretamente na tabela.'
+                );
+
+                marcarCampoInvalido(
+                    selectProduto
                 );
 
                 return;
@@ -541,11 +654,27 @@
             atualizarTabelaItens();
 
 
+            // ==============================================
+            // MELHORIA DE USABILIDADE
+            // ==============================================
+            //
+            // Ao adicionar um item, limpamos somente
+            // os campos referentes ao produto.
+            //
+            // Fornecedor e data permanecem preenchidos,
+            // facilitando compras com vários itens.
+            // ==============================================
+
             selectProduto.value = '';
 
             quantidade.value = '';
 
             valor.value = '';
+
+
+            // Cursor volta automaticamente para Produto.
+
+            selectProduto.focus();
 
         }
 
@@ -565,6 +694,14 @@
                 );
 
 
+            // Mesmo que o valor seja inválido,
+            // ele precisa ser armazenado temporariamente
+            // para validarItens() detectá-lo.
+
+            itensCompra[indice].quantidade =
+                quantidadeNova;
+
+
             if (
                 !Number.isFinite(
                     quantidadeNova
@@ -572,17 +709,24 @@
                 quantidadeNova <= 0
             ) {
 
+                itensCompra[indice].subtotal =
+                    0;
+
+
+                atualizarSubtotalLinha(
+                    indice
+                );
+
+
                 return;
 
             }
 
 
-            itensCompra[indice].quantidade =
-                quantidadeNova;
-
-
             itensCompra[indice].subtotal =
+
                 quantidadeNova *
+
                 Number(
                     itensCompra[indice]
                         .valorUnitario
@@ -607,8 +751,17 @@
 
             const valorNovo =
                 Number(
-                    novoValor
+                    String(
+                        novoValor
+                    ).replace(
+                        ',',
+                        '.'
+                    )
                 );
+
+
+            itensCompra[indice].valorUnitario =
+                valorNovo;
 
 
             if (
@@ -618,20 +771,27 @@
                 valorNovo <= 0
             ) {
 
+                itensCompra[indice].subtotal =
+                    0;
+
+
+                atualizarSubtotalLinha(
+                    indice
+                );
+
+
                 return;
 
             }
 
 
-            itensCompra[indice].valorUnitario =
-                valorNovo;
-
-
             itensCompra[indice].subtotal =
+
                 Number(
                     itensCompra[indice]
                         .quantidade
                 ) *
+
                 valorNovo;
 
 
@@ -704,6 +864,11 @@
 
 
             atualizarTabelaItens();
+
+
+            // Facilita a inclusão de outro item.
+
+            selectProduto.focus();
 
         }
 
@@ -791,12 +956,22 @@
                         '1';
 
 
+                    inputQuantidade.inputMode =
+                        'numeric';
+
+
                     inputQuantidade.value =
                         item.quantidade;
 
 
-                    inputQuantidade.style.width =
-                        '100px';
+                    inputQuantidade.className =
+                        'input-tabela input-quantidade';
+
+
+                    inputQuantidade.setAttribute(
+                        'aria-label',
+                        `Quantidade de ${item.produto}`
+                    );
 
 
                     inputQuantidade.addEventListener(
@@ -845,14 +1020,24 @@
                         '0.01';
 
 
+                    inputValor.inputMode =
+                        'decimal';
+
+
                     inputValor.value =
                         Number(
                             item.valorUnitario
                         ).toFixed(2);
 
 
-                    inputValor.style.width =
-                        '120px';
+                    inputValor.className =
+                        'input-tabela input-valor';
+
+
+                    inputValor.setAttribute(
+                        'aria-label',
+                        `Valor unitário de ${item.produto}`
+                    );
 
 
                     inputValor.addEventListener(
@@ -919,6 +1104,12 @@
 
                     botaoRemover.className =
                         'btn delete';
+
+
+                    botaoRemover.setAttribute(
+                        'aria-label',
+                        `Remover ${item.produto} da compra`
+                    );
 
 
                     botaoRemover.addEventListener(
@@ -1044,12 +1235,19 @@
 
         function validarCompra() {
 
+            limparMarcacoesFormulario();
+
+
             if (
                 !selectFornecedor.value
             ) {
 
                 alert(
                     'Selecione um fornecedor.'
+                );
+
+                marcarCampoInvalido(
+                    selectFornecedor
                 );
 
                 return false;
@@ -1065,6 +1263,10 @@
                     'Informe a data da compra.'
                 );
 
+                marcarCampoInvalido(
+                    dataCompra
+                );
+
                 return false;
 
             }
@@ -1076,6 +1278,10 @@
 
                 alert(
                     'Adicione pelo menos um produto à compra.'
+                );
+
+                marcarCampoInvalido(
+                    selectProduto
                 );
 
                 return false;
@@ -1599,7 +1805,16 @@
             dataCompra.value = '';
 
 
+            limparMarcacoesFormulario();
+
+
             preencherDataAtual();
+
+
+            // Após concluir uma compra,
+            // o cursor retorna ao fornecedor.
+
+            selectFornecedor.focus();
 
         }
 
@@ -1652,6 +1867,91 @@
 
 
         // ==================================================
+        // REMOVER DESTAQUE DE ERRO AO CORRIGIR CAMPO
+        // ==================================================
+
+        [
+            selectFornecedor,
+            selectProduto,
+            quantidade,
+            valor,
+            dataCompra
+        ].forEach(
+            campo => {
+
+                if (!campo) {
+                    return;
+                }
+
+
+                campo.addEventListener(
+                    'input',
+                    function () {
+
+                        limparCampoInvalido(
+                            this
+                        );
+
+                    }
+                );
+
+
+                campo.addEventListener(
+                    'change',
+                    function () {
+
+                        limparCampoInvalido(
+                            this
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        // ==================================================
+        // NAVEGAÇÃO COM ENTER
+        // ==================================================
+
+        quantidade.addEventListener(
+            'keydown',
+            function (evento) {
+
+                if (
+                    evento.key === 'Enter'
+                ) {
+
+                    evento.preventDefault();
+
+                    valor.focus();
+
+                }
+
+            }
+        );
+
+
+        valor.addEventListener(
+            'keydown',
+            function (evento) {
+
+                if (
+                    evento.key === 'Enter'
+                ) {
+
+                    evento.preventDefault();
+
+                    adicionarProduto();
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
         // EVENTOS
         // ==================================================
 
@@ -1696,6 +1996,41 @@
 
 
         // ==================================================
+        // MENU RESPONSIVO
+        // ==================================================
+
+        const btnMenu =
+            document.querySelector(
+                '#btnMenu'
+            );
+
+
+        const menuPrincipal =
+            document.querySelector(
+                '#menuPrincipal'
+            );
+
+
+        if (
+            btnMenu &&
+            menuPrincipal
+        ) {
+
+            btnMenu.addEventListener(
+                'click',
+                function () {
+
+                    menuPrincipal.classList.toggle(
+                        'menu-aberto'
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
         // INICIALIZAÇÃO
         // ==================================================
 
@@ -1715,6 +2050,8 @@
             } else {
 
                 preencherDataAtual();
+
+                selectFornecedor.focus();
 
             }
 
