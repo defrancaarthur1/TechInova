@@ -40,7 +40,10 @@ SELECT * FROM produtos;
 Show tables ;
 
 USE adega_controle;
+USE adega_controle;
 
+ALTER TABLE itens_compra
+ADD COLUMN subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00;
 
 INSERT INTO usuarios (nome, email, senha)
 VALUES ('Administrador', 'admin@adega.com', 'TEMPORARIA');
@@ -62,3 +65,13 @@ ADD CONSTRAINT uq_produto_nome_categoria_unidade
 UNIQUE (nome, categoria, unidade);
 
 DESCRIBE produtos;
+SELECT *
+FROM produtos
+ORDER BY id DESC;
+
+SELECT * FROM compras;
+SELECT * FROM itens_compra;
+
+SELECT * FROM compras ORDER BY id DESC;
+
+SELECT * FROM itens_compra ORDER BY id DESC;
