@@ -29,6 +29,11 @@ body {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .topbar h1 {
@@ -60,6 +65,20 @@ nav a:hover {
     background: #555;
 }
 
+.topbar nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.topbar nav a {
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
 
 /* ========================================
    CONTAINER
@@ -68,6 +87,7 @@ nav a:hover {
 .container {
     width: 100%;
     min-height: calc(100vh - 120px);
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
@@ -83,7 +103,10 @@ nav a:hover {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.10);
 }
 
 .card.principal {
@@ -105,6 +128,34 @@ nav a:hover {
 
 
 /* ========================================
+   ORIENTAÇÕES DOS FORMULÁRIOS
+======================================== */
+
+.orientacao-formulario {
+    margin-top: -5px;
+    margin-bottom: 18px;
+
+    color: #666;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.campos-obrigatorios {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+.titulo-itens {
+    margin-top: 25px;
+}
+
+
+/* ========================================
    CAMPOS
 ======================================== */
 
@@ -114,8 +165,10 @@ nav a:hover {
 
 label {
     display: block;
+
     margin-top: 10px;
     margin-bottom: 5px;
+
     font-weight: bold;
     font-size: 14px;
 }
@@ -124,12 +177,75 @@ input,
 select {
     width: 100%;
     max-width: 100%;
+
     padding: 9px;
+
     border: 1px solid #ccc;
     border-radius: 5px;
+
     margin-bottom: 5px;
+
     background: white;
+
     font-size: 14px;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background-color 0.2s;
+}
+
+
+/* ========================================
+   FOCO DOS CAMPOS
+======================================== */
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: #555;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================================
+   CAMPO INVÁLIDO
+======================================== */
+
+.campo-invalido {
+    border: 2px solid #c62828 !important;
+
+    background-color: #fff8f8 !important;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(198, 40, 40, 0.08);
+}
+
+.campo-invalido:focus {
+    border-color: #c62828 !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(198, 40, 40, 0.15);
+}
+
+
+/* ========================================
+   CAMPOS DESABILITADOS
+======================================== */
+
+input:disabled,
+select:disabled {
+    background: #eee;
+
+    cursor: not-allowed;
+
+    opacity: 0.8;
 }
 
 
@@ -139,18 +255,36 @@ select {
 
 .btn {
     padding: 9px 13px;
+
     border: none;
     border-radius: 5px;
+
     cursor: pointer;
+
     margin-top: 10px;
     margin-right: 5px;
+
     color: white;
     background: #333;
+
     font-size: 13px;
+
+    transition:
+        opacity 0.2s,
+        transform 0.1s;
 }
 
 .btn:hover {
     opacity: 0.85;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn:focus {
+    outline: 2px solid #555;
+    outline-offset: 2px;
 }
 
 .success {
@@ -174,6 +308,8 @@ select {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+
+    margin-top: 5px;
 }
 
 .acoes-fornecedor {
@@ -189,11 +325,14 @@ select {
 
 .filtros-produtos {
     width: 100%;
+
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
+
     gap: 10px;
 
     margin-bottom: 15px;
+
     padding: 15px;
 
     background: #f4f4f4;
@@ -218,12 +357,19 @@ select {
 
 .info-box {
     display: none;
+
     width: 100%;
+
     margin-top: 15px;
+
     padding: 15px;
+
     border-radius: 8px;
+
     background: #f4f4f4;
+
     border: 1px solid #ccc;
+
     line-height: 1.7;
 }
 
@@ -238,11 +384,16 @@ select {
 
 .form-extra {
     display: none;
+
     width: 100%;
+
     margin-top: 15px;
+
     padding: 15px;
+
     border: 1px solid #ccc;
     border-radius: 8px;
+
     background: #f8f8f8;
 }
 
@@ -257,9 +408,33 @@ select {
 
 .itens-compra {
     width: 100%;
-    margin-top: 20px;
+
+    margin-top: 10px;
+
     overflow-x: auto;
+
     -webkit-overflow-scrolling: touch;
+}
+
+
+/* ========================================
+   INPUTS DENTRO DA TABELA
+======================================== */
+
+.input-tabela {
+    margin: 0;
+
+    text-align: center;
+
+    padding: 7px;
+}
+
+.input-quantidade {
+    width: 100px;
+}
+
+.input-valor {
+    width: 120px;
 }
 
 
@@ -270,15 +445,20 @@ select {
 table {
     width: 100%;
     min-width: 650px;
+
     border-collapse: collapse;
+
     margin-top: 20px;
 }
 
 table th,
 table td {
     border: 1px solid #ccc;
+
     padding: 9px;
+
     text-align: center;
+
     white-space: nowrap;
 }
 
@@ -298,8 +478,12 @@ table tr:hover {
 
 .filtros {
     width: 100%;
+
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
     gap: 10px;
 }
 
@@ -322,10 +506,13 @@ table tr:hover {
 ======================================== */
 
 .pagina-login {
-    min-height: calc(100vh - 30px);
+    min-height:
+        calc(100vh - 30px);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     grid-template-columns: 1fr;
@@ -336,6 +523,7 @@ table tr:hover {
 
 .login-card {
     width: 100%;
+
     max-width: 420px;
 
     padding: 30px;
@@ -345,7 +533,8 @@ table tr:hover {
     border-radius: 8px;
 
     box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.10);
+        0 2px 8px
+        rgba(0, 0, 0, 0.10);
 }
 
 
@@ -353,7 +542,9 @@ table tr:hover {
 
 .login-card h1 {
     font-size: 25px;
+
     margin-bottom: 10px;
+
     text-align: center;
 }
 
@@ -379,6 +570,7 @@ table tr:hover {
 
 .login-card input {
     width: 100%;
+
     margin-bottom: 5px;
 }
 
@@ -389,6 +581,7 @@ table tr:hover {
     width: 100%;
 
     margin-top: 15px;
+
     margin-right: 0;
 
     padding: 11px;
@@ -428,6 +621,29 @@ table tr:hover {
 
 
 /* ========================================
+   MENU RESPONSIVO
+======================================== */
+
+.menu-mobile {
+    display: none;
+}
+
+.btn-menu {
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    padding: 5px 10px;
+}
+
+
+/* ========================================
    TELAS MÉDIAS
 ======================================== */
 
@@ -450,6 +666,48 @@ table tr:hover {
         grid-template-columns: 1fr;
     }
 
+
+    /* MENU */
+
+    .topbar {
+        position: relative;
+    }
+
+    .menu-mobile {
+        display: block;
+
+        margin-left: auto;
+    }
+
+    .topbar nav {
+        display: none;
+
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        margin-top: 10px;
+
+        padding-top: 10px;
+
+        border-top:
+            1px solid #555;
+    }
+
+    .topbar nav.menu-aberto {
+        display: flex;
+    }
+
+    .topbar nav a {
+        width: 100%;
+
+        text-align: center;
+
+        padding: 12px 10px;
+    }
+
 }
 
 
@@ -464,24 +722,25 @@ table tr:hover {
     }
 
     .topbar {
-        padding: 12px;
+        padding: 10px;
     }
 
     .topbar h1 {
-        font-size: 21px;
+        font-size: 18px;
+
+        max-width:
+            calc(100% - 55px);
+
+        margin-bottom: 0;
     }
 
-    nav {
-        flex-direction: column;
-    }
-
-    nav a {
-        width: 100%;
-        text-align: center;
+    .btn-menu {
+        font-size: 27px;
     }
 
     .container {
         min-height: auto;
+
         gap: 10px;
     }
 
@@ -489,30 +748,41 @@ table tr:hover {
         padding: 15px;
     }
 
+    .card h2 {
+        font-size: 19px;
+    }
+
+    .orientacao-formulario {
+        font-size: 13px;
+    }
+
     .acoes,
     .acoes-fornecedor {
         flex-direction: column;
+
         width: 100%;
     }
 
     .btn {
         width: 100%;
+
         margin-right: 0;
     }
 
     .filtros-produtos {
         grid-template-columns: 1fr;
+
         padding: 10px;
     }
 
-    /*
-       A tabela continua com suas colunas
-       e ganha rolagem horizontal,
-       evitando quebrar o layout.
-    */
+
+    /* ==================================
+       TABELAS NO CELULAR
+    ================================== */
 
     .itens-compra {
         width: 100%;
+
         overflow-x: auto;
     }
 
@@ -524,18 +794,25 @@ table tr:hover {
         min-width: 650px;
     }
 
+
+    /*
+       16px evita zoom automático
+       em alguns navegadores móveis.
+    */
+
     input,
     select {
         font-size: 16px;
     }
 
 
-    /* ==============================
+    /* ==================================
        LOGIN NO CELULAR
-    ============================== */
+    ================================== */
 
     .pagina-login {
-        min-height: calc(100vh - 16px);
+        min-height:
+            calc(100vh - 16px);
 
         padding: 5px;
     }
@@ -552,114 +829,6 @@ table tr:hover {
 
     .login-subtitulo {
         font-size: 14px;
-    }
-
-}
-
-/* ========================================
-   MENU RESPONSIVO
-======================================== */
-
-/* Botão hambúrguer escondido no notebook */
-.menu-mobile {
-    display: none;
-}
-
-.btn-menu {
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    padding: 5px 10px;
-}
-
-
-/* ========================================
-   MENU NO NOTEBOOK
-======================================== */
-
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.topbar nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-.topbar nav a {
-    text-decoration: none;
-    padding: 9px 12px;
-    border-radius: 5px;
-    white-space: nowrap;
-}
-
-
-/* ========================================
-   TABLET E CELULAR
-======================================== */
-
-@media (max-width: 900px) {
-
-    .topbar {
-        position: relative;
-    }
-
-    /* Mostra o botão ☰ */
-    .menu-mobile {
-        display: block;
-        margin-left: auto;
-    }
-
-    /* Esconde o menu inicialmente */
-    .topbar nav {
-        display: none;
-
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-
-        margin-top: 10px;
-        padding-top: 10px;
-
-        border-top: 1px solid #ddd;
-    }
-
-    /* Quando estiver aberto */
-    .topbar nav.menu-aberto {
-        display: flex;
-    }
-
-    .topbar nav a {
-        width: 100%;
-        text-align: center;
-        padding: 12px 10px;
-    }
-}
-
-
-/* ========================================
-   CELULAR
-======================================== */
-
-@media (max-width: 600px) {
-
-    .topbar {
-        padding: 10px;
-    }
-
-    .topbar h1 {
-        font-size: 18px;
-        max-width: calc(100% - 55px);
-    }
-
-    .btn-menu {
-        font-size: 27px;
     }
 
 }
