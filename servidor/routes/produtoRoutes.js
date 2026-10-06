@@ -1,5 +1,6 @@
 const tratarErroBanco =
     require('../utils/tratarErroBanco');
+
 const express = require('express');
 const router = express.Router();
 const banco = require('../banco');
@@ -18,7 +19,7 @@ const banco = require('../banco');
 // =====================================================
 
 const categorias = {
-    1: 'Bebidas',
+    1: 'Sucos',
     2: 'Cervejas',
     3: 'Refrigerantes',
     4: 'Destilados',
@@ -30,7 +31,7 @@ const categorias = {
 
 // =====================================================
 // OBTER NOME DA CATEGORIA PELO ID
-// =====================================================
+// =====================s================================
 
 function obterCategoria(categoria_id) {
 
