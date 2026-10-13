@@ -24,6 +24,10 @@ router.post('/', async (req, res) => {
         } = req.body;
 
 
+        // ========================================
+        // VALIDAR CAMPOS OBRIGATÓRIOS
+        // ========================================
+
         if (!empresa || !cnpj) {
 
             return res.status(400).json({
@@ -38,6 +42,50 @@ router.post('/', async (req, res) => {
         }
 
 
+        const empresaLimpa =
+            empresa.trim();
+
+        const cnpjLimpo =
+            cnpj.trim();
+
+
+        // ========================================
+        // VERIFICAR CNPJ DUPLICADO
+        // ========================================
+
+        const [fornecedorExistente] =
+            await banco.query(
+
+                `
+                SELECT id
+                FROM Fornecedores
+                WHERE CNPJ = ?
+                LIMIT 1
+                `,
+
+                [cnpjLimpo]
+
+            );
+
+
+        if (fornecedorExistente.length > 0) {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    'Já existe um fornecedor cadastrado com este CNPJ.'
+
+            });
+
+        }
+
+
+        // ========================================
+        // CADASTRAR FORNECEDOR
+        // ========================================
+
         const [resultado] =
             await banco.query(
 
@@ -51,15 +99,25 @@ router.post('/', async (req, res) => {
                     email,
                     data_cadastro
                 )
+
                 VALUES (?, ?, ?, ?, ?, ?)
                 `,
 
                 [
-                    empresa,
-                    cnpj,
-                    telefone || null,
-                    consultor || null,
-                    email || null,
+                    empresaLimpa,
+                    cnpjLimpo,
+                    telefone
+                        ? telefone.trim()
+                        : null,
+
+                    consultor
+                        ? consultor.trim()
+                        : null,
+
+                    email
+                        ? email.trim()
+                        : null,
+
                     data_cadastro || null
                 ]
 
@@ -85,6 +143,21 @@ router.post('/', async (req, res) => {
             'Erro ao cadastrar fornecedor:',
             erro
         );
+
+
+        // Proteção adicional do UNIQUE do MySQL
+        if (erro.code === 'ER_DUP_ENTRY') {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    'Já existe um fornecedor cadastrado com este CNPJ.'
+
+            });
+
+        }
 
 
         res.status(500).json({
@@ -273,6 +346,54 @@ router.put('/:id', async (req, res) => {
         }
 
 
+        const empresaLimpa =
+            empresa.trim();
+
+        const cnpjLimpo =
+            cnpj.trim();
+
+
+        // ========================================
+        // VERIFICAR CNPJ DUPLICADO NA EDIÇÃO
+        // ========================================
+
+        const [fornecedorExistente] =
+            await banco.query(
+
+                `
+                SELECT id
+                FROM Fornecedores
+                WHERE CNPJ = ?
+                  AND id <> ?
+                LIMIT 1
+                `,
+
+                [
+                    cnpjLimpo,
+                    id
+                ]
+
+            );
+
+
+        if (fornecedorExistente.length > 0) {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    'Já existe outro fornecedor cadastrado com este CNPJ.'
+
+            });
+
+        }
+
+
+        // ========================================
+        // ATUALIZAR FORNECEDOR
+        // ========================================
+
         const [resultado] =
             await banco.query(
 
@@ -291,12 +412,23 @@ router.put('/:id', async (req, res) => {
                 `,
 
                 [
-                    empresa,
-                    cnpj,
-                    telefone || null,
-                    consultor || null,
-                    email || null,
+                    empresaLimpa,
+                    cnpjLimpo,
+
+                    telefone
+                        ? telefone.trim()
+                        : null,
+
+                    consultor
+                        ? consultor.trim()
+                        : null,
+
+                    email
+                        ? email.trim()
+                        : null,
+
                     data_cadastro || null,
+
                     id
                 ]
 
@@ -333,6 +465,20 @@ router.put('/:id', async (req, res) => {
             'Erro ao editar fornecedor:',
             erro
         );
+
+
+        if (erro.code === 'ER_DUP_ENTRY') {
+
+            return res.status(409).json({
+
+                sucesso: false,
+
+                mensagem:
+                    'Já existe outro fornecedor cadastrado com este CNPJ.'
+
+            });
+
+        }
 
 
         res.status(500).json({

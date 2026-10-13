@@ -1,154 +1,79 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="pt-br">
 
-<title>Histórico de Compras</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="adegastyle.css">
+    <title>Histórico de Compras</title>
 
-</head><body><header class="topbar"><h1>Sistema de Controle de Compras</h1>
+    <link rel="stylesheet" href="adegastyle.css">
+</head>
 
-<nav>
+<body>
 
-    <a href="index.html">Registrar Compra</a>
-    <a href="cadastros.html">Cadastros</a>
-    <a href="historico.html">Histórico</a>
+<header class="topbar">
 
-</nav>
-
-</header><main class="container"><section class="card full">
-
-    <h2>Histórico de Compras</h2>
-
-
-    <div class="filtros">
-
-        <div>
-
-            <label for="filtroFornecedor">
-                Fornecedor
-            </label>
-
-            <select id="filtroFornecedor">
-
-                <option value="todos">
-                    Todos os fornecedores
-                </option>
-
-                <option value="Coca-Cola">
-                    Coca-Cola
-                </option>
-
-                <option value="Distribuidora de Gelo">
-                    Distribuidora de Gelo
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div>
-
-            <label for="dataInicial">
-                Data inicial
-            </label>
-
-            <input
-                type="date"
-                id="dataInicial">
-
-        </div>
-
-
-        <div>
-
-            <label for="dataFinal">
-                Data final
-            </label>
-
-            <input
-                type="date"
-                id="dataFinal">
-
-        </div>
-
+    <div class="logo-adega">
+        <img src="/public/img/logo-adega.png" alt="Logo Adega Filé">
+        <h1>Sistema de Controle de Compras</h1>
     </div>
 
 
-    <button class="btn" id="btnFiltrar">
-        Filtrar
-    </button>
+    <div class="menu-mobile">
+    <button id="btnMenu" class="btn-menu">☰</button>
+</div>
 
+<nav id="menuPrincipal">
+    <a href="index.html">Registrar Compra</a>
+    <a href="cadastros.html">Cadastros</a>
+    <a href="editar-excluir.html">Editar / Excluir</a>
+    <a href="historico.html">Histórico</a>
+    <a href="#" id="btnLogout">Sair</a>
+</nav>
 
-    <table>
+</header>
 
-        <thead>
+<main class="container">
 
-            <tr>
+    <section class="card full">
 
-                <th>Data</th>
-                <th>Fornecedor</th>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Valor</th>
-                <th>Ações</th>
+        <h2>Histórico de Compras</h2>
 
-            </tr>
+        <table>
 
-        </thead>
+            <thead>
 
+                <tr>
+                    <th>Data</th>
+                    <th>Fornecedor</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
 
-        <tbody id="tabelaHistorico">
+            </thead>
 
-            <tr>
+            <tbody id="tabelaHistorico">
 
-                <td>10/03/2026</td>
-                <td>Coca-Cola</td>
-                <td>Coca-Cola 2L</td>
-                <td>30</td>
-                <td>R$ 200,00</td>
+                <tr>
+                    <td colspan="6">
+                        Carregando compras...
+                    </td>
+                </tr>
 
-                <td>
+            </tbody>
 
-                    <button class="btn edit">
-                        Editar
-                    </button>
+        </table>
 
-                    <button class="btn delete">
-                        Excluir
-                    </button>
+    </section>
 
-                </td>
+</main>
 
-            </tr>
+<script src="historico.js"></script>
+<script src="auth.js"></script>
 
+</body>
 
-            <tr>
-
-                <td>12/03/2026</td>
-                <td>Distribuidora de Gelo</td>
-                <td>Gelo</td>
-                <td>10</td>
-                <td>R$ 80,00</td>
-
-                <td>
-
-                    <button class="btn edit">
-                        Editar
-                    </button>
-
-                    <button class="btn delete">
-                        Excluir
-                    </button>
-
-                </td>
-
-            </tr>
-
-        </tbody>
-
-    </table>
-
-</section>
-
-</main><script src="historico.js"></script></body></html>
+</html>

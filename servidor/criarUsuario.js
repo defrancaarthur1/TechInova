@@ -1,40 +1,32 @@
 const bcrypt = require('bcrypt');
 const banco = require('./banco');
 
-async function criarUsuario() {
+async function alterarSenha() {
     try {
-        const nome = 'Administrador';
         const email = 'admin@adega.com';
-        const senha = '123456';
+        const novaSenha = 'Adega2026';
+        const nome = 'Administrador';
+        const senhaCriptografada = await bcrypt.hash(novaSenha, 10);
 
-        const senhaCriptografada = await bcrypt.hash(senha, 10);
+        const [resultado] = await banco.execute(`
+            INSERT IGNORE INTO usuarios (nome, email, senha, ativo)
+            VALUES (?, ?, ?, TRUE)
+        `, [nome, email, senhaCriptografada]);
 
-        const sql = `
-            INSERT INTO usuarios (nome, email, senha)
-            VALUES (?, ?, ?)
-        `;
-
-        banco.query(
-            sql,
-            [nome, email, senhaCriptografada],
-            (erro, resultado) => {
-                if (erro) {
-                    console.error('Erro ao criar usuário:', erro);
-                    return;
-                }
-
-                console.log('Usuário criado com sucesso!');
-                console.log('ID:', resultado.insertId);
-                console.log('E-mail:', email);
-                console.log('Senha:', senha);
-
-                banco.end();
-            }
-        );
+        if (resultado.affectedRows === 1) {
+            console.log('Administrador inicial criado com sucesso.');
+            console.log('E-mail: admin@adega.com');
+            console.log('Senha inicial: Adega2026');
+        } else {
+            console.log('O administrador já existe; a senha não foi alterada.');
+        }
 
     } catch (erro) {
-        console.error('Erro:', erro);
+        console.error('Erro ao alterar senha:', erro);
+        process.exitCode = 1;
+    } finally {
+        await banco.end();
     }
 }
 
-criarUsuario();
+alterarSenha();

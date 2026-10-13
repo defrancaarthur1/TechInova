@@ -18,6 +18,8 @@ const produtoRoutes =
 const usuarioRoutes =
     require('./routes/usuarioRoutes');
 
+    const compraRoutes = require('./routes/compraRoutes');
+
 
 const app = express();
 
@@ -47,6 +49,7 @@ app.use(express.urlencoded({
     extended: true
 
 }));
+
 
 
 // ========================================
@@ -113,10 +116,13 @@ app.use(
 
 );
 
+app.use('/api/compras', compraRoutes);
+
+// ROTAS DE LOGIN, LOGOUT E SESSÃO
 
 app.use(
 
-    '/api/usuarios',
+    '/api',
 
     usuarioRoutes
 
@@ -179,7 +185,7 @@ app.get(
 // SERVIDOR
 // ========================================
 
-const PORT = 3000;
+const PORT = Number(process.env.PORT || 3000);
 
 
 app.listen(PORT, () => {
