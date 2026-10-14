@@ -32,6 +32,43 @@ CREATE TABLE IF NOT EXISTS fornecedores (
     data_cadastro DATE
 );
 
+-- ============================================
+-- TABELA DE COMPRAS
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS Compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fornecedor_id INT NOT NULL,
+    data_compra DATE NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+
+    CONSTRAINT fk_compras_fornecedor
+        FOREIGN KEY (fornecedor_id)
+        REFERENCES fornecedores(id)
+);
+
+-- ============================================
+-- TABELA DE ITENS_COMPRAS
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS Itens_compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    compra_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    valor_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT fk_itens_compra_compra
+        FOREIGN KEY (compra_id)
+        REFERENCES Compras(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_itens_compra_produto
+        FOREIGN KEY (produto_id)
+        REFERENCES produtos(id)
+);
+
 USE adega_controle;
 
 SELECT * FROM fornecedores;
