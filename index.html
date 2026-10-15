@@ -12,48 +12,50 @@
 
 <body>
 
-    <!-- ========================================= -->
-    <!-- CABEÇALHO -->
-    <!-- ========================================= -->
-
     <header class="topbar">
 
         <h1>Sistema de Controle de Compras</h1>
 
-       <div class="menu-mobile">
-    <button id="btnMenu" class="btn-menu">☰</button>
-</div>
+        <div class="menu-mobile">
+            <button id="btnMenu" class="btn-menu" type="button">☰</button>
+        </div>
 
-<nav id="menuPrincipal">
-    <a href="index.html">Registrar Compra</a>
-    <a href="cadastros.html">Cadastros</a>
-    <a href="editar-excluir.html">Editar / Excluir</a>
-    <a href="historico.html">Histórico</a>
-    <a href="#" id="btnLogout">Sair</a>
-</nav>
+        <nav id="menuPrincipal">
+            <a href="index.html">Registrar Compra</a>
+            <a href="cadastros.html">Cadastros</a>
+            <a href="editar-excluir.html">Editar / Excluir</a>
+            <a href="historico.html">Histórico</a>
+            <a href="#" id="btnLogout">Sair</a>
+        </nav>
+
     </header>
 
-
-    <!-- ========================================= -->
-    <!-- CONTEÚDO PRINCIPAL -->
-    <!-- ========================================= -->
 
     <main class="container">
 
         <section class="card principal">
 
-            <h2>Registrar Compra</h2>
+            <h2 id="tituloCompra">
+                Registrar Compra
+            </h2>
+
+            <p class="orientacao-formulario">
+                Preencha os dados abaixo e adicione os produtos da compra.
+                Os campos marcados com * são obrigatórios.
+            </p>
 
 
-            <!-- ================================= -->
             <!-- FORNECEDOR -->
-            <!-- ================================= -->
 
             <label for="fornecedor">
-                Fornecedor
+                Fornecedor *
             </label>
 
-            <select id="fornecedor">
+            <select
+                id="fornecedor"
+                required
+                autofocus
+            >
 
                 <option value="">
                     Selecione o fornecedor
@@ -62,15 +64,16 @@
             </select>
 
 
-            <!-- ================================= -->
             <!-- PRODUTO -->
-            <!-- ================================= -->
 
             <label for="produto">
-                Produto
+                Produto *
             </label>
 
-            <select id="produto">
+            <select
+                id="produto"
+                required
+            >
 
                 <option value="">
                     Selecione o produto
@@ -79,56 +82,59 @@
             </select>
 
 
-            <!-- ================================= -->
             <!-- QUANTIDADE -->
-            <!-- ================================= -->
 
             <label for="quantidade">
-                Quantidade
+                Quantidade *
             </label>
 
             <input
                 type="number"
                 id="quantidade"
                 min="1"
+                step="1"
+                inputmode="numeric"
                 placeholder="Ex: 30"
+                required
             >
 
 
-            <!-- ================================= -->
             <!-- VALOR UNITÁRIO -->
-            <!-- ================================= -->
 
             <label for="valor">
-                Valor unitário
+                Valor unitário *
             </label>
 
             <input
                 type="number"
                 id="valor"
-                min="0"
+                min="0.01"
                 step="0.01"
+                inputmode="decimal"
                 placeholder="Ex: 5,00"
+                required
             >
 
 
-            <!-- ================================= -->
-            <!-- DATA DA COMPRA -->
-            <!-- ================================= -->
+            <!-- DATA -->
 
             <label for="data">
-                Data da compra
+                Data da compra *
             </label>
 
             <input
                 type="date"
                 id="data"
+                required
             >
 
 
-            <!-- ================================= -->
+            <p class="campos-obrigatorios">
+                * Campos obrigatórios
+            </p>
+
+
             <!-- ADICIONAR PRODUTO -->
-            <!-- ================================= -->
 
             <button
                 class="btn"
@@ -139,58 +145,54 @@
             </button>
 
 
-            <!-- ================================= -->
-            <!-- ITENS DA COMPRA -->
-            <!-- ================================= -->
-
-            <h3>Itens da compra</h3>
+            <h3 class="titulo-itens">
+                Itens da compra
+            </h3>
 
 
-            <table>
+            <!-- TABELA -->
 
-                <thead>
+            <div class="itens-compra">
 
-                    <tr>
+                <table>
 
-                        <th>
-                            Produto
-                        </th>
+                    <thead>
 
-                        <th>
-                            Quantidade
-                        </th>
+                        <tr>
 
-                        <th>
-                            Valor unitário
-                        </th>
+                            <th>Produto</th>
 
-                        <th>
-                            Subtotal
-                        </th>
+                            <th>Quantidade</th>
 
-                    </tr>
+                            <th>Valor unitário</th>
 
-                </thead>
+                            <th>Subtotal</th>
+
+                            <th>Ações</th>
+
+                        </tr>
+
+                    </thead>
 
 
-                <tbody id="listaItens">
+                    <tbody id="listaItens">
 
-                    <tr>
+                        <tr>
 
-                        <td colspan="4">
-                            Nenhum produto adicionado.
-                        </td>
+                            <td colspan="5">
+                                Nenhum produto adicionado.
+                            </td>
 
-                    </tr>
+                        </tr>
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+
+            </div>
 
 
-            <!-- ================================= -->
-            <!-- BOTÕES DA COMPRA -->
-            <!-- ================================= -->
+            <!-- BOTÕES -->
 
             <div class="acoes">
 
@@ -222,44 +224,16 @@
 
             </div>
 
-            <!---- ===================  --> 
-            <!-- COMPRAS JÁ REGISTRADAS -->
-            <!-- ===================== -->
-
-<div class="card" style="margin-top: 20px;">
-    <h3>Compras cadastradas</h3>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Fornecedor</th>
-                <th>Produtos</th>
-                <th>Valor total</th>
-            </tr>
-        </thead>
-        <tbody id="listaComprasRegistradas">
-            <tr>
-                <td colspan="4">Carregando compras...</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
         </section>
 
     </main>
 
 
-    <!-- ========================================= -->
-    <!-- JAVASCRIPT DA PÁGINA -->
-    <!-- ========================================= -->
-
     <script>
 
-        // ========================================
-        // ELEMENTOS DA PÁGINA
-        // ========================================
+        // ==================================================
+        // ELEMENTOS
+        // ==================================================
 
         const selectFornecedor =
             document.querySelector('#fornecedor');
@@ -279,23 +253,128 @@
         const listaItens =
             document.querySelector('#listaItens');
 
+        const tituloCompra =
+            document.querySelector('#tituloCompra');
+
         const btnAdicionarProduto =
             document.querySelector('#btnAdicionarProduto');
 
         const btnRegistrarCompra =
             document.querySelector('#btnRegistrarCompra');
 
+        const btnEditarCompra =
+            document.querySelector('#btnEditarCompra');
 
-        // ========================================
-        // ITENS TEMPORÁRIOS DA COMPRA
-        // ========================================
+        const btnExcluirCompra =
+            document.querySelector('#btnExcluirCompra');
+
+
+        // ==================================================
+        // ARRAY DE ITENS
+        // ==================================================
 
         let itensCompra = [];
 
 
-        // ========================================
-        // CARREGAR FORNECEDORES DO MYSQL
-        // ========================================
+        // ==================================================
+        // VERIFICAR SE ESTAMOS EDITANDO
+        // ==================================================
+
+        const parametrosURL =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const compraIdEdicao =
+            parametrosURL.get('editar');
+
+
+        const modoEdicao =
+            compraIdEdicao !== null;
+
+
+        // ==================================================
+        // FORMATAR DINHEIRO
+        // ==================================================
+
+        function formatarMoeda(valor) {
+
+            return Number(valor).toLocaleString(
+                'pt-BR',
+                {
+                    style: 'currency',
+                    currency: 'BRL'
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // MARCAR CAMPO INVÁLIDO
+        // ==================================================
+
+        function marcarCampoInvalido(campo) {
+
+            if (!campo) {
+                return;
+            }
+
+            campo.classList.add(
+                'campo-invalido'
+            );
+
+            campo.focus();
+
+        }
+
+
+        // ==================================================
+        // REMOVER MARCAÇÃO DE ERRO
+        // ==================================================
+
+        function limparCampoInvalido(campo) {
+
+            if (!campo) {
+                return;
+            }
+
+            campo.classList.remove(
+                'campo-invalido'
+            );
+
+        }
+
+
+        // ==================================================
+        // LIMPAR TODAS AS MARCAÇÕES
+        // ==================================================
+
+        function limparMarcacoesFormulario() {
+
+            [
+                selectFornecedor,
+                selectProduto,
+                quantidade,
+                valor,
+                dataCompra
+            ].forEach(
+                campo => {
+
+                    limparCampoInvalido(
+                        campo
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // CARREGAR FORNECEDORES
+        // ==================================================
 
         async function carregarFornecedores() {
 
@@ -309,33 +388,18 @@
                     await resposta.json();
 
 
-                // Limpa completamente o select.
-                // Dessa forma fornecedores excluídos
-                // não permanecem na tela.
-
-                selectFornecedor.innerHTML = '';
+                selectFornecedor.innerHTML =
+                    '<option value="">Selecione o fornecedor</option>';
 
 
-                const opcaoInicial =
-                    document.createElement('option');
-
-
-                opcaoInicial.value = '';
-
-                opcaoInicial.textContent =
-                    'Selecione o fornecedor';
-
-
-                selectFornecedor.appendChild(
-                    opcaoInicial
-                );
-
-
-                if (!resposta.ok || !dados.sucesso) {
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
 
                     console.error(
                         'Erro ao carregar fornecedores:',
-                        dados.mensagem
+                        dados
                     );
 
                     return;
@@ -370,122 +434,235 @@
 
             } catch (erro) {
 
-                console.error( 'Erro ao buscar fornecedores:', erro);
+                console.error(
+                    'Erro ao carregar fornecedores:',
+                    erro
+                );
+
             }
+
         }
 
-        // CARREGAR PRODUTOS DO MYSQL
+
+        // ==================================================
+        // CARREGAR PRODUTOS
+        // ==================================================
 
         async function carregarProdutos() {
 
             try {
 
-                const resposta = await fetch('/api/produtos');
+                const resposta =
+                    await fetch('/api/produtos');
 
-                const dados = await resposta.json();
 
-                // Limpa completamente os produtos
-                // que estavam anteriormente no select.
+                const dados =
+                    await resposta.json();
 
-                selectProduto.innerHTML = '';
 
-                const opcaoInicial = document.createElement('option');
+                selectProduto.innerHTML =
+                    '<option value="">Selecione o produto</option>';
 
-                opcaoInicial.value = '';
 
-                opcaoInicial.textContent = 'Selecione o produto';
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
 
-                selectProduto.appendChild(opcaoInicial);
+                    console.error(
+                        'Erro ao carregar produtos:',
+                        dados
+                    );
 
-                if (!resposta.ok || !dados.sucesso) {
-
-                    console.error('Erro ao carregar produtos:', dados.mensagem);
                     return;
+
                 }
+
 
                 dados.produtos.forEach(
                     produto => {
 
-                        const option = document.createElement('option');
+                        const option =
+                            document.createElement(
+                                'option'
+                            );
 
-                        option.value = produto.id;
 
-                        option.textContent = produto.nome;
+                        option.value =
+                            produto.id;
 
-                        selectProduto.appendChild(option);
-                    });
+
+                        option.textContent =
+                            produto.nome;
+
+
+                        selectProduto.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
 
             } catch (erro) {
-                console.error('Erro ao buscar produtos:', erro);
+
+                console.error(
+                    'Erro ao carregar produtos:',
+                    erro
+                );
+
             }
+
         }
 
-        // ADICIONAR PRODUTO À COMPRA
+
+        // ==================================================
+        // ADICIONAR PRODUTO
+        // ==================================================
 
         function adicionarProduto() {
 
-            const produtoId = selectProduto.value;
+            limparMarcacoesFormulario();
 
 
-            if (!produtoId) {
+            const produtoId =
+                Number(
+                    selectProduto.value
+                );
 
-                alert( 'Selecione um produto.');
-                return;
-            }
 
-            const produtoNome = selectProduto.options[selectProduto.selectedIndex].textContent;
+     const produtoValido = Array.from(
+    selectProduto.options
+).some(option =>
+    option.value !== '' &&
+    Number(option.value) === produtoId
+);
 
-            const quantidadeValor = Number(quantidade.value);
+if (!produtoId || !produtoValido) {
+    alert('Selecione um produto válido.');
+    marcarCampoInvalido(selectProduto);
+    return;
+}
 
-            const valorUnitario = Number(valor.value);
 
-            // VALIDAÇÃO DA QUANTIDADE
+            const produtoNome =
+                selectProduto.options[
+                    selectProduto.selectedIndex
+                ].textContent;
+
+
+            const quantidadeValor =
+                Number(
+                    quantidade.value
+                );
+
+
+            const valorUnitario =
+                Number(
+                    valor.value
+                );
+
 
             if (
-                !quantidadeValor ||
+                !Number.isFinite(
+                    quantidadeValor
+                ) ||
                 quantidadeValor <= 0
             ) {
 
-                alert('Informe uma quantidade válida.');
+                alert(
+                    'Informe uma quantidade válida.'
+                );
+
+                marcarCampoInvalido(
+                    quantidade
+                );
+
                 return;
+
             }
 
-            // VALIDAÇÃO DO VALOR
 
             if (
-                !Number.isFinite(valorUnitario) ||
+                !Number.isFinite(
+                    valorUnitario
+                ) ||
                 valorUnitario <= 0
             ) {
 
-                alert('Informe um valor unitário válido.');
+                alert(
+                    'Informe um valor unitário válido.'
+                );
+
+                marcarCampoInvalido(
+                    valor
+                );
+
                 return;
 
             }
 
-            // CALCULAR SUBTOTAL
-            const subtotal = quantidadeValor * valorUnitario;
+
+            // Evita adicionar o mesmo produto
+            // duas vezes na mesma compra.
+
+            const produtoJaExiste =
+                itensCompra.some(
+                    item =>
+                        Number(item.produtoId) ===
+                        produtoId
+                );
 
 
-            // ADICIONAR ITEM
+            if (produtoJaExiste) {
+
+                alert(
+                    'Este produto já está na compra. Altere a quantidade ou o valor diretamente na tabela.'
+                );
+
+                marcarCampoInvalido(
+                    selectProduto
+                );
+
+                return;
+
+            }
+
+
             itensCompra.push({
 
-                produtoId: produtoId,
+                produtoId:
+                    produtoId,
 
-                produto: produtoNome,
+                produto:
+                    produtoNome,
 
-                quantidade: quantidadeValor,
+                quantidade:
+                    quantidadeValor,
 
-                valorUnitario: valorUnitario,
+                valorUnitario:
+                    valorUnitario,
 
-                subtotal: subtotal
+                subtotal:
+                    quantidadeValor *
+                    valorUnitario
 
             });
 
-            // ATUALIZAR TABELA
 
             atualizarTabelaItens();
 
-            // LIMPAR CAMPOS
+
+            // ==============================================
+            // MELHORIA DE USABILIDADE
+            // ==============================================
+            //
+            // Ao adicionar um item, limpamos somente
+            // os campos referentes ao produto.
+            //
+            // Fornecedor e data permanecem preenchidos,
+            // facilitando compras com vários itens.
+            // ==============================================
 
             selectProduto.value = '';
 
@@ -493,278 +670,1428 @@
 
             valor.value = '';
 
+
+            // Cursor volta automaticamente para Produto.
+
+            selectProduto.focus();
+
         }
 
-        // ATUALIZAR TABELA DE ITENS
+
+        // ==================================================
+        // ALTERAR QUANTIDADE
+        // ==================================================
+
+        function alterarQuantidade(
+            indice,
+            novoValor
+        ) {
+
+            const quantidadeNova =
+                Number(
+                    novoValor
+                );
+
+
+            // Mesmo que o valor seja inválido,
+            // ele precisa ser armazenado temporariamente
+            // para validarItens() detectá-lo.
+
+            itensCompra[indice].quantidade =
+                quantidadeNova;
+
+
+            if (
+                !Number.isFinite(
+                    quantidadeNova
+                ) ||
+                quantidadeNova <= 0
+            ) {
+
+                itensCompra[indice].subtotal =
+                    0;
+
+
+                atualizarSubtotalLinha(
+                    indice
+                );
+
+
+                return;
+
+            }
+
+
+            itensCompra[indice].subtotal =
+
+                quantidadeNova *
+
+                Number(
+                    itensCompra[indice]
+                        .valorUnitario
+                );
+
+
+            atualizarSubtotalLinha(
+                indice
+            );
+
+        }
+
+
+        // ==================================================
+        // ALTERAR VALOR UNITÁRIO
+        // ==================================================
+
+        function alterarValorUnitario(
+            indice,
+            novoValor
+        ) {
+
+            const valorNovo =
+                Number(
+                    String(
+                        novoValor
+                    ).replace(
+                        ',',
+                        '.'
+                    )
+                );
+
+
+            itensCompra[indice].valorUnitario =
+                valorNovo;
+
+
+            if (
+                !Number.isFinite(
+                    valorNovo
+                ) ||
+                valorNovo <= 0
+            ) {
+
+                itensCompra[indice].subtotal =
+                    0;
+
+
+                atualizarSubtotalLinha(
+                    indice
+                );
+
+
+                return;
+
+            }
+
+
+            itensCompra[indice].subtotal =
+
+                Number(
+                    itensCompra[indice]
+                        .quantidade
+                ) *
+
+                valorNovo;
+
+
+            atualizarSubtotalLinha(
+                indice
+            );
+
+        }
+
+        function alterarProduto(indice, novoProdutoId) {
+    const produtoId = Number(novoProdutoId);
+
+    if (!produtoId) {
+        return;
+    }
+
+    // Impede que o mesmo produto apareça duas vezes na compra
+    const produtoDuplicado = itensCompra.some((item, i) => {
+        return i !== indice &&
+            Number(item.produtoId) === produtoId;
+    });
+
+    if (produtoDuplicado) {
+        alert('Este produto já está na compra.');
+        atualizarTabelaItens();
+        return;
+    }
+
+    // Encontra o nome do produto selecionado
+    const opcaoSelecionada = Array.from(selectProduto.options)
+        .find(opcao => Number(opcao.value) === produtoId);
+
+    if (!opcaoSelecionada) {
+        alert('Não foi possível encontrar o produto selecionado.');
+        atualizarTabelaItens();
+        return;
+    }
+
+    // Atualiza o produto do item na compra
+    itensCompra[indice].produtoId = produtoId;
+    itensCompra[indice].produto = opcaoSelecionada.textContent;
+
+    // Atualiza a tabela e os dados exibidos
+    atualizarTabelaItens();
+}
+
+
+        // ==================================================
+        // ATUALIZAR SOMENTE O SUBTOTAL
+        // ==================================================
+
+        function atualizarSubtotalLinha(
+            indice
+        ) {
+
+            const subtotalElemento =
+                document.querySelector(
+                    `#subtotal-${indice}`
+                );
+
+
+            if (!subtotalElemento) {
+
+                return;
+
+            }
+
+
+            subtotalElemento.textContent =
+                formatarMoeda(
+                    itensCompra[indice]
+                        .subtotal
+                );
+
+        }
+
+
+        // ==================================================
+        // REMOVER ITEM
+        // ==================================================
+
+        function removerItem(
+            indice
+        ) {
+
+            const item =
+                itensCompra[indice];
+
+
+            const confirmar =
+                confirm(
+                    `Deseja remover "${item.produto}" desta compra?`
+                );
+
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+
+            itensCompra.splice(
+                indice,
+                1
+            );
+
+
+            atualizarTabelaItens();
+
+
+            // Facilita a inclusão de outro item.
+
+            selectProduto.focus();
+
+        }
+
+
+        // ==================================================
+        // TABELA DE ITENS
+        // ==================================================
 
         function atualizarTabelaItens() {
 
             listaItens.innerHTML = '';
 
-            // NENHUM ITEM
-            if (itensCompra.length === 0) {
 
-                const linha = document.createElement('tr');
+            if (
+                itensCompra.length === 0
+            ) {
 
-                const coluna = document.createElement('td');
+                listaItens.innerHTML = `
 
-                coluna.colSpan = 4;
+                    <tr>
 
-                coluna.textContent = 'Nenhum produto adicionado.';
+                        <td colspan="5">
+                            Nenhum produto adicionado.
+                        </td>
 
-                linha.appendChild(coluna);
+                    </tr>
 
-                listaItens.appendChild(linha);
+                `;
+
 
                 return;
+
             }
 
-            // MOSTRAR ITENS
-            itensCompra.forEach( item => {
-                    const linha = document.createElement('tr');
 
-                    // PRODUTO
+            itensCompra.forEach(
+                (item, indice) => {
+
+
+                    const linha =
+                        document.createElement(
+                            'tr'
+                        );
+
+
+                    // ======================================
+                    // PRODUTO: Permitir troca direta na tabela
+                    // ======================================
+
                     const colunaProduto = document.createElement('td');
+const selectProdutoItem = document.createElement('select');
 
-                    colunaProduto.textContent = item.produto;
+selectProdutoItem.className = 'input-tabela input-produto';
+selectProdutoItem.setAttribute(
+    'aria-label',
+    `Produto do item ${indice + 1}`
+);
 
-                    // QUANTIDADE
-                    const colunaQuantidade = document.createElement('td');
+// Reaproveita os produtos carregados no campo principal
+Array.from(selectProduto.options).forEach(opcao => {
+    if (!opcao.value) return;
 
-                    colunaQuantidade.textContent =item.quantidade;
+    const novaOpcao = document.createElement('option');
+    novaOpcao.value = opcao.value;
+    novaOpcao.textContent = opcao.textContent;
 
-                    // VALOR
-                    const colunaValor = document.createElement('td');
+    if (Number(opcao.value) === Number(item.produtoId)) {
+        novaOpcao.selected = true;
+    }
 
-                    colunaValor.textContent =
-                        item.valorUnitario
-                            .toLocaleString(
-                                'pt-BR',
-                                {
-                                    style:
-                                        'currency',
+    selectProdutoItem.appendChild(novaOpcao);
+});
 
-                                    currency:
-                                        'BRL'
-                                }
+// Quando o usuário escolher outro produto
+selectProdutoItem.addEventListener('change', function () {
+    alterarProduto(indice, this.value);
+});
+
+colunaProduto.appendChild(selectProdutoItem);
+linha.appendChild(colunaProduto);
+
+
+                    // ======================================
+                    // QUANTIDADE EDITÁVEL
+                    // ======================================
+
+                    const colunaQuantidade =
+                        document.createElement(
+                            'td'
+                        );
+
+
+                    const inputQuantidade =
+                        document.createElement(
+                            'input'
+                        );
+
+
+                    inputQuantidade.type =
+                        'number';
+
+
+                    inputQuantidade.min =
+                        '1';
+
+
+                    inputQuantidade.step =
+                        '1';
+
+
+                    inputQuantidade.inputMode =
+                        'numeric';
+
+
+                    inputQuantidade.value =
+                        item.quantidade;
+
+
+                    inputQuantidade.className =
+                        'input-tabela input-quantidade';
+
+
+                    inputQuantidade.setAttribute(
+                        'aria-label',
+                        `Quantidade de ${item.produto}`
+                    );
+
+
+                    inputQuantidade.addEventListener(
+                        'input',
+                        function () {
+
+                            alterarQuantidade(
+                                indice,
+                                this.value
                             );
 
+                        }
+                    );
 
+
+                    colunaQuantidade.appendChild(
+                        inputQuantidade
+                    );
+
+
+                    // ======================================
+                    // VALOR UNITÁRIO EDITÁVEL
+                    // ======================================
+
+                    const colunaValor =
+                        document.createElement(
+                            'td'
+                        );
+
+
+                    const inputValor =
+                        document.createElement(
+                            'input'
+                        );
+
+
+                    inputValor.type =
+                        'number';
+
+
+                    inputValor.min =
+                        '0.01';
+
+
+                    inputValor.step =
+                        '0.01';
+
+
+                    inputValor.inputMode =
+                        'decimal';
+
+
+                    inputValor.value =
+                        Number(
+                            item.valorUnitario
+                        ).toFixed(2);
+
+
+                    inputValor.className =
+                        'input-tabela input-valor';
+
+
+                    inputValor.setAttribute(
+                        'aria-label',
+                        `Valor unitário de ${item.produto}`
+                    );
+
+
+                    inputValor.addEventListener(
+                        'input',
+                        function () {
+
+                            alterarValorUnitario(
+                                indice,
+                                this.value
+                            );
+
+                        }
+                    );
+
+
+                    colunaValor.appendChild(
+                        inputValor
+                    );
+
+
+                    // ======================================
                     // SUBTOTAL
-                    const colunaSubtotal = document.createElement('td');
+                    // ======================================
 
-                    colunaSubtotal.textContent = item.subtotal.toLocaleString('pt-BR',{style: 'currency', currency: 'BRL'});
+                    const colunaSubtotal =
+                        document.createElement(
+                            'td'
+                        );
 
+
+                    colunaSubtotal.id =
+                        `subtotal-${indice}`;
+
+
+                    colunaSubtotal.textContent =
+                        formatarMoeda(
+                            item.subtotal
+                        );
+
+
+                    // ======================================
+                    // AÇÕES
+                    // ======================================
+
+                    const colunaAcoes =
+                        document.createElement(
+                            'td'
+                        );
+
+
+                    const botaoRemover =
+                        document.createElement(
+                            'button'
+                        );
+
+
+                    botaoRemover.type =
+                        'button';
+
+
+                    botaoRemover.textContent =
+                        'Remover';
+
+
+                    botaoRemover.className =
+                        'btn delete';
+
+
+                    botaoRemover.setAttribute(
+                        'aria-label',
+                        `Remover ${item.produto} da compra`
+                    );
+
+
+                    botaoRemover.addEventListener(
+                        'click',
+                        function () {
+
+                            removerItem(
+                                indice
+                            );
+
+                        }
+                    );
+
+
+                    colunaAcoes.appendChild(
+                        botaoRemover
+                    );
+
+
+                    // ======================================
                     // MONTAR LINHA
-                    linha.appendChild(colunaProduto);
+                    // ======================================
 
-                    linha.appendChild(colunaQuantidade);
+                    linha.appendChild(
+                        colunaProduto
+                    );
 
-                    linha.appendChild(colunaValor);
 
-                    linha.appendChild(colunaSubtotal);
+                    linha.appendChild(
+                        colunaQuantidade
+                    );
 
-                    listaItens.appendChild(linha);
+
+                    linha.appendChild(
+                        colunaValor
+                    );
+
+
+                    linha.appendChild(
+                        colunaSubtotal
+                    );
+
+
+                    linha.appendChild(
+                        colunaAcoes
+                    );
+
+
+                    listaItens.appendChild(
+                        linha
+                    );
+
                 }
             );
+
         }
-        
-        
+
+
+        // ==================================================
+        // VALIDAR ITENS
+        // ==================================================
+
+        function validarItens() {
+
+            for (
+                const item of itensCompra
+            ) {
+
+                const quantidadeItem =
+                    Number(
+                        item.quantidade
+                    );
+
+
+                const valorItem =
+                    Number(
+                        item.valorUnitario
+                    );
+
+
+                if (
+                    !Number.isFinite(
+                        quantidadeItem
+                    ) ||
+                    quantidadeItem <= 0
+                ) {
+
+                    alert(
+                        `Quantidade inválida para o produto ${item.produto}.`
+                    );
+
+                    return false;
+
+                }
+
+
+                if (
+                    !Number.isFinite(
+                        valorItem
+                    ) ||
+                    valorItem <= 0
+                ) {
+
+                    alert(
+                        `Valor unitário inválido para o produto ${item.produto}.`
+                    );
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        }
+
+
+        // ==================================================
+        // VALIDAR COMPRA
+        // ==================================================
+
+        function validarCompra() {
+
+            limparMarcacoesFormulario();
+
+
+            if (
+                !selectFornecedor.value
+            ) {
+
+                alert(
+                    'Selecione um fornecedor.'
+                );
+
+                marcarCampoInvalido(
+                    selectFornecedor
+                );
+
+                return false;
+
+            }
+
+
+            if (
+                !dataCompra.value
+            ) {
+
+                alert(
+                    'Informe a data da compra.'
+                );
+
+                marcarCampoInvalido(
+                    dataCompra
+                );
+
+                return false;
+
+            }
+
+
+            if (
+                itensCompra.length === 0
+            ) {
+
+                alert(
+                    'Adicione pelo menos um produto à compra.'
+                );
+
+                marcarCampoInvalido(
+                    selectProduto
+                );
+
+                return false;
+
+            }
+
+
+            if (
+                !validarItens()
+            ) {
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+        // ==================================================
+        // MONTAR OBJETO ENVIADO AO BACKEND
+        // ==================================================
+
+        function montarDadosCompra() {
+
+            return {
+
+                fornecedor_id:
+                    Number(
+                        selectFornecedor.value
+                    ),
+
+                data_compra:
+                    dataCompra.value,
+
+                itens:
+                    itensCompra.map(
+                        item => ({
+
+                            produto_id:
+                                Number(
+                                    item.produtoId
+                                ),
+
+                            quantidade:
+                                Number(
+                                    item.quantidade
+                                ),
+
+                            valor_unitario:
+                                Number(
+                                    item.valorUnitario
+                                )
+
+                        })
+                    )
+
+            };
+
+        }
+
+
+        // ==================================================
+        // REGISTRAR COMPRA
+        // ==================================================
+
         async function registrarCompra() {
-    const fornecedorId = selectFornecedor.value;
-    const data = dataCompra.value;
 
-    if (!fornecedorId) {
-        alert('Selecione um fornecedor.');
-        return;
-    }
+            if (
+                !validarCompra()
+            ) {
 
-    if (!data) {
-        alert('Informe a data da compra.');
-        return;
-    }
+                return;
 
-    if (itensCompra.length === 0) {
-        alert('Adicione pelo menos um produto à compra.');
-        return;
-    }
+            }
 
-    // Converte os nomes dos campos para o formato
-    // esperado pela rota do servidor.
-    const itens = itensCompra.map(item => ({
-        produto_id: Number(item.produtoId),
-        quantidade: Number(item.quantidade),
-        valor_unitario: Number(item.valorUnitario)
-    }));
 
-    try {
-        const resposta = await fetch('/api/compras', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                fornecedor_id: Number(fornecedorId),
-                data_compra: data,
-                itens: itens
-            })
-        });
+            try {
 
-        const resultado = await resposta.json();
+                const resposta =
+                    await fetch(
+                        '/api/compras',
+                        {
 
-        if (!resposta.ok || !resultado.sucesso) {
-            alert(
-                resultado.mensagem ||
-                'Não foi possível registrar a compra.'
-            );
-            console.error('Erro ao registrar compra:', resultado);
-            return;
+                            method:
+                                'POST',
+
+                            headers: {
+
+                                'Content-Type':
+                                    'application/json'
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    montarDadosCompra()
+                                )
+
+                        }
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
+
+                    alert(
+                        dados.mensagem ||
+                        'Erro ao registrar compra.'
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    'Compra registrada com sucesso!'
+                );
+
+
+                limparFormulario();
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao registrar compra:',
+                    erro
+                );
+
+
+                alert(
+                    'Erro ao conectar com o servidor.'
+                );
+
+            }
+
         }
 
-        alert('Compra registrada com sucesso!');
 
-        // Limpa a lista somente depois de salvar no banco.
-        itensCompra = [];
-        atualizarTabelaItens();
+        // ==================================================
+        // CARREGAR COMPRA PARA EDIÇÃO
+        // ==================================================
 
-        selectFornecedor.value = '';
-        dataCompra.value = '';
-        preencherDataAtual();
+        async function carregarCompraParaEdicao() {
 
-    } catch (erro) {
-        console.error('Erro ao registrar compra:', erro);
-        alert(
-            'Não foi possível conectar ao servidor para salvar a compra.'
-        );
-    }
-}
+            if (
+                !modoEdicao
+            ) {
 
-btnRegistrarCompra.addEventListener('click', registrarCompra);
+                return;
 
-        // BOTÃO ADICIONAR PRODUTO
-        btnAdicionarProduto.addEventListener('click', adicionarProduto);
+            }
 
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `/api/compras/${compraIdEdicao}`
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
+
+                    alert(
+                        dados.mensagem ||
+                        'Não foi possível carregar a compra.'
+                    );
+
+                    return;
+
+                }
+
+
+                const compra =
+                    dados.compra;
+
+
+                // TÍTULO
+
+                tituloCompra.textContent =
+                    'Editar Compra';
+
+
+                // FORNECEDOR
+
+                selectFornecedor.value =
+                    String(
+                        compra.fornecedor_id
+                    );
+
+
+                // DATA
+
+                if (
+                    compra.data_compra
+                ) {
+
+                    dataCompra.value =
+                        String(
+                            compra.data_compra
+                        ).substring(
+                            0,
+                            10
+                        );
+
+                }
+
+
+                // ITENS
+
+                itensCompra =
+                    compra.itens.map(
+                        item => ({
+
+                            produtoId:
+                                Number(
+                                    item.produto_id
+                                ),
+
+                            produto:
+                                item.produto,
+
+                            quantidade:
+                                Number(
+                                    item.quantidade
+                                ),
+
+                            valorUnitario:
+                                Number(
+                                    item.valor_unitario
+                                ),
+
+                            subtotal:
+                                Number(
+                                    item.quantidade
+                                ) *
+                                Number(
+                                    item.valor_unitario
+                                )
+
+                        })
+                    );
+
+
+                atualizarTabelaItens();
+
+
+                // MODO EDIÇÃO
+
+                btnRegistrarCompra.style.display =
+                    'none';
+
+
+                btnEditarCompra.textContent =
+                    'Salvar edição';
+
+
+                btnEditarCompra.style.display =
+                    'inline-block';
+
+
+                btnExcluirCompra.style.display =
+                    'none';
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao carregar compra:',
+                    erro
+                );
+
+
+                alert(
+                    'Erro ao carregar a compra.'
+                );
+
+            }
+
+        }
+
+
+        // ==================================================
+        // SALVAR EDIÇÃO
+        // ==================================================
+
+        async function salvarEdicaoCompra() {
+
+            if (
+                !modoEdicao
+            ) {
+
+                alert(
+                    'Selecione uma compra no Histórico para editar.'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !validarCompra()
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const dadosEnviados =
+                    montarDadosCompra();
+
+
+                console.log(
+                    'Dados enviados na edição:',
+                    dadosEnviados
+                );
+
+
+                const resposta =
+                    await fetch(
+                        `/api/compras/${compraIdEdicao}`,
+                        {
+
+                            method:
+                                'PUT',
+
+                            headers: {
+
+                                'Content-Type':
+                                    'application/json'
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    dadosEnviados
+                                )
+
+                        }
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
+
+                    alert(
+                        dados.mensagem ||
+                        'Erro ao editar compra.'
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    'Compra atualizada com sucesso!'
+                );
+
+
+                window.location.href =
+                    'historico.html';
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao editar compra:',
+                    erro
+                );
+
+
+                alert(
+                    'Erro ao conectar com o servidor.'
+                );
+
+            }
+
+        }
+
+
+        // ==================================================
+        // EXCLUIR COMPRA
+        // ==================================================
+
+        async function excluirCompraAtual() {
+
+            if (
+                !modoEdicao
+            ) {
+
+                alert(
+                    'Para excluir uma compra, utilize o Histórico.'
+                );
+
+                return;
+
+            }
+
+
+            const confirmar =
+                confirm(
+                    'Tem certeza que deseja excluir esta compra?'
+                );
+
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `/api/compras/${compraIdEdicao}`,
+                        {
+
+                            method:
+                                'DELETE'
+
+                        }
+                    );
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (
+                    !resposta.ok ||
+                    !dados.sucesso
+                ) {
+
+                    alert(
+                        dados.mensagem ||
+                        'Erro ao excluir compra.'
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    'Compra excluída com sucesso!'
+                );
+
+
+                window.location.href =
+                    'historico.html';
+
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro ao excluir compra:',
+                    erro
+                );
+
+
+                alert(
+                    'Erro ao conectar com o servidor.'
+                );
+
+            }
+
+        }
+
+
+        // ==================================================
+        // LIMPAR FORMULÁRIO
+        // ==================================================
+
+        function limparFormulario() {
+
+            itensCompra = [];
+
+
+            atualizarTabelaItens();
+
+
+            selectFornecedor.value = '';
+
+            selectProduto.value = '';
+
+            quantidade.value = '';
+
+            valor.value = '';
+
+            dataCompra.value = '';
+
+
+            limparMarcacoesFormulario();
+
+
+            preencherDataAtual();
+
+
+            // Após concluir uma compra,
+            // o cursor retorna ao fornecedor.
+
+            selectFornecedor.focus();
+
+        }
+
+
+        // ==================================================
         // DATA ATUAL
+        // ==================================================
+
         function preencherDataAtual() {
 
-            if (dataCompra.value) {
+            if (
+                dataCompra.value
+            ) {
+
                 return;
+
             }
 
-            const hoje = new Date();
-            const ano = hoje.getFullYear();
-            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-            const dia = String( hoje.getDate()).padStart(2, '0');
 
-            dataCompra.value = `${ano}-${mes}-${dia}`;
+            const hoje =
+                new Date();
+
+
+            const ano =
+                hoje.getFullYear();
+
+
+            const mes =
+                String(
+                    hoje.getMonth() + 1
+                ).padStart(
+                    2,
+                    '0'
+                );
+
+
+            const dia =
+                String(
+                    hoje.getDate()
+                ).padStart(
+                    2,
+                    '0'
+                );
+
+
+            dataCompra.value =
+                `${ano}-${mes}-${dia}`;
+
         }
 
-        // ATUALIZAR AO VOLTAR PARA A PÁGINA
 
-        window.addEventListener(
-            'pageshow',
-            async () => {
+        // ==================================================
+        // REMOVER DESTAQUE DE ERRO AO CORRIGIR CAMPO
+        // ==================================================
 
-                await carregarFornecedores();
+        [
+            selectFornecedor,
+            selectProduto,
+            quantidade,
+            valor,
+            dataCompra
+        ].forEach(
+            campo => {
 
-                await carregarProdutos();
+                if (!campo) {
+                    return;
+                }
+
+
+                campo.addEventListener(
+                    'input',
+                    function () {
+
+                        limparCampoInvalido(
+                            this
+                        );
+
+                    }
+                );
+
+
+                campo.addEventListener(
+                    'change',
+                    function () {
+
+                        limparCampoInvalido(
+                            this
+                        );
+
+                    }
+                );
 
             }
         );
 
 
-        // ========================================
-        // ATUALIZAR QUANDO A ABA GANHAR FOCO
-        // ========================================
+        // ==================================================
+        // NAVEGAÇÃO COM ENTER
+        // ==================================================
 
-        window.addEventListener(
-            'focus',
-            async () => {
+        quantidade.addEventListener(
+            'keydown',
+            function (evento) {
 
-                await carregarFornecedores();
+                if (
+                    evento.key === 'Enter'
+                ) {
 
-                await carregarProdutos();
+                    evento.preventDefault();
+
+                    valor.focus();
+
+                }
 
             }
         );
 
-        async function carregarComprasRegistradas() {
-    const tabela = document.getElementById(
-        'listaComprasRegistradas'
-    );
 
-    try {
-        const resposta = await fetch('/api/compras');
-        const dados = await resposta.json();
+        valor.addEventListener(
+            'keydown',
+            function (evento) {
 
-        if (!resposta.ok || !dados.sucesso) {
-            throw new Error(
-                dados.mensagem || 'Não foi possível carregar as compras.'
+                if (
+                    evento.key === 'Enter'
+                ) {
+
+                    evento.preventDefault();
+
+                    adicionarProduto();
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // EVENTOS
+        // ==================================================
+
+        btnAdicionarProduto.addEventListener(
+            'click',
+            adicionarProduto
+        );
+
+
+        btnRegistrarCompra.addEventListener(
+            'click',
+            registrarCompra
+        );
+
+
+        btnEditarCompra.addEventListener(
+            'click',
+            async function () {
+
+                if (
+                    modoEdicao
+                ) {
+
+                    await salvarEdicaoCompra();
+
+                } else {
+
+                    alert(
+                        'Para editar uma compra, selecione-a no Histórico.'
+                    );
+
+                }
+
+            }
+        );
+
+
+        btnExcluirCompra.addEventListener(
+            'click',
+            excluirCompraAtual
+        );
+
+
+        // ==================================================
+        // MENU RESPONSIVO
+        // ==================================================
+
+        const btnMenu =
+            document.querySelector(
+                '#btnMenu'
             );
+
+
+        const menuPrincipal =
+            document.querySelector(
+                '#menuPrincipal'
+            );
+
+
+        if (
+            btnMenu &&
+            menuPrincipal
+        ) {
+
+            btnMenu.addEventListener(
+                'click',
+                function () {
+
+                    menuPrincipal.classList.toggle(
+                        'menu-aberto'
+                    );
+
+                }
+            );
+
         }
 
-        tabela.innerHTML = '';
 
-        const compras = dados.compras || [];
-
-        if (compras.length === 0) {
-            tabela.innerHTML = `
-                <tr>
-                    <td colspan="4">Nenhuma compra cadastrada.</td>
-                </tr>
-            `;
-            return;
-        }
-
-        compras.forEach(compra => {
-            const linha = document.createElement('tr');
-
-            const data = new Date(compra.data_compra);
-            const dataFormatada = Number.isNaN(data.getTime())
-                ? compra.data_compra
-                : data.toLocaleDateString('pt-BR');
-
-            const produtos = (compra.itens || [])
-                .map(item =>
-                    `${item.produto} (Qtd.: ${item.quantidade})`
-                )
-                .join(', ');
-
-            const valores = [
-                dataFormatada,
-                compra.fornecedor,
-                produtos || 'Sem produtos',
-                Number(compra.valor_total || 0).toLocaleString(
-                    'pt-BR',
-                    { style: 'currency', currency: 'BRL' }
-                )
-            ];
-
-            valores.forEach(valor => {
-                const coluna = document.createElement('td');
-                coluna.textContent = valor ?? '';
-                linha.appendChild(coluna);
-            });
-
-            tabela.appendChild(linha);
-        });
-
-    } catch (erro) {
-        console.error('Erro ao carregar compras:', erro);
-
-        tabela.innerHTML = `
-            <tr>
-                <td colspan="4">
-                    Erro ao carregar as compras cadastradas.
-                </td>
-            </tr>
-        `;
-    }
-}
-
-        // ========================================
+        // ==================================================
         // INICIALIZAÇÃO
-        // ========================================
+        // ==================================================
 
         async function iniciarPagina() {
 
@@ -772,18 +2099,30 @@ btnRegistrarCompra.addEventListener('click', registrarCompra);
 
             await carregarProdutos();
 
-            await carregarComprasRegistradas();
 
-            preencherDataAtual();
+            if (
+                modoEdicao
+            ) {
+
+                await carregarCompraParaEdicao();
+
+            } else {
+
+                preencherDataAtual();
+
+                selectFornecedor.focus();
+
+            }
 
         }
 
 
-    iniciarPagina();
+        iniciarPagina();
 
-</script>
+    </script>
 
-<script src="auth.js"></script>
+
+    <script src="auth.js"></script>
 
 </body>
 
