@@ -170,6 +170,68 @@ router.get('/', async (req, res) => {
     }
 });
 
+/////////// BUSCAR UMA COMPRA ESPECÍFICA PARA EDIÇÃO ///////////////////////
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Buscar os dados principais da compra
+        const [compras] = await banco.query(`
+            SELECT
+                c.id,
+                c.fornecedor_id,
+                DATE_FORMAT(c.data_compra, '%Y-%m-%d') AS data_compra,
+                c.valor_total,
+                f.empresa AS fornecedor
+            FROM Compras c
+            INNER JOIN Fornecedores f
+                ON c.fornecedor_id = f.id
+            WHERE c.id = ?
+        `, [id]);
+
+        // Verificar se a compra existe
+        if (compras.length === 0) {
+            return res.status(404).json({
+                sucesso: false,
+                mensagem: 'Compra não encontrada.'
+            });
+        }
+
+        const compra = compras[0];
+
+        // Buscar os produtos dessa compra
+        const [itens] = await banco.query(`
+            SELECT
+                ic.id AS item_id,
+                ic.produto_id,
+                p.nome AS produto,
+                ic.quantidade,
+                ic.valor_unitario,
+                ic.subtotal
+            FROM Itens_compra ic
+            INNER JOIN Produtos p
+                ON ic.produto_id = p.id
+            WHERE ic.compra_id = ?
+        `, [id]);
+
+        // Montar a resposta esperada pelo index.html
+        compra.itens = itens;
+
+        res.json({
+            sucesso: true,
+            compra: compra
+        });
+
+    } catch (erro) {
+        console.error('Erro ao buscar compra para edição:', erro);
+
+        res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao buscar compra para edição.'
+        });
+    }
+});
+
 // EXCLUIR COMPRA
 router.delete('/:id', async (req, res) => {
 
