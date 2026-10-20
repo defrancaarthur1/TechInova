@@ -29,8 +29,8 @@ function validarItens(itens) {
     for (const item of itens) {
         if (!Number.isSafeInteger(Number(item.produto_id)) || Number(item.produto_id) <= 0)
             return 'Selecione um produto válido.';
-        if (!Number.isSafeInteger(Number(item.quantidade)) || Number(item.quantidade) <= 0)
-            return 'A quantidade deve ser um número inteiro maior que zero.';
+        if (!Number.isSafeInteger(Number(item.quantidade)) || Number(item.quantidade) < 1 || Number(item.quantidade) > 10000)
+            return 'A quantidade deve ser um número inteiro entre 1 e 10000.';
         if (item.valor_unitario === '' || item.valor_unitario == null || !Number.isFinite(Number(item.valor_unitario)) || Number(item.valor_unitario) <= 0)
             return 'O valor unitário deve ser maior que zero.';
     }
@@ -817,7 +817,9 @@ for (const item of itens) {
         !Number.isFinite(
             quantidade
         ) ||
-        quantidade <= 0
+        !Number.isSafeInteger(quantidade) ||
+        quantidade < 1 ||
+        quantidade > 10000
     ) {
 
         return res.status(400).json({
@@ -825,7 +827,7 @@ for (const item of itens) {
             sucesso: false,
 
             mensagem:
-                'A quantidade dos produtos deve ser maior que zero.'
+                'A quantidade dos produtos deve ser um número inteiro entre 1 e 10000.'
 
         });
 
