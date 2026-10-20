@@ -92,6 +92,7 @@
                 type="number"
                 id="quantidade"
                 min="1"
+                max="10000"
                 step="1"
                 inputmode="numeric"
                 placeholder="Ex: 30"
@@ -531,7 +532,7 @@
                 );
 
 
-     const produtoValido = Array.from(
+           const produtoValido = Array.from(
     selectProduto.options
 ).some(option =>
     option.value !== '' &&
@@ -567,11 +568,13 @@ if (!produtoId || !produtoValido) {
                 !Number.isFinite(
                     quantidadeValor
                 ) ||
-                quantidadeValor <= 0
+                !Number.isSafeInteger(quantidadeValor) ||
+                quantidadeValor < 1 ||
+                quantidadeValor > 10000
             ) {
 
                 alert(
-                    'Informe uma quantidade válida.'
+                    'Informe uma quantidade inteira entre 1 e 10000.'
                 );
 
                 marcarCampoInvalido(
@@ -705,7 +708,9 @@ if (!produtoId || !produtoValido) {
                 !Number.isFinite(
                     quantidadeNova
                 ) ||
-                quantidadeNova <= 0
+                !Number.isSafeInteger(quantidadeNova) ||
+                quantidadeNova < 1 ||
+                quantidadeNova > 10000
             ) {
 
                 itensCompra[indice].subtotal =
@@ -951,6 +956,9 @@ if (!produtoId || !produtoValido) {
                         '1';
 
 
+                    inputQuantidade.max =
+                        '10000';
+
                     inputQuantidade.step =
                         '1';
 
@@ -1193,11 +1201,13 @@ if (!produtoId || !produtoValido) {
                     !Number.isFinite(
                         quantidadeItem
                     ) ||
-                    quantidadeItem <= 0
+                    !Number.isSafeInteger(quantidadeItem) ||
+                quantidadeItem < 1 ||
+                quantidadeItem > 10000
                 ) {
 
                     alert(
-                        `Quantidade inválida para o produto ${item.produto}.`
+                        `A quantidade de ${item.produto} deve ser um número inteiro entre 1 e 10000.`
                     );
 
                     return false;
