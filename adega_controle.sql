@@ -75,3 +75,33 @@ SELECT * FROM itens_compra;
 SELECT * FROM compras ORDER BY id DESC;
 
 SELECT * FROM itens_compra ORDER BY id DESC;
+
+SELECT * FROM itens_compra
+WHERE compra_id = 9;
+
+SELECT *
+FROM compras
+WHERE id = 13;
+
+SELECT id, nome, estoque
+FROM produtos
+WHERE id = 7;
+
+USE adega_controle;
+
+ALTER TABLE Compras
+ADD COLUMN estoque_contabilizado
+TINYINT(1) NOT NULL DEFAULT 0;
+
+SELECT
+    c.id,
+    c.data_compra,
+    p.nome AS produto,
+    i.quantidade,
+    c.estoque_contabilizado
+FROM Compras c
+INNER JOIN Itens_compra i
+    ON i.compra_id = c.id
+INNER JOIN produtos p
+    ON p.id = i.produto_id
+ORDER BY c.id DESC;
