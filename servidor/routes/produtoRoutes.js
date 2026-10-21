@@ -1,3 +1,6 @@
+const tratarErroBanco =
+    require('../utils/tratarErroBanco');
+
 const express = require('express');
 const router = express.Router();
 const banco = require('../banco');
@@ -28,7 +31,7 @@ const categorias = {
 
 // =====================================================
 // OBTER NOME DA CATEGORIA PELO ID
-// =====================================================
+// =====================s================================
 
 function obterCategoria(categoria_id) {
 
@@ -46,6 +49,7 @@ function obterCategoriaId(nomeCategoria) {
     if (!nomeCategoria) {
         return null;
     }
+    if (String(nomeCategoria).trim().toLowerCase() === 'sucos') return 1;
 
     const categoriaEncontrada = Object.entries(categorias)
         .find(([id, nome]) => {
@@ -290,7 +294,8 @@ router.get('/', async (req, res) => {
                 id,
                 nome,
                 categoria,
-                unidade
+                unidade,
+                estoque
 
             FROM produtos
 
@@ -332,10 +337,8 @@ router.get('/', async (req, res) => {
             unidade:
                 produto.unidade,
 
-            // O banco atual não possui coluna estoque.
-            // A interface possui essa coluna.
             estoque:
-                0
+                Number(produto.estoque)
 
         }));
 
@@ -395,7 +398,8 @@ router.get('/:id', async (req, res) => {
                 id,
                 nome,
                 categoria,
-                unidade
+                unidade,
+                estoque
 
             FROM produtos
 
@@ -451,7 +455,7 @@ router.get('/:id', async (req, res) => {
                 produto.unidade,
 
             estoque:
-                0
+                Number(produto.estoque)
 
         };
 

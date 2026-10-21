@@ -3,29 +3,30 @@ const banco = require('./banco');
 
 async function alterarSenha() {
     try {
+
         const email = 'admin@adega.com';
         const novaSenha = 'Adega2026';
-        const nome = 'Administrador';
+
         const senhaCriptografada = await bcrypt.hash(novaSenha, 10);
 
-        const [resultado] = await banco.execute(`
-            INSERT IGNORE INTO usuarios (nome, email, senha, ativo)
-            VALUES (?, ?, ?, TRUE)
-        `, [nome, email, senhaCriptografada]);
+        const [resultado] = await banco.query(`
+            UPDATE usuarios
+            SET senha = ?
+            WHERE email = ? `, [senhaCriptografada, email]);
 
-        if (resultado.affectedRows === 1) {
-            console.log('Administrador inicial criado com sucesso.');
-            console.log('E-mail: admin@adega.com');
-            console.log('Senha inicial: Adega2026');
+        if (resultado.affectedRows === 0) {
+            console.log('Usuário não encontrado.');
+
         } else {
-            console.log('O administrador já existe; a senha não foi alterada.');
+            console.log('Senha alterada com sucesso!');
+            console.log('E-mail:', email);
+            console.log('Nova senha:', novaSenha);
         }
+
+        await banco.end();
 
     } catch (erro) {
         console.error('Erro ao alterar senha:', erro);
-        process.exitCode = 1;
-    } finally {
-        await banco.end();
     }
 }
 

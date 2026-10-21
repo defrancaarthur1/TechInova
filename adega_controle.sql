@@ -1,7 +1,11 @@
 CREATE DATABASE IF NOT EXISTS adega_controle;
-   
+
 USE adega_controle;
 
+
+-- ============================================
+-- TABELA DE PRODUTOS
+-- ============================================
 
 CREATE TABLE IF NOT EXISTS produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -11,8 +15,12 @@ CREATE TABLE IF NOT EXISTS produtos (
     preco DECIMAL(10,2) DEFAULT 0.00,
     quantidade INT DEFAULT 0,
     data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   
 );
+
+
+-- ============================================
+-- TABELA DE FORNECEDORES
+-- ============================================
 
 CREATE TABLE IF NOT EXISTS fornecedores (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,32 +30,78 @@ CREATE TABLE IF NOT EXISTS fornecedores (
     consultor VARCHAR(100),
     email VARCHAR(100),
     data_cadastro DATE
-    
-    );
-    
-    CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    ativo TINYINT(1) NOT NULL DEFAULT 1,
-    data_cadastro TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO usuarios (nome, email, senha, ativo)
-SELECT 'Administrador', 'admin@adega.com', '$2b$10$vudXvMHXn70HQ4r6szhtt.1jgXVIFnDHd0/tRRkGJh/DXMRedCkOS', 1
-WHERE NOT EXISTS (
-SELECT 1 FROM usuarios WHERE email = 'admin@adega.com'
-
 );
 
 USE adega_controle;
 
 SELECT * FROM fornecedores;
+SELECT * FROM produtos;
 
-UPDATE usuarios
-SET senha = '$2b$10$vudXvMHXn70HQ4r6szhtt.1jgXVIFnDHd0/tRRkGJh/DXMRedCkOS'
-WHERE email = 'admin@adega.com'
-    AND senha NOT LIKE '$2%';
+Show tables ;
 
+USE adega_controle;
+USE adega_controle;
 
+ALTER TABLE itens_compra
+ADD COLUMN subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+
+INSERT INTO usuarios (nome, email, senha)
+VALUES ('Administrador', 'admin@adega.com', 'TEMPORARIA');
+
+SELECT id, nome, email, senha
+FROM usuarios;
+
+SELECT 
+    nome,
+    categoria,
+    unidade,
+    COUNT(*) AS quantidade
+FROM produtos
+GROUP BY nome, categoria, unidade
+HAVING COUNT(*) > 1;
+
+ALTER TABLE produtos
+ADD CONSTRAINT uq_produto_nome_categoria_unidade
+UNIQUE (nome, categoria, unidade);
+
+DESCRIBE produtos;
+SELECT *
+FROM produtos
+ORDER BY id DESC;
+
+SELECT * FROM compras;
+SELECT * FROM itens_compra;
+
+SELECT * FROM compras ORDER BY id DESC;
+
+SELECT * FROM itens_compra ORDER BY id DESC;
+
+SELECT * FROM itens_compra
+WHERE compra_id = 9;
+
+SELECT *
+FROM compras
+WHERE id = 13;
+
+SELECT id, nome, estoque
+FROM produtos
+WHERE id = 7;
+
+USE adega_controle;
+
+ALTER TABLE Compras
+ADD COLUMN estoque_contabilizado
+TINYINT(1) NOT NULL DEFAULT 0;
+
+SELECT
+    c.id,
+    c.data_compra,
+    p.nome AS produto,
+    i.quantidade,
+    c.estoque_contabilizado
+FROM Compras c
+INNER JOIN Itens_compra i
+    ON i.compra_id = c.id
+INNER JOIN produtos p
+    ON p.id = i.produto_id
+ORDER BY c.id DESC;
