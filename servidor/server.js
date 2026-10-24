@@ -185,14 +185,14 @@ app.get(
 // SERVIDOR
 // ========================================
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 app.listen(PORT, () => {
 
     console.log(
 
-        `Servidor iniciado em http://localhost:${PORT}`
+        `Servidor iniciado na porta ${PORT}`
 
     );
 
