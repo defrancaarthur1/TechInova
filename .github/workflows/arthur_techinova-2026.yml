@@ -31,18 +31,18 @@ jobs:
           echo "Verificando web.config na raiz do pacote:"
           ls -la deploy/web.config
 
-          cd deploy/servidor
-          npm install --omit=dev
-          cd ../..
+          echo "Instalando dependências do backend:"
+          npm install --omit=dev --prefix deploy/servidor
 
+          echo "Removendo arquivo .env do pacote:"
           rm -f deploy/servidor/.env
-          printf '{"name":"techinova","version":"1.0.0","scripts":{"start":"node servidor/server.js"}}' > pacote/package.json
 
       - name: Upload deployment package
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: pacote/
+          path: deploy/
+
 
   deploy:
     runs-on: ubuntu-latest
