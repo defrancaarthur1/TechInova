@@ -25,11 +25,17 @@ jobs:
 
       - name: Prepare deployment package
         run: |
-          mkdir pacote
-          cp -r servidor pacote/
-          cp -r *.html *.js *.css pacote/ 2>/dev/null || true
-          cp adega_controle.sql pacote/ 2>/dev/null || true
-          rm -f pacote/servidor/.env
+          mkdir -p deploy
+          git archive HEAD | tar -x -C deploy
+
+          echo "Verificando web.config na raiz do pacote:"
+          ls -la deploy/web.config
+
+          cd deploy/servidor
+          npm install --omit=dev
+          cd ../..
+
+          rm -f deploy/servidor/.env
           printf '{"name":"techinova","version":"1.0.0","scripts":{"start":"node servidor/server.js"}}' > pacote/package.json
 
       - name: Upload deployment package
