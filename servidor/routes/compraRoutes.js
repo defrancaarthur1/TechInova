@@ -200,6 +200,21 @@ router.post('/', async (req, res) => {
 
             for (const item of itens) {
                 await movimentarEstoque(conexao, item.produto_id, Number(item.quantidade));
+                await conexao.query(
+    `INSERT INTO movimentacoes_estoque
+    (
+        compra_id,
+        produto_id,
+        tipo,
+        quantidade
+    )
+    VALUES (?, ?, 'ENTRADA', ?)`,
+    [
+        compra_id,
+        item.produto_id,
+        Number(item.quantidade)
+    ]
+);
             }
 
             // ==========================================
