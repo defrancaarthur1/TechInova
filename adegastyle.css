@@ -832,3 +832,34 @@ table tr:hover {
     }
 
 }
+
+/* LOGO DA ADEGA FILÉ */
+.logo-adega {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-adega img {
+    width: 80px;
+    height: 80px;
+    max-width: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.logo-adega h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+/* LOGO DA TELA DE LOGIN */
+img.logo-login {
+    display: block;
+    width: 80px !important;
+    height: 80px !important;
+    max-width: 80px !important;
+    object-fit: contain;
+    margin: 0 auto 10px;
+}
