@@ -37,6 +37,23 @@ function validarItens(itens) {
     return null;
 }
 
+// Mantém o histórico de movimentações sincronizado com os itens da compra.
+async function registrarEntradas(conexao, compraId, itens) {
+    for (const item of itens) {
+        const quantidade = Number(item.quantidade);
+        await movimentarEstoque(conexao, item.produto_id, quantidade);
+        await conexao.query(
+            `INSERT INTO movimentacoes_estoque (compra_id, produto_id, tipo, quantidade)
+             VALUES (?, ?, 'ENTRADA', ?)`,
+            [compraId, item.produto_id, quantidade]
+        );
+    }
+}
+
+async function removerMovimentacoes(conexao, compraId) {
+    await conexao.query('DELETE FROM movimentacoes_estoque WHERE compra_id = ?', [compraId]);
+}
+
 async function reverterItens(conexao, compraId) {
     const [itensAnteriores] = await conexao.query(
         'SELECT produto_id, quantidade FROM Itens_compra WHERE compra_id = ? ORDER BY produto_id',
@@ -198,24 +215,7 @@ router.post('/', async (req, res) => {
             }
 
 
-            for (const item of itens) {
-                await movimentarEstoque(conexao, item.produto_id, Number(item.quantidade));
-                await conexao.query(
-    `INSERT INTO movimentacoes_estoque
-    (
-        compra_id,
-        produto_id,
-        tipo,
-        quantidade
-    )
-    VALUES (?, ?, 'ENTRADA', ?)`,
-    [
-        compra_id,
-        item.produto_id,
-        Number(item.quantidade)
-    ]
-);
-            }
+            await registrarEntradas(conexao, compra_id, itens);
 
             // ==========================================
             // CONFIRMAR TRANSAÇÃO
@@ -586,6 +586,8 @@ router.delete('/:id', async (req, res) => {
             }
 
             
+            await removerMovimentacoes(conexao, id);
+
             // ==========================================
             // EXCLUIR PRIMEIRO OS ITENS
             // ==========================================
@@ -927,6 +929,15 @@ for (const item of itens) {
             await conexao.beginTransaction();
 
 
+            const [situacaoEstoque] = await conexao.query(
+                'SELECT estoque_contabilizado FROM Compras WHERE id = ? FOR UPDATE', [id]
+            );
+            if (!situacaoEstoque.length) {
+                await conexao.rollback();
+                return res.status(404).json({ sucesso: false, mensagem: 'Compra não encontrada.' });
+            }
+            const compraContabilizada = Number(situacaoEstoque[0].estoque_contabilizado) === 1;
+
             // ==========================================
             // ATUALIZAR DADOS PRINCIPAIS DA COMPRA
             // ==========================================
@@ -986,15 +997,11 @@ for (const item of itens) {
 
 
             // Compras anteriores ao controle de estoque não movimentam o saldo.
-            const [situacaoEstoque] = await conexao.query(
-                'SELECT estoque_contabilizado FROM Compras WHERE id = ? FOR UPDATE',
-                [id]
-            );
-            const compraContabilizada = situacaoEstoque.length > 0 &&
-                Number(situacaoEstoque[0].estoque_contabilizado) === 1;
             if (compraContabilizada) {
                 await reverterItens(conexao, id);
             }
+
+            await removerMovimentacoes(conexao, id);
 
             // ==========================================
             // REMOVER ITENS ANTIGOS
@@ -1075,9 +1082,7 @@ for (const item of itens) {
 
 
             if (compraContabilizada) {
-                for (const item of itens) {
-                    await movimentarEstoque(conexao, item.produto_id, Number(item.quantidade));
-                }
+                await registrarEntradas(conexao, id, itens);
             }
 
             // ==========================================
