@@ -36,40 +36,28 @@
 
         <h2>Histórico de Compras</h2>
 
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Data</th>
-                    <th>Fornecedor</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Valor</th>
-                    <th>Ações</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="tabelaHistorico">
-
-                <tr>
-                    <td colspan="6">
-                        Carregando compras...
-                    </td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
+        <form id="formFiltrosHistorico" class="historico-filtros">
+            <label for="filtroFornecedor">Fornecedor</label>
+            <select id="filtroFornecedor"><option value="">Todos os fornecedores</option></select>
+            <label for="filtroDataInicial">Data inicial</label>
+            <input type="date" id="filtroDataInicial">
+            <label for="filtroDataFinal">Data final</label>
+            <input type="date" id="filtroDataFinal">
+            <div class="historico-filtros-acoes">
+                <button class="btn" type="submit">Filtrar</button>
+                <button class="btn" type="button" id="limparFiltros">Limpar filtros</button>
+            </div>
+            <p id="mensagemFiltros" role="status" aria-live="polite"></p>
+        </form>
+        <div class="historico-tabela-rolagem">
+            <table class="historico-tabela">
+                <thead><tr><th>Data</th><th>Fornecedor</th><th>Produto</th><th>Quantidade</th><th>Valor</th><th>Ações</th></tr></thead>
+                <tbody id="tabelaHistorico"><tr><td colspan="6">Carregando compras...</td></tr></tbody>
+            </table>
+        </div>
     </section>
-
 </main>
-
 <script src="historico.js"></script>
 <script src="auth.js"></script>
-
 </body>
-
 </html>
