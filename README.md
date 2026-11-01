@@ -224,51 +224,9 @@ Portanto, o banco será criado caso ainda não exista.
 
 ## 6. Configurar a conexão com o MySQL
 
-Depois de criar o banco, abra no Visual Studio Code o arquivo:
-
-```text
-servidor/banco.js
-```
-
-Verifique as configurações de conexão com o MySQL.
-
-A configuração segue uma estrutura semelhante a:
-
-```javascript
-const mysql = require('mysql2/promise');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'SUA_SENHA_MYSQL',
-    database: 'adega_controle'
-});
-
-module.exports = pool;
-```
-
-### Atenção
-
-O usuário e a senha do MySQL podem ser diferentes em cada computador.
-
-Por isso, verifique principalmente:
-
-```javascript
-user: 'root',
-password: 'SUA_SENHA_MYSQL'
-```
-
-Caso o usuário `root` não possua senha, a configuração poderá utilizar:
-
-```javascript
-password: ''
-```
-
-Não altere o nome do banco caso esteja utilizando o banco padrão do projeto:
-
-```javascript
-database: 'adega_controle'
-```
+Crie `servidor/.env` copiando `servidor/.env.example`. Preencha `DB_USER` e
+`DB_PASSWORD` com as credenciais do seu MySQL. Se o usuário não tiver senha,
+deixe `DB_PASSWORD` vazio. Não coloque credenciais reais no Git.
 
 ---
 
@@ -401,9 +359,13 @@ Ao utilizar o sistema pela primeira vez em outro computador:
 3. Abra o projeto no Visual Studio Code;
 4. Execute `npm install`;
 5. Execute o arquivo `adega_controle.sql` no MySQL;
-6. Configure usuário e senha do MySQL em `servidor/banco.js`;
-7. Execute `node servidor/server.js`;
-8. Acesse `http://localhost:3000`.
+6. Copie `servidor/.env.example` para `servidor/.env` e configure usuário e senha do MySQL;
+7. Na pasta principal do projeto, execute `node servidor/criarUsuario.js` para criar o administrador inicial;
+8. Execute `node servidor/server.js`;
+9. Acesse `http://localhost:3000`.
+
+O login inicial é `admin@adega.com`, com senha `Adega2026`. Altere essa senha
+depois do primeiro acesso.
 
 Depois dessa configuração inicial, não será necessário executar novamente o arquivo SQL a cada inicialização.
 
@@ -422,10 +384,16 @@ Access denied for user 'root'@'localhost'
 verifique o arquivo:
 
 ```text
-servidor/banco.js
+servidor/.env
 ```
 
 Confira se o usuário e a senha correspondem às credenciais configuradas durante a instalação do MySQL.
+
+## Erro de configuração do banco
+
+Se o servidor informar que faltam variáveis `DB_HOST`, `DB_USER` ou `DB_NAME`,
+confira se o arquivo `servidor/.env` foi criado a partir do modelo
+`servidor/.env.example`.
 
 ---
 
@@ -514,6 +482,16 @@ Portanto, o endereço utilizado é:
 ```text
 http://localhost:3000
 ```
+
+Se a porta 3000 já estiver ocupada, inicie o servidor em outra porta no
+PowerShell:
+
+```powershell
+$env:PORT = '3001'
+node servidor/server.js
+```
+
+Nesse caso, acesse `http://localhost:3001`.
 
 ---
 
