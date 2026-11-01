@@ -4,10 +4,20 @@ let fornecedores = [];
 
 function dataISO(valor) {
     if (!valor) return '';
-    // Evita deslocamento de um dia causado pelo fuso horário.
-    if (typeof valor === 'string') return valor.slice(0, 10);
+    const texto = String(valor);
+    // MySQL pode retornar YYYY-MM-DD ou uma data ISO com horário UTC.
+    const iso = texto.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (iso) return iso[1];
+    const br = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (br) return `${br[3]}-${br[2]}-${br[1]}`;
     const d = new Date(valor);
-    return Number.isNaN(d.getTime()) ? '' : `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if (Number.isNaN(d.getTime())) return '';
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function normalizarNome(valor) {
+    return String(valor ?? '').trim().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
 }
 
 function dataBR(valor) {
@@ -45,15 +55,20 @@ async function carregarFornecedores() {
 function atualizarOpcoesFornecedores() {
     const select = document.getElementById('filtroFornecedor');
     const anterior = select.value;
-    const nomes = new Set([
-        ...fornecedores.map(f => f.empresa),
-        ...compras.map(c => c.fornecedor)
-    ].filter(Boolean));
-    select.replaceChildren(new Option('Todos os fornecedores', ''));
-    [...nomes].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(nome => {
-        select.add(new Option(nome, nome));
+    // Filtra pelo ID do fornecedor, sem depender de diferenças de escrita no nome.
+    const opcoes = new Map();
+    fornecedores.forEach(f => {
+        if (f.id != null) opcoes.set(String(f.id), String(f.empresa || `Fornecedor ${f.id}`));
     });
-    if ([...nomes].includes(anterior)) select.value = anterior;
+    compras.forEach(c => {
+        if (c.fornecedor_id != null && !opcoes.has(String(c.fornecedor_id))) {
+            opcoes.set(String(c.fornecedor_id), String(c.fornecedor || `Fornecedor ${c.fornecedor_id}`));
+        }
+    });
+    select.replaceChildren(new Option('Todos os fornecedores', ''));
+    [...opcoes].sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'))
+        .forEach(([id, nome]) => select.add(new Option(nome, id)));
+    if (opcoes.has(anterior)) select.value = anterior;
 }
 
 async function carregarCompras() {
@@ -73,21 +88,22 @@ async function carregarCompras() {
 }
 
 function aplicarFiltros() {
-    const fornecedor = document.getElementById('filtroFornecedor').value;
+    const fornecedorId = document.getElementById('filtroFornecedor').value;
     const inicio = document.getElementById('filtroDataInicial').value;
     const fim = document.getElementById('filtroDataFinal').value;
     const mensagem = document.getElementById('mensagemFiltros');
     if (inicio && fim && inicio > fim) {
         mensagem.textContent = 'A data inicial não pode ser posterior à data final.';
+        mostrarCompras([]);
         return;
     }
-    mensagem.textContent = '';
     const filtradas = compras.filter(compra => {
         const data = dataISO(compra.data_compra);
-        return (!fornecedor || compra.fornecedor === fornecedor) &&
-            (!inicio || data >= inicio) && (!fim || data <= fim);
+        const correspondeFornecedor = !fornecedorId || String(compra.fornecedor_id) === fornecedorId;
+        return correspondeFornecedor && (!inicio || data >= inicio) && (!fim || data <= fim);
     });
     mostrarCompras(filtradas);
+    mensagem.textContent = `${filtradas.length} compra(s) encontrada(s).`;
 }
 
 function mostrarCompras(lista) {
@@ -151,5 +167,9 @@ document.getElementById('formFiltrosHistorico').addEventListener('submit', event
 document.getElementById('limparFiltros').addEventListener('click', () => {
     document.getElementById('formFiltrosHistorico').reset();
     aplicarFiltros();
+});
+// Também atualiza a listagem ao alterar qualquer campo, sem precisar clicar em Filtrar.
+['filtroFornecedor', 'filtroDataInicial', 'filtroDataFinal'].forEach(id => {
+    document.getElementById(id).addEventListener('change', aplicarFiltros);
 });
 Promise.all([carregarCompras(), carregarFornecedores()]);
