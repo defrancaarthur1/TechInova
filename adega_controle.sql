@@ -32,6 +32,51 @@ CREATE TABLE IF NOT EXISTS fornecedores (
     data_cadastro DATE
 );
 
+
+-- ============================================
+-- TABELA DE COMPRAS
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS compras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fornecedor_id INT NOT NULL,
+    data_compra DATE NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX fk_compra_fornecedor (fornecedor_id),
+    CONSTRAINT fk_compra_fornecedor
+        FOREIGN KEY (fornecedor_id)
+        REFERENCES fornecedores(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+
+-- ============================================
+-- ITENS DE CADA COMPRA
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS itens_compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    compra_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade DECIMAL(10,2) NOT NULL,
+    valor_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    INDEX fk_item_compra (compra_id),
+    INDEX fk_item_produto (produto_id),
+    CONSTRAINT fk_item_compra
+        FOREIGN KEY (compra_id)
+        REFERENCES compras(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_item_produto
+        FOREIGN KEY (produto_id)
+        REFERENCES produtos(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 USE adega_controle;
 
 SELECT * FROM fornecedores;
@@ -41,9 +86,6 @@ Show tables ;
 
 USE adega_controle;
 USE adega_controle;
-
-ALTER TABLE itens_compra
-ADD COLUMN subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00;
 
 INSERT INTO usuarios (nome, email, senha)
 VALUES ('Administrador', 'admin@adega.com', 'TEMPORARIA');
@@ -105,3 +147,6 @@ INNER JOIN Itens_compra i
 INNER JOIN produtos p
     ON p.id = i.produto_id
 ORDER BY c.id DESC;
+
+
+);

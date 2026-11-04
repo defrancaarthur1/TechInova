@@ -1,3 +1,7 @@
+require('dotenv').config({
+    path: __dirname + '/.env'
+})
+
 const express = require('express');
 
 const cors = require('cors');
@@ -185,11 +189,7 @@ app.get(
 // SERVIDOR
 // ========================================
 
-<<<<<<< HEAD
-const PORT = process.env.PORT || 3000;
-=======
 const PORT = Number(process.env.PORT || 3000);
->>>>>>> origin/main
 
 
 app.listen(PORT, () => {

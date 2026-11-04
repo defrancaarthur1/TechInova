@@ -265,90 +265,73 @@ router.post('/', async (req, res) => {
 
 
 // =====================================================
-// LISTAR TODOS OS PRODUTOS
-// GET /api/produtos
+// LISTAR COMPRAS PARA O HISTÓRICO
+// GET /api/compras
 // =====================================================
 
 router.get('/', async (req, res) => {
 
     try {
 
-        // -------------------------------------------------
-        // IMPORTANTE:
-        //
-        // A tabela atual possui somente:
-        //
-        // id
-        // nome
-        // categoria
-        // unidade
-        //
-        // Portanto não buscamos preco, quantidade,
-        // data_cadastro etc.
-        // -------------------------------------------------
-
-        const [produtos] = await banco.query(
+        const [linhas] = await banco.query(
 
             `
             SELECT
-                id,
-                nome,
-                categoria,
-                unidade,
-                estoque
-
-            FROM produtos
-
-            ORDER BY nome ASC
+                c.id AS compra_id,
+                c.fornecedor_id,
+                f.empresa AS fornecedor,
+                c.data_compra,
+                c.valor_total,
+                i.id AS item_id,
+                i.produto_id,
+                p.nome AS produto,
+                i.quantidade,
+                i.valor_unitario,
+                i.subtotal
+            FROM compras c
+            INNER JOIN fornecedores f
+                ON f.id = c.fornecedor_id
+            LEFT JOIN itens_compra i
+                ON i.compra_id = c.id
+            LEFT JOIN produtos p
+                ON p.id = i.produto_id
+            ORDER BY c.data_compra DESC, c.id DESC, i.id ASC
             `
 
         );
 
+        const comprasPorId = new Map();
 
-        // -------------------------------------------------
-        // FORMATAR PARA O FRONTEND
-        // -------------------------------------------------
-        //
-        // cadastro.js trabalha com categoria_id.
-        //
-        // Portanto transformamos:
-        //
-        // "Refrigerantes"
-        //
-        // em:
-        //
-        // categoria_id: 3
-        // -------------------------------------------------
+        linhas.forEach(linha => {
+            if (!comprasPorId.has(linha.compra_id)) {
+                comprasPorId.set(linha.compra_id, {
+                    compra_id: linha.compra_id,
+                    fornecedor_id: linha.fornecedor_id,
+                    fornecedor: linha.fornecedor,
+                    data_compra: linha.data_compra,
+                    valor_total: Number(linha.valor_total),
+                    itens: []
+                });
+            }
 
-        const produtosFormatados = produtos.map(produto => ({
-
-            id:
-                produto.id,
-
-            nome:
-                produto.nome,
-
-            categoria:
-                produto.categoria,
-
-            categoria_id:
-                obterCategoriaId(produto.categoria),
-
-            unidade:
-                produto.unidade,
-
-            estoque:
-                Number(produto.estoque)
-
-        }));
-
+            if (linha.item_id !== null) {
+                comprasPorId.get(linha.compra_id).itens.push({
+                    item_id: linha.item_id,
+                    produto_id: linha.produto_id,
+                    produto: linha.produto,
+                    quantidade: Number(linha.quantidade),
+                    valor_unitario: Number(linha.valor_unitario),
+                    subtotal: Number(linha.subtotal)
+                });
+            }
+        });
 
         return res.json({
 
             sucesso: true,
 
-            produtos:
-                produtosFormatados
+            compras:
+                Array.from(comprasPorId.values())
 
         });
 
@@ -366,7 +349,7 @@ router.get('/', async (req, res) => {
             sucesso: false,
 
             mensagem:
-                'Erro ao buscar produtos.',
+                'Erro ao buscar compras.',
 
             erro:
                 erro.message
