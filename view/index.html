@@ -531,19 +531,18 @@
                 );
 
 
-            if (!produtoId) {
+     const produtoValido = Array.from(
+    selectProduto.options
+).some(option =>
+    option.value !== '' &&
+    Number(option.value) === produtoId
+);
 
-                alert(
-                    'Selecione um produto.'
-                );
-
-                marcarCampoInvalido(
-                    selectProduto
-                );
-
-                return;
-
-            }
+if (!produtoId || !produtoValido) {
+    alert('Selecione um produto válido.');
+    marcarCampoInvalido(selectProduto);
+    return;
+}
 
 
             const produtoNome =

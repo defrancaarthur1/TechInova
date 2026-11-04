@@ -9,6 +9,44 @@ console.log('ROTAS DE COMPRAS INICIADAS');
 const banco = require('../banco');
 
 
+
+// Atualiza estoque na mesma transação da compra.
+async function movimentarEstoque(conexao, produtoId, diferenca) {
+    const [resultado] = await conexao.query(
+        `UPDATE produtos SET estoque = estoque + ?
+         WHERE id = ? AND estoque + ? >= 0`,
+        [diferenca, produtoId, diferenca]
+    );
+    if (resultado.affectedRows !== 1) {
+        const erro = new Error('Produto inexistente ou estoque insuficiente para reverter a compra.');
+        erro.status = 409;
+        throw erro;
+    }
+}
+
+function validarItens(itens) {
+    if (!Array.isArray(itens) || itens.length === 0) return 'Adicione pelo menos um produto à compra.';
+    for (const item of itens) {
+        if (!Number.isSafeInteger(Number(item.produto_id)) || Number(item.produto_id) <= 0)
+            return 'Selecione um produto válido.';
+        if (!Number.isSafeInteger(Number(item.quantidade)) || Number(item.quantidade) <= 0)
+            return 'A quantidade deve ser um número inteiro maior que zero.';
+        if (item.valor_unitario === '' || item.valor_unitario == null || !Number.isFinite(Number(item.valor_unitario)) || Number(item.valor_unitario) <= 0)
+            return 'O valor unitário deve ser maior que zero.';
+    }
+    return null;
+}
+
+async function reverterItens(conexao, compraId) {
+    const [itensAnteriores] = await conexao.query(
+        'SELECT produto_id, quantidade FROM Itens_compra WHERE compra_id = ? ORDER BY produto_id',
+        [compraId]
+    );
+    for (const item of itensAnteriores) {
+        await movimentarEstoque(conexao, item.produto_id, -Number(item.quantidade));
+    }
+}
+
 // ======================================================
 // REGISTRAR COMPRA
 // ======================================================
@@ -58,6 +96,9 @@ router.post('/', async (req, res) => {
         }
 
 
+        const erroItens = validarItens(itens);
+        if (erroItens) return res.status(400).json({ sucesso: false, mensagem: erroItens });
+
         // ==============================================
         // CALCULAR VALOR TOTAL
         // ==============================================
@@ -98,8 +139,8 @@ router.post('/', async (req, res) => {
                 await conexao.query(
 
                     `INSERT INTO Compras
-                    (fornecedor_id, data_compra, valor_total)
-                    VALUES (?, ?, ?)`,
+                    (fornecedor_id, data_compra, valor_total, estoque_contabilizado)
+                    VALUES (?, ?, ?, 1)`,
 
                     [
                         fornecedor_id,
@@ -157,6 +198,10 @@ router.post('/', async (req, res) => {
             }
 
 
+            for (const item of itens) {
+                await movimentarEstoque(conexao, item.produto_id, Number(item.quantidade));
+            }
+
             // ==========================================
             // CONFIRMAR TRANSAÇÃO
             // ==========================================
@@ -206,12 +251,11 @@ router.post('/', async (req, res) => {
         );
 
 
-        res.status(500).json({
+        res.status(erro.status || 500).json({
 
             sucesso: false,
 
-            mensagem:
-                'Erro ao registrar compra.'
+            mensagem: erro.status ? erro.message : 'Erro ao registrar compra.'
 
         });
 
@@ -515,7 +559,18 @@ router.delete('/:id', async (req, res) => {
 
             await conexao.beginTransaction();
 
+            const [compraExistente] = await conexao.query(
+                'SELECT id, estoque_contabilizado FROM Compras WHERE id = ? FOR UPDATE', [id]
+            );
+            if (!compraExistente.length) {
+                await conexao.rollback();
+                return res.status(404).json({ sucesso: false, mensagem: 'Compra não encontrada.' });
+            }
+            if (Number(compraExistente[0].estoque_contabilizado) === 1) {
+                await reverterItens(conexao, id);
+            }
 
+            
             // ==========================================
             // EXCLUIR PRIMEIRO OS ITENS
             // ==========================================
@@ -615,12 +670,11 @@ router.delete('/:id', async (req, res) => {
         );
 
 
-        res.status(500).json({
+        res.status(erro.status || 500).json({
 
             sucesso: false,
 
-            mensagem:
-                'Erro ao excluir compra.'
+            mensagem: erro.status ? erro.message : 'Erro ao excluir compra.'
 
         });
 
@@ -803,6 +857,9 @@ for (const item of itens) {
 }
 
 
+    const erroItens = validarItens(itens);
+    if (erroItens) return res.status(400).json({ sucesso: false, mensagem: erroItens });
+
     try {
 
 
@@ -911,6 +968,17 @@ for (const item of itens) {
             }
 
 
+            // Compras anteriores ao controle de estoque não movimentam o saldo.
+            const [situacaoEstoque] = await conexao.query(
+                'SELECT estoque_contabilizado FROM Compras WHERE id = ? FOR UPDATE',
+                [id]
+            );
+            const compraContabilizada = situacaoEstoque.length > 0 &&
+                Number(situacaoEstoque[0].estoque_contabilizado) === 1;
+            if (compraContabilizada) {
+                await reverterItens(conexao, id);
+            }
+
             // ==========================================
             // REMOVER ITENS ANTIGOS
             // ==========================================
@@ -989,6 +1057,12 @@ for (const item of itens) {
             }
 
 
+            if (compraContabilizada) {
+                for (const item of itens) {
+                    await movimentarEstoque(conexao, item.produto_id, Number(item.quantidade));
+                }
+            }
+
             // ==========================================
             // CONFIRMAR ALTERAÇÕES
             // ==========================================
@@ -1039,12 +1113,11 @@ for (const item of itens) {
         );
 
 
-        res.status(500).json({
+        res.status(erro.status || 500).json({
 
             sucesso: false,
 
-            mensagem:
-                'Erro ao editar compra.'
+            mensagem: erro.status ? erro.message : 'Erro ao editar compra.'
 
         });
 

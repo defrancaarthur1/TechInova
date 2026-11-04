@@ -1,0 +1,3 @@
+loggingEnabled: true
+logDirectory: C:\home\LogFiles\iisnode
+devErrorsEnabled: true
