@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
 
                 `
                 SELECT id
-                FROM Fornecedores
+                FROM fornecedores
                 WHERE CNPJ = ?
                 LIMIT 1
                 `,
@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
             await banco.query(
 
                 `
-                INSERT INTO Fornecedores
+                INSERT INTO fornecedores
                 (
                     empresa,
                     CNPJ,
@@ -194,7 +194,7 @@ router.get('/', async (req, res) => {
 
                 `
                 SELECT *
-                FROM Fornecedores
+                FROM fornecedores
                 ORDER BY empresa ASC
                 `
 
@@ -254,7 +254,7 @@ router.get('/:id', async (req, res) => {
 
                 `
                 SELECT *
-                FROM Fornecedores
+                FROM fornecedores
                 WHERE id = ?
                 `,
 
@@ -365,7 +365,7 @@ router.put('/:id', async (req, res) => {
 
                 `
                 SELECT id
-                FROM Fornecedores
+                FROM fornecedores
                 WHERE CNPJ = ?
                   AND id <> ?
                 LIMIT 1
@@ -401,7 +401,7 @@ router.put('/:id', async (req, res) => {
             await banco.query(
 
                 `
-                UPDATE Fornecedores
+                UPDATE fornecedores
 
                 SET
                     empresa = ?,
@@ -518,7 +518,7 @@ router.delete('/:id', async (req, res) => {
             await banco.query(
 
                 `
-                DELETE FROM Fornecedores
+                DELETE FROM fornecedores
                 WHERE id = ?
                 `,
 
