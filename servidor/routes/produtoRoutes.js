@@ -716,6 +716,19 @@ router.delete('/:id', async (req, res) => {
             req.params;
 
 
+        const [vinculos] = await banco.query(
+            `SELECT
+                (SELECT COUNT(*) FROM itens_compra WHERE produto_id = ?) AS itens,
+                (SELECT COUNT(*) FROM movimentacoes_estoque WHERE produto_id = ?) AS movimentacoes`,
+            [id, id]
+        );
+        if (Number(vinculos[0].itens) > 0 || Number(vinculos[0].movimentacoes) > 0) {
+            return res.status(409).json({
+                sucesso: false,
+                mensagem: 'Produto com histórico de compras ou movimentações não pode ser excluído.'
+            });
+        }
+
         const [resultado] = await banco.query(
 
             `
