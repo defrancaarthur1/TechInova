@@ -3,259 +3,274 @@ const tratarErroBanco =
 
 const express = require('express');
 const router = express.Router();
+
+console.log('ROTAS DE COMPRAS INICIADAS');
+
 const banco = require('../banco');
 
 
-// =====================================================
-// CATEGORIAS DO SISTEMA
-// =====================================================
-//
-// O frontend envia categoria_id.
-// O banco atual armazena o NOME da categoria.
-//
-// Exemplo:
-// categoria_id = 3
-// banco = "Refrigerantes"
-// =====================================================
 
-const categorias = {
-    1: 'Bebidas',
-    2: 'Cervejas',
-    3: 'Refrigerantes',
-    4: 'Destilados',
-    5: 'Água',
-    6: 'Gelo',
-    7: 'Outros'
-};
-
-
-// =====================================================
-// OBTER NOME DA CATEGORIA PELO ID
-// =====================s================================
-
-function obterCategoria(categoria_id) {
-
-    return categorias[Number(categoria_id)] || null;
-
-}
-
-
-// =====================================================
-// OBTER ID DA CATEGORIA PELO NOME
-// =====================================================
-
-function obterCategoriaId(nomeCategoria) {
-
-    if (!nomeCategoria) {
-        return null;
+// Atualiza estoque na mesma transação da compra.
+async function movimentarEstoque(conexao, produtoId, diferenca) {
+    const [resultado] = await conexao.query(
+        `UPDATE produtos SET estoque = estoque + ?
+         WHERE id = ? AND estoque + ? >= 0`,
+        [diferenca, produtoId, diferenca]
+    );
+    if (resultado.affectedRows !== 1) {
+        const erro = new Error('Produto inexistente ou estoque insuficiente para reverter a compra.');
+        erro.status = 409;
+        throw erro;
     }
-    if (String(nomeCategoria).trim().toLowerCase() === 'sucos') return 1;
-
-    const categoriaEncontrada = Object.entries(categorias)
-        .find(([id, nome]) => {
-
-            return nome.toLowerCase() ===
-                String(nomeCategoria).trim().toLowerCase();
-
-        });
-
-
-    return categoriaEncontrada
-        ? Number(categoriaEncontrada[0])
-        : null;
-
 }
 
+function validarItens(itens) {
+    if (!Array.isArray(itens) || itens.length === 0) return 'Adicione pelo menos um produto à compra.';
+    for (const item of itens) {
+        if (!Number.isSafeInteger(Number(item.produto_id)) || Number(item.produto_id) <= 0)
+            return 'Selecione um produto válido.';
+        if (!Number.isSafeInteger(Number(item.quantidade)) || Number(item.quantidade) < 1 || Number(item.quantidade) > 10000)
+            return 'A quantidade deve ser um número inteiro entre 1 e 10000.';
+        if (item.valor_unitario === '' || item.valor_unitario == null || !Number.isFinite(Number(item.valor_unitario)) || Number(item.valor_unitario) <= 0)
+            return 'O valor unitário deve ser maior que zero.';
+    }
+    return null;
+}
 
-// =====================================================
-// CADASTRAR PRODUTO
-// POST /api/produtos
-// =====================================================
+// Mantém o histórico de movimentações sincronizado com os itens da compra.
+async function registrarEntradas(conexao, compraId, itens) {
+    for (const item of itens) {
+        const quantidade = Number(item.quantidade);
+        await movimentarEstoque(conexao, item.produto_id, quantidade);
+        await conexao.query(
+            `INSERT INTO movimentacoes_estoque (compra_id, produto_id, tipo, quantidade)
+             VALUES (?, ?, 'ENTRADA', ?)`,
+            [compraId, item.produto_id, quantidade]
+        );
+    }
+}
+
+async function removerMovimentacoes(conexao, compraId) {
+    await conexao.query('DELETE FROM movimentacoes_estoque WHERE compra_id = ?', [compraId]);
+}
+
+async function reverterItens(conexao, compraId) {
+    const [itensAnteriores] = await conexao.query(
+        'SELECT produto_id, quantidade FROM itens_compra WHERE compra_id = ? ORDER BY produto_id',
+        [compraId]
+    );
+    for (const item of itensAnteriores) {
+        await movimentarEstoque(conexao, item.produto_id, -Number(item.quantidade));
+    }
+}
+
+// ======================================================
+// REGISTRAR COMPRA
+// ======================================================
 
 router.post('/', async (req, res) => {
 
     try {
 
         const {
-            nome,
-            categoria_id,
-            unidade
+            fornecedor_id,
+            data_compra,
+            itens
         } = req.body;
 
 
-        // -------------------------------------------------
-        // VALIDAR CAMPOS OBRIGATÓRIOS
-        // -------------------------------------------------
+        // ==============================================
+        // VALIDAÇÕES
+        // ==============================================
 
-        if (!nome || !categoria_id || !unidade) {
-
-            return res.status(400).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Preencha todos os campos do produto.'
-
-            });
-
-        }
-
-
-        const nomeLimpo =
-            String(nome).trim();
-
-        const unidadeLimpa =
-            String(unidade).trim();
-
-        const categoriaNome =
-            obterCategoria(categoria_id);
-
-
-        // -------------------------------------------------
-        // VALIDAR CATEGORIA
-        // -------------------------------------------------
-
-        if (!categoriaNome) {
+        if (!fornecedor_id) {
 
             return res.status(400).json({
-
                 sucesso: false,
-
-                mensagem:
-                    'Categoria inválida.'
-
+                mensagem: 'Selecione um fornecedor.'
             });
 
         }
 
 
-        // -------------------------------------------------
-        // VERIFICAR PRODUTO DUPLICADO
-        // -------------------------------------------------
-        //
-        // Consideramos duplicado quando:
-        //
-        // nome + categoria + unidade
-        //
-        // forem iguais.
-        //
-        // LOWER e TRIM também impedem diferenças como:
-        //
-        // Coca Cola
-        // coca cola
-        // Coca Cola
-        // -------------------------------------------------
+        if (!data_compra) {
 
-        const [produtoExistente] = await banco.query(
-
-            `
-            SELECT id
-            FROM produtos
-
-            WHERE LOWER(TRIM(nome)) = LOWER(?)
-              AND LOWER(TRIM(categoria)) = LOWER(?)
-              AND LOWER(TRIM(unidade)) = LOWER(?)
-
-            LIMIT 1
-            `,
-
-            [
-                nomeLimpo,
-                categoriaNome,
-                unidadeLimpa
-            ]
-
-        );
-
-
-        if (produtoExistente.length > 0) {
-
-            return res.status(409).json({
-
+            return res.status(400).json({
                 sucesso: false,
-
-                mensagem:
-                    'Este produto já está cadastrado.'
-
+                mensagem: 'Informe a data da compra.'
             });
 
         }
 
 
-        // -------------------------------------------------
-        // INSERIR PRODUTO
-        // -------------------------------------------------
+        if (!itens || itens.length === 0) {
 
-        const [resultado] = await banco.query(
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Adicione pelo menos um produto à compra.'
+            });
 
-            `
-            INSERT INTO produtos
-            (
-                nome,
-                categoria,
-                unidade
-            )
-
-            VALUES (?, ?, ?)
-            `,
-
-            [
-                nomeLimpo,
-                categoriaNome,
-                unidadeLimpa
-            ]
-
-        );
+        }
 
 
-        return res.status(201).json({
+        const erroItens = validarItens(itens);
+        if (erroItens) return res.status(400).json({ sucesso: false, mensagem: erroItens });
 
-            sucesso: true,
+        // ==============================================
+        // CALCULAR VALOR TOTAL
+        // ==============================================
 
-            mensagem:
-                'Produto cadastrado com sucesso!',
+        let valor_total = 0;
 
-            id:
-                resultado.insertId
+
+        itens.forEach(item => {
+
+            const subtotal =
+                Number(item.quantidade) *
+                Number(item.valor_unitario);
+
+
+            valor_total += subtotal;
 
         });
+
+
+        // ==============================================
+        // INICIAR TRANSAÇÃO
+        // ==============================================
+
+        const conexao =
+            await banco.getConnection();
+
+
+        try {
+
+            await conexao.beginTransaction();
+
+
+            // ==========================================
+            // INSERIR COMPRA
+            // ==========================================
+
+            const [resultadoCompra] =
+                await conexao.query(
+
+                    `INSERT INTO compras
+                    (fornecedor_id, data_compra, valor_total, estoque_contabilizado)
+                    VALUES (?, ?, ?, 1)`,
+
+                    [
+                        fornecedor_id,
+                        data_compra,
+                        valor_total
+                    ]
+
+                );
+
+
+            const compra_id =
+                resultadoCompra.insertId;
+
+
+            // ==========================================
+            // INSERIR ITENS DA COMPRA
+            // ==========================================
+
+            for (const item of itens) {
+
+                const quantidade =
+                    Number(item.quantidade);
+
+
+                const valor_unitario =
+                    Number(item.valor_unitario);
+
+
+                const subtotal =
+                    quantidade * valor_unitario;
+
+
+                await conexao.query(
+
+                    `INSERT INTO itens_compra
+                    (
+                        compra_id,
+                        produto_id,
+                        quantidade,
+                        valor_unitario,
+                        subtotal
+                    )
+                    VALUES (?, ?, ?, ?, ?)`,
+
+                    [
+                        compra_id,
+                        item.produto_id,
+                        quantidade,
+                        valor_unitario,
+                        subtotal
+                    ]
+
+                );
+
+            }
+
+
+            await registrarEntradas(conexao, compra_id, itens);
+
+            // ==========================================
+            // CONFIRMAR TRANSAÇÃO
+            // ==========================================
+
+            await conexao.commit();
+
+
+            res.status(201).json({
+
+                sucesso: true,
+
+                mensagem:
+                    'Compra registrada com sucesso!',
+
+                compra_id:
+                    compra_id,
+
+                valor_total:
+                    valor_total
+
+            });
+
+
+        } catch (erro) {
+
+            // ==========================================
+            // DESFAZER ALTERAÇÕES EM CASO DE ERRO
+            // ==========================================
+
+            await conexao.rollback();
+
+            throw erro;
+
+
+        } finally {
+
+            conexao.release();
+
+        }
 
 
     } catch (erro) {
 
         console.error(
-            'Erro ao cadastrar produto:',
+            'Erro ao registrar compra:',
             erro
         );
 
 
-        // -------------------------------------------------
-        // CASO O MYSQL POSSUA RESTRIÇÃO UNIQUE
-        // -------------------------------------------------
-
-        if (erro.code === 'ER_DUP_ENTRY') {
-
-            return res.status(409).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Este produto já está cadastrado.'
-
-            });
-
-        }
-
-
-        return res.status(500).json({
+        res.status(erro.status || 500).json({
 
             sucesso: false,
 
-            mensagem:
-                'Erro ao cadastrar produto.',
-
-            erro:
-                erro.message
+            mensagem: erro.status ? erro.message : 'Erro ao registrar compra.'
 
         });
 
@@ -264,112 +279,115 @@ router.post('/', async (req, res) => {
 });
 
 
-// =====================================================
-// LISTAR TODOS OS PRODUTOS
-// GET /api/produtos
-// =====================================================
+// ======================================================
+// LISTAR TODAS AS COMPRAS
+// ======================================================
 
 router.get('/', async (req, res) => {
 
     try {
 
-        // -------------------------------------------------
-        // IMPORTANTE:
-        //
-        // A tabela atual possui somente:
-        //
-        // id
-        // nome
-        // categoria
-        // unidade
-        //
-        // Portanto não buscamos preco, quantidade,
-        // data_cadastro etc.
-        // -------------------------------------------------
 
-        const [produtos] = await banco.query(
+        // ==============================================
+        // BUSCAR COMPRAS
+        // ==============================================
 
-            `
-            SELECT
-                id,
-                nome,
-                categoria,
-                unidade,
-                estoque
+        const [compras] =
+            await banco.query(`
 
-            FROM produtos
+                SELECT
 
-            ORDER BY nome ASC
-            `
+                    c.id AS compra_id,
 
-        );
+                    c.fornecedor_id,
+
+                    c.data_compra,
+
+                    c.valor_total,
+
+                    f.empresa AS fornecedor
+
+                FROM compras c
+
+                INNER JOIN fornecedores f
+                    ON c.fornecedor_id = f.id
+
+                ORDER BY c.data_compra DESC
+
+            `);
 
 
-        // -------------------------------------------------
-        // FORMATAR PARA O FRONTEND
-        // -------------------------------------------------
-        //
-        // cadastro.js trabalha com categoria_id.
-        //
-        // Portanto transformamos:
-        //
-        // "Refrigerantes"
-        //
-        // em:
-        //
-        // categoria_id: 3
-        // -------------------------------------------------
+        // ==============================================
+        // BUSCAR ITENS DE CADA COMPRA
+        // ==============================================
 
-        const produtosFormatados = produtos.map(produto => ({
-
-            id:
-                produto.id,
-
-            nome:
-                produto.nome,
-
-            categoria:
-                produto.categoria,
-
-            categoria_id:
-                obterCategoriaId(produto.categoria),
-
-            unidade:
-                produto.unidade,
-
-            estoque:
-                Number(produto.estoque)
-
-        }));
+        for (const compra of compras) {
 
 
-        return res.json({
+            const [itens] =
+                await banco.query(`
+
+                    SELECT
+
+                        ic.id AS item_id,
+
+                        ic.produto_id,
+
+                        p.nome AS produto,
+
+                        ic.quantidade,
+
+                        ic.valor_unitario,
+
+                        ic.subtotal
+
+                    FROM itens_compra ic
+
+                    INNER JOIN produtos p
+                        ON ic.produto_id = p.id
+
+                    WHERE ic.compra_id = ?
+
+                `,
+
+                [
+                    compra.compra_id
+                ]);
+
+
+            compra.itens = itens;
+
+        }
+
+
+        // ==============================================
+        // RETORNAR COMPRAS
+        // ==============================================
+
+        res.json({
 
             sucesso: true,
 
-            produtos:
-                produtosFormatados
+            compras: compras
 
         });
 
 
     } catch (erro) {
 
+
         console.error(
-            'Erro ao buscar produtos:',
+            'Erro ao buscar compras:',
             erro
         );
 
 
-        return res.status(500).json({
+        res.status(500).json({
 
             sucesso: false,
 
             mensagem:
-                'Erro ao buscar produtos.',
-
-            erro:
-                erro.message
+                'Erro ao buscar compras.'
 
         });
 
@@ -378,115 +396,153 @@ router.get('/', async (req, res) => {
 });
 
 
-// =====================================================
-// BUSCAR PRODUTO POR ID
-// GET /api/produtos/:id
-// =====================================================
+// ======================================================
+// BUSCAR UMA COMPRA PELO ID
+// ======================================================
+// Esta rota é utilizada quando clicamos em "Editar"
+// no Histórico.
+//
+// Exemplo:
+//
+// GET /api/compras/5
+//
+// Ela devolve a compra e TODOS os itens relacionados.
+// ======================================================
 
 router.get('/:id', async (req, res) => {
 
+
+    const { id } =
+        req.params;
+
+
     try {
 
-        const { id } =
-            req.params;
 
+        // ==============================================
+        // BUSCAR COMPRA
+        // ==============================================
 
-        const [produtos] = await banco.query(
+        const [compras] =
+            await banco.query(`
 
-            `
-            SELECT
-                id,
-                nome,
-                categoria,
-                unidade,
-                estoque
+                SELECT
 
-            FROM produtos
+                    c.id AS compra_id,
 
-            WHERE id = ?
+                    c.fornecedor_id,
+
+                    c.data_compra,
+
+                    c.valor_total,
+
+                    f.empresa AS fornecedor
+
+                FROM compras c
+
+                INNER JOIN fornecedores f
+                    ON c.fornecedor_id = f.id
+
+                WHERE c.id = ?
+
             `,
 
-            [id]
+            [
+                id
+            ]);
 
-        );
 
+        // ==============================================
+        // VERIFICAR SE A COMPRA EXISTE
+        // ==============================================
 
-        // -------------------------------------------------
-        // PRODUTO NÃO ENCONTRADO
-        // -------------------------------------------------
-
-        if (produtos.length === 0) {
+        if (compras.length === 0) {
 
             return res.status(404).json({
 
                 sucesso: false,
 
                 mensagem:
-                    'Produto não encontrado.'
+                    'Compra não encontrada.'
 
             });
 
         }
 
 
-        const produto =
-            produtos[0];
+        const compra =
+            compras[0];
 
 
-        // -------------------------------------------------
-        // FORMATAR PRODUTO PARA O FRONTEND
-        // -------------------------------------------------
+        // ==============================================
+        // BUSCAR ITENS DA COMPRA
+        // ==============================================
 
-        const produtoFormatado = {
+        const [itens] =
+            await banco.query(`
 
-            id:
-                produto.id,
+                SELECT
 
-            nome:
-                produto.nome,
+                    ic.id AS item_id,
 
-            categoria:
-                produto.categoria,
+                    ic.produto_id,
 
-            categoria_id:
-                obterCategoriaId(produto.categoria),
+                    p.nome AS produto,
 
-            unidade:
-                produto.unidade,
+                    ic.quantidade,
 
-            estoque:
-                Number(produto.estoque)
+                    ic.valor_unitario,
 
-        };
+                    ic.subtotal
+
+                FROM itens_compra ic
+
+                INNER JOIN produtos p
+                    ON ic.produto_id = p.id
+
+                WHERE ic.compra_id = ?
+
+                ORDER BY ic.id
+
+            `,
+
+            [
+                id
+            ]);
 
 
-        return res.json({
+        compra.itens =
+            itens;
+
+
+        // ==============================================
+        // RETORNAR COMPRA COMPLETA
+        // ==============================================
+
+        res.json({
 
             sucesso: true,
 
-            produto:
-                produtoFormatado
+            compra: compra
 
         });
 
 
     } catch (erro) {
 
+
         console.error(
-            'Erro ao buscar produto:',
+            'Erro ao buscar compra:',
             erro
         );
 
 
-        return res.status(500).json({
+        res.status(500).json({
 
             sucesso: false,
 
             mensagem:
-                'Erro ao buscar produto.',
-
-            erro:
-                erro.message
+                'Erro ao buscar compra.'
 
         });
 
@@ -495,297 +551,147 @@ router.get('/:id', async (req, res) => {
 });
 
 
-// =====================================================
-// EDITAR PRODUTO
-// PUT /api/produtos/:id
-// =====================================================
-
-router.put('/:id', async (req, res) => {
-
-    try {
-
-        const { id } =
-            req.params;
-
-
-        const {
-            nome,
-            categoria_id,
-            unidade
-        } = req.body;
-
-
-        // -------------------------------------------------
-        // VALIDAR CAMPOS
-        // -------------------------------------------------
-
-        if (!nome || !categoria_id || !unidade) {
-
-            return res.status(400).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Preencha todos os campos do produto.'
-
-            });
-
-        }
-
-
-        const nomeLimpo =
-            String(nome).trim();
-
-        const unidadeLimpa =
-            String(unidade).trim();
-
-        const categoriaNome =
-            obterCategoria(categoria_id);
-
-
-        // -------------------------------------------------
-        // VALIDAR CATEGORIA
-        // -------------------------------------------------
-
-        if (!categoriaNome) {
-
-            return res.status(400).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Categoria inválida.'
-
-            });
-
-        }
-
-
-        // -------------------------------------------------
-        // VERIFICAR DUPLICIDADE NA EDIÇÃO
-        // -------------------------------------------------
-        //
-        // O "id <> ?" é importante.
-        //
-        // Ele impede que o próprio produto seja
-        // considerado uma duplicidade.
-        // -------------------------------------------------
-
-        const [produtoExistente] = await banco.query(
-
-            `
-            SELECT id
-            FROM produtos
-
-            WHERE LOWER(TRIM(nome)) = LOWER(?)
-              AND LOWER(TRIM(categoria)) = LOWER(?)
-              AND LOWER(TRIM(unidade)) = LOWER(?)
-              AND id <> ?
-
-            LIMIT 1
-            `,
-
-            [
-                nomeLimpo,
-                categoriaNome,
-                unidadeLimpa,
-                id
-            ]
-
-        );
-
-
-        if (produtoExistente.length > 0) {
-
-            return res.status(409).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Já existe outro produto com estes dados.'
-
-            });
-
-        }
-
-
-        // -------------------------------------------------
-        // ATUALIZAR PRODUTO
-        // -------------------------------------------------
-
-        const [resultado] = await banco.query(
-
-            `
-            UPDATE produtos
-
-            SET
-                nome = ?,
-                categoria = ?,
-                unidade = ?
-
-            WHERE id = ?
-            `,
-
-            [
-                nomeLimpo,
-                categoriaNome,
-                unidadeLimpa,
-                id
-            ]
-
-        );
-
-
-        // -------------------------------------------------
-        // VERIFICAR SE O PRODUTO EXISTE
-        // -------------------------------------------------
-
-        if (resultado.affectedRows === 0) {
-
-            return res.status(404).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Produto não encontrado.'
-
-            });
-
-        }
-
-
-        return res.json({
-
-            sucesso: true,
-
-            mensagem:
-                'Produto editado com sucesso!'
-
-        });
-
-
-    } catch (erro) {
-
-        console.error(
-            'Erro ao editar produto:',
-            erro
-        );
-
-
-        if (erro.code === 'ER_DUP_ENTRY') {
-
-            return res.status(409).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Já existe outro produto com estes dados.'
-
-            });
-
-        }
-
-
-        return res.status(500).json({
-
-            sucesso: false,
-
-            mensagem:
-                'Erro ao editar produto.',
-
-            erro:
-                erro.message
-
-        });
-
-    }
-
-});
-
-
-// =====================================================
-// EXCLUIR PRODUTO
-// DELETE /api/produtos/:id
-// =====================================================
+// ======================================================
+// EXCLUIR COMPRA
+// ======================================================
 
 router.delete('/:id', async (req, res) => {
 
+
+    const { id } =
+        req.params;
+
+
     try {
 
-        const { id } =
-            req.params;
+
+        const conexao =
+            await banco.getConnection();
 
 
-        const [vinculos] = await banco.query(
-            `SELECT
-                (SELECT COUNT(*) FROM Itens_compra WHERE produto_id = ?) AS itens,
-                (SELECT COUNT(*) FROM movimentacoes_estoque WHERE produto_id = ?) AS movimentacoes`,
-            [id, id]
-        );
-        if (Number(vinculos[0].itens) > 0 || Number(vinculos[0].movimentacoes) > 0) {
-            return res.status(409).json({
-                sucesso: false,
-                mensagem: 'Produto com histórico de compras ou movimentações não pode ser excluído.'
-            });
-        }
-
-        const [resultado] = await banco.query(
-
-            `
-            DELETE FROM produtos
-            WHERE id = ?
-            `,
-
-            [id]
-
-        );
+        try {
 
 
-        // -------------------------------------------------
-        // PRODUTO NÃO ENCONTRADO
-        // -------------------------------------------------
+            await conexao.beginTransaction();
 
-        if (resultado.affectedRows === 0) {
+            const [compraExistente] = await conexao.query(
+                'SELECT id, estoque_contabilizado FROM compras WHERE id = ? FOR UPDATE', [id]
+            );
+            if (!compraExistente.length) {
+                await conexao.rollback();
+                return res.status(404).json({ sucesso: false, mensagem: 'Compra não encontrada.' });
+            }
+            if (Number(compraExistente[0].estoque_contabilizado) === 1) {
+                await reverterItens(conexao, id);
+            }
 
-            return res.status(404).json({
+            
+            await removerMovimentacoes(conexao, id);
 
-                sucesso: false,
+            // ==========================================
+            // EXCLUIR PRIMEIRO OS ITENS
+            // ==========================================
+
+            await conexao.query(
+
+                `DELETE FROM itens_compra
+                 WHERE compra_id = ?`,
+
+                [
+                    id
+                ]
+
+            );
+
+
+            // ==========================================
+            // EXCLUIR A COMPRA
+            // ==========================================
+
+            const [resultado] =
+                await conexao.query(
+
+                    `DELETE FROM compras
+                     WHERE id = ?`,
+
+                    [
+                        id
+                    ]
+
+                );
+
+
+            // ==========================================
+            // VERIFICAR SE A COMPRA EXISTIA
+            // ==========================================
+
+            if (
+                resultado.affectedRows === 0
+            ) {
+
+
+                await conexao.rollback();
+
+
+                return res.status(404).json({
+
+                    sucesso: false,
+
+                    mensagem:
+                        'Compra não encontrada.'
+
+                });
+
+            }
+
+
+            // ==========================================
+            // CONFIRMAR EXCLUSÃO
+            // ==========================================
+
+            await conexao.commit();
+
+
+            res.json({
+
+                sucesso: true,
 
                 mensagem:
-                    'Produto não encontrado.'
+                    'Compra excluída com sucesso.'
 
             });
 
+
+        } catch (erro) {
+
+
+            await conexao.rollback();
+
+            throw erro;
+
+
+        } finally {
+
+
+            conexao.release();
+
         }
-
-
-        return res.json({
-
-            sucesso: true,
-
-            mensagem:
-                'Produto excluído com sucesso!'
-
-        });
 
 
     } catch (erro) {
 
+
         console.error(
-            'Erro ao excluir produto:',
+            'Erro ao excluir compra:',
             erro
         );
 
 
-        return res.status(500).json({
+        res.status(erro.status || 500).json({
 
             sucesso: false,
 
-            mensagem:
-                'Erro ao excluir produto.',
-
-            erro:
-                erro.message
+            mensagem: erro.status ? erro.message : 'Erro ao excluir compra.'
 
         });
 
@@ -793,5 +699,462 @@ router.delete('/:id', async (req, res) => {
 
 });
 
+
+// ======================================================
+// EDITAR COMPRA
+// ======================================================
+
+console.log(
+    'REGISTRANDO ROTA PUT /:id'
+);
+
+
+router.put('/:id', async (req, res) => {
+
+
+    console.log(
+        'ENTROU NA ROTA PUT!'
+    );
+
+
+    const { id } =
+        req.params;
+
+
+    const {
+
+        fornecedor_id,
+
+        data_compra,
+
+        itens
+
+    } = req.body;
+
+
+    // ==================================================
+    // VALIDAÇÃO DO FORNECEDOR
+    // ==================================================
+
+    if (!fornecedor_id) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'Selecione um fornecedor.'
+
+        });
+
+    }
+
+
+    // ==================================================
+    // VALIDAÇÃO DA DATA
+    // ==================================================
+
+    if (!data_compra) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'Informe a data da compra.'
+
+        });
+
+    }
+
+
+    // ==================================================
+    // VALIDAÇÃO DOS ITENS
+    // ==================================================
+
+    if (
+        !itens ||
+        itens.length === 0
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'Adicione pelo menos um produto à compra.'
+
+        });
+
+    }
+
+    // ==================================================
+// VALIDAR QUANTIDADE E VALOR DOS ITENS
+// ==================================================
+
+for (const item of itens) {
+
+    const quantidade =
+        Number(
+            item.quantidade
+        );
+
+
+    const valor_unitario =
+        Number(
+            item.valor_unitario
+        );
+
+
+    // ==============================================
+    // VALIDAR PRODUTO
+    // ==============================================
+
+    if (
+        !item.produto_id
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'Produto inválido na compra.'
+
+        });
+
+    }
+
+
+    // ==============================================
+    // VALIDAR QUANTIDADE
+    // ==============================================
+
+    if (
+        !Number.isFinite(
+            quantidade
+        ) ||
+        !Number.isSafeInteger(quantidade) ||
+        quantidade < 1 ||
+        quantidade > 10000
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'A quantidade dos produtos deve ser um número inteiro entre 1 e 10000.'
+
+        });
+
+    }
+
+
+    // ==============================================
+    // VALIDAR VALOR UNITÁRIO
+    // ==============================================
+
+    if (
+        !Number.isFinite(
+            valor_unitario
+        ) ||
+        valor_unitario <= 0
+    ) {
+
+        return res.status(400).json({
+
+            sucesso: false,
+
+            mensagem:
+                'O valor unitário dos produtos deve ser maior que zero.'
+
+        });
+
+    }
+
+}
+
+
+    const erroItens = validarItens(itens);
+    if (erroItens) return res.status(400).json({ sucesso: false, mensagem: erroItens });
+
+    try {
+
+
+        // ==============================================
+        // CALCULAR NOVO VALOR TOTAL
+        // ==============================================
+
+        let valor_total = 0;
+
+
+        itens.forEach(item => {
+
+
+            const quantidade =
+                Number(
+                    item.quantidade
+                );
+
+
+            const valor_unitario =
+                Number(
+                    item.valor_unitario
+                );
+
+
+            valor_total +=
+                quantidade *
+                valor_unitario;
+
+        });
+
+
+        // ==============================================
+        // PEGAR CONEXÃO
+        // ==============================================
+
+        const conexao =
+            await banco.getConnection();
+
+
+        try {
+
+
+            // ==========================================
+            // INICIAR TRANSAÇÃO
+            // ==========================================
+
+            await conexao.beginTransaction();
+
+
+            const [situacaoEstoque] = await conexao.query(
+                'SELECT estoque_contabilizado FROM compras WHERE id = ? FOR UPDATE', [id]
+            );
+            if (!situacaoEstoque.length) {
+                await conexao.rollback();
+                return res.status(404).json({ sucesso: false, mensagem: 'Compra não encontrada.' });
+            }
+            const compraContabilizada = Number(situacaoEstoque[0].estoque_contabilizado) === 1;
+
+            // ==========================================
+            // ATUALIZAR DADOS PRINCIPAIS DA COMPRA
+            // ==========================================
+
+            const [resultadoCompra] =
+                await conexao.query(
+
+                    `UPDATE compras
+
+                     SET
+
+                        fornecedor_id = ?,
+
+                        data_compra = ?,
+
+                        valor_total = ?
+
+                     WHERE id = ?`,
+
+                    [
+
+                        fornecedor_id,
+
+                        data_compra,
+
+                        valor_total,
+
+                        id
+
+                    ]
+
+                );
+
+
+            // ==========================================
+            // VERIFICAR SE A COMPRA EXISTE
+            // ==========================================
+
+            if (
+                resultadoCompra.affectedRows === 0
+            ) {
+
+
+                await conexao.rollback();
+
+
+                return res.status(404).json({
+
+                    sucesso: false,
+
+                    mensagem:
+                        'Compra não encontrada.'
+
+                });
+
+            }
+
+
+            // compras anteriores ao controle de estoque não movimentam o saldo.
+            if (compraContabilizada) {
+                await reverterItens(conexao, id);
+            }
+
+            await removerMovimentacoes(conexao, id);
+
+            // ==========================================
+            // REMOVER ITENS ANTIGOS
+            // ==========================================
+            //
+            // Como a compra pode possuir vários itens,
+            // removemos os itens antigos e cadastramos
+            // novamente a lista atualizada.
+            // ==========================================
+
+            await conexao.query(
+
+                `DELETE FROM itens_compra
+                 WHERE compra_id = ?`,
+
+                [
+                    id
+                ]
+
+            );
+
+
+            // ==========================================
+            // INSERIR ITENS ATUALIZADOS
+            // ==========================================
+
+            for (const item of itens) {
+
+
+                const quantidade =
+                    Number(
+                        item.quantidade
+                    );
+
+
+                const valor_unitario =
+                    Number(
+                        item.valor_unitario
+                    );
+
+
+                const subtotal =
+                    quantidade *
+                    valor_unitario;
+
+
+                await conexao.query(
+
+                    `INSERT INTO itens_compra
+
+                    (
+                        compra_id,
+                        produto_id,
+                        quantidade,
+                        valor_unitario,
+                        subtotal
+                    )
+
+                    VALUES (?, ?, ?, ?, ?)`,
+
+                    [
+
+                        id,
+
+                        item.produto_id,
+
+                        quantidade,
+
+                        valor_unitario,
+
+                        subtotal
+
+                    ]
+
+                );
+
+            }
+
+
+            if (compraContabilizada) {
+                await registrarEntradas(conexao, id, itens);
+            }
+
+            // ==========================================
+            // CONFIRMAR ALTERAÇÕES
+            // ==========================================
+
+            await conexao.commit();
+
+
+            res.json({
+
+                sucesso: true,
+
+                mensagem:
+                    'Compra atualizada com sucesso.',
+
+                valor_total:
+                    valor_total
+
+            });
+
+
+        } catch (erro) {
+
+
+            // ==========================================
+            // DESFAZER ALTERAÇÕES
+            // ==========================================
+
+            await conexao.rollback();
+
+
+            throw erro;
+
+
+        } finally {
+
+
+            conexao.release();
+
+        }
+
+
+    } catch (erro) {
+
+
+        console.error(
+            'Erro ao editar compra:',
+            erro
+        );
+
+
+        res.status(erro.status || 500).json({
+
+            sucesso: false,
+
+            mensagem: erro.status ? erro.message : 'Erro ao editar compra.'
+
+        });
+
+    }
+
+});
+
+
+console.log(
+    'ROTA PUT DE COMPRAS CARREGADA'
+);
+
+
+// ======================================================
+// EXPORTAR ROTAS
+// ======================================================
 
 module.exports = router;
