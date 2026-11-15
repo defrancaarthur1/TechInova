@@ -1,151 +1,142 @@
-// Histórico de compras: filtros locais sem alterar as rotas existentes.
+// Histórico de compras - TechInova
 let compras = [];
 let fornecedores = [];
 
-function dataISO(valor) {
+const elemento = id => document.getElementById(id);
+const texto = valor => String(valor ?? '');
+
+function mostrarMensagem(mensagem) {
+    const corpo = elemento('tabelaHistorico');
+    if (!corpo) return;
+    corpo.replaceChildren();
+    const linha = corpo.insertRow();
+    const celula = linha.insertCell();
+    celula.colSpan = 6;
+    celula.textContent = mensagem;
+}
+
+function dataLocal(valor) {
     if (!valor) return '';
-    const texto = String(valor);
-    // MySQL pode retornar YYYY-MM-DD ou uma data ISO com horário UTC.
-    const iso = texto.match(/^(\d{4}-\d{2}-\d{2})/);
-    if (iso) return iso[1];
-    const br = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (br) return `${br[3]}-${br[2]}-${br[1]}`;
-    const d = new Date(valor);
-    if (Number.isNaN(d.getTime())) return '';
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const parte = texto(valor).slice(0, 10);
+    return /^\d{4}-\d{2}-\d{2}$/.test(parte) ? parte : '';
 }
 
-function normalizarNome(valor) {
-    return String(valor ?? '').trim().normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
-}
-
-function dataBR(valor) {
-    const iso = dataISO(valor);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return '-';
-    const [ano, mes, dia] = iso.split('-');
+function formatarData(valor) {
+    const data = dataLocal(valor);
+    if (!data) return '-';
+    const [ano, mes, dia] = data.split('-');
     return `${dia}/${mes}/${ano}`;
 }
 
-function moeda(valor) {
-    return Number(valor || 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+function formatarValor(valor) {
+    return Number(valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function adicionarCelula(linha, valor) {
-    const td = document.createElement('td');
-    td.textContent = String(valor ?? '');
-    linha.appendChild(td);
-    return td;
+function atualizarOpcoesFornecedores() {
+    const campo = elemento('filtroFornecedor');
+    if (!campo) return;
+    const selecionado = campo.value;
+    const nomes = new Set();
+    fornecedores.forEach(f => { if (f.empresa) nomes.add(texto(f.empresa)); });
+    compras.forEach(c => { if (c.fornecedor) nomes.add(texto(c.fornecedor)); });
+    campo.replaceChildren();
+    const todos = document.createElement('option');
+    todos.value = '';
+    todos.textContent = 'Todos os fornecedores';
+    campo.appendChild(todos);
+    [...nomes].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(nome => {
+        const opcao = document.createElement('option');
+        opcao.value = nome;
+        opcao.textContent = nome;
+        campo.appendChild(opcao);
+    });
+    campo.value = [...campo.options].some(o => o.value === selecionado) ? selecionado : '';
 }
 
 async function carregarFornecedores() {
     try {
-        const resposta = await fetch('/api/fornecedores');
-        if (!resposta.ok) throw new Error('Falha ao consultar fornecedores');
+        const resposta = await fetch('/api/fornecedores', { credentials: 'same-origin' });
+        if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
         const dados = await resposta.json();
         fornecedores = Array.isArray(dados.fornecedores) ? dados.fornecedores : [];
-        atualizarOpcoesFornecedores();
     } catch (erro) {
-        console.error('Erro ao carregar fornecedores:', erro);
-        // Mantém o filtro utilizável com fornecedores das compras já carregadas.
-        atualizarOpcoesFornecedores();
+        console.warn('Não foi possível carregar a lista de fornecedores:', erro);
+        fornecedores = [];
     }
-}
-
-function atualizarOpcoesFornecedores() {
-    const select = document.getElementById('filtroFornecedor');
-    const anterior = select.value;
-    // Filtra pelo ID do fornecedor, sem depender de diferenças de escrita no nome.
-    const opcoes = new Map();
-    fornecedores.forEach(f => {
-        if (f.id != null) opcoes.set(String(f.id), String(f.empresa || `Fornecedor ${f.id}`));
-    });
-    compras.forEach(c => {
-        if (c.fornecedor_id != null && !opcoes.has(String(c.fornecedor_id))) {
-            opcoes.set(String(c.fornecedor_id), String(c.fornecedor || `Fornecedor ${c.fornecedor_id}`));
-        }
-    });
-    select.replaceChildren(new Option('Todos os fornecedores', ''));
-    [...opcoes].sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'))
-        .forEach(([id, nome]) => select.add(new Option(nome, id)));
-    if (opcoes.has(anterior)) select.value = anterior;
+    atualizarOpcoesFornecedores();
 }
 
 async function carregarCompras() {
     try {
-        const resposta = await fetch('/api/compras');
+        const resposta = await fetch('/api/compras', { credentials: 'same-origin' });
+        if (resposta.status === 401) { window.location.href = 'login.html'; return; }
+        if (!resposta.ok) throw new Error(`Erro HTTP ${resposta.status}`);
         const dados = await resposta.json();
-        if (!resposta.ok || !Array.isArray(dados.compras)) {
-            throw new Error(dados.mensagem || 'Resposta inválida da API');
-        }
+        if (!Array.isArray(dados.compras)) throw new Error('Formato de resposta inesperado.');
         compras = dados.compras;
         atualizarOpcoesFornecedores();
         aplicarFiltros();
     } catch (erro) {
         console.error('Erro ao carregar compras:', erro);
-        document.getElementById('tabelaHistorico').innerHTML = '<tr><td colspan="6">Erro ao carregar o histórico.</td></tr>';
+        mostrarMensagem('Erro ao carregar o histórico. Consulte o Console.');
     }
 }
 
 function aplicarFiltros() {
-    const fornecedorId = document.getElementById('filtroFornecedor').value;
-    const inicio = document.getElementById('filtroDataInicial').value;
-    const fim = document.getElementById('filtroDataFinal').value;
-    const mensagem = document.getElementById('mensagemFiltros');
-    if (inicio && fim && inicio > fim) {
-        mensagem.textContent = 'A data inicial não pode ser posterior à data final.';
-        mostrarCompras([]);
+    const fornecedor = elemento('filtroFornecedor')?.value || '';
+    const inicial = elemento('filtroDataInicial')?.value || '';
+    const final = elemento('filtroDataFinal')?.value || '';
+    if (inicial && final && inicial > final) {
+        mostrarMensagem('A data inicial não pode ser posterior à data final.');
         return;
     }
     const filtradas = compras.filter(compra => {
-        const data = dataISO(compra.data_compra);
-        const correspondeFornecedor = !fornecedorId || String(compra.fornecedor_id) === fornecedorId;
-        return correspondeFornecedor && (!inicio || data >= inicio) && (!fim || data <= fim);
+        const data = dataLocal(compra.data_compra);
+        return (!fornecedor || texto(compra.fornecedor) === fornecedor) &&
+               (!inicial || (data && data >= inicial)) &&
+               (!final || (data && data <= final));
     });
     mostrarCompras(filtradas);
-    mensagem.textContent = `${filtradas.length} compra(s) encontrada(s).`;
 }
 
 function mostrarCompras(lista) {
-    const tabela = document.getElementById('tabelaHistorico');
-    tabela.replaceChildren();
-    let totalLinhas = 0;
+    const corpo = elemento('tabelaHistorico');
+    if (!corpo) return;
+    corpo.replaceChildren();
+    if (!lista.length) { mostrarMensagem('Nenhuma compra encontrada.'); return; }
     lista.forEach(compra => {
-        (Array.isArray(compra.itens) ? compra.itens : []).forEach(item => {
-            totalLinhas++;
-            const linha = document.createElement('tr');
-            adicionarCelula(linha, dataBR(compra.data_compra));
-            adicionarCelula(linha, compra.fornecedor || 'Fornecedor não informado');
-            adicionarCelula(linha, item.produto || 'Produto não informado');
-            adicionarCelula(linha, Number(item.quantidade));
-            adicionarCelula(linha, moeda(item.subtotal));
-            const tdAcoes = document.createElement('td');
+        const itens = Array.isArray(compra.itens) && compra.itens.length ? compra.itens : [null];
+        itens.forEach(item => {
+            const linha = corpo.insertRow();
+            const colunas = [
+                formatarData(compra.data_compra),
+                texto(compra.fornecedor || '-'),
+                texto(item?.produto || '-'),
+                texto(item?.quantidade ?? '-'),
+                formatarValor(item?.subtotal ?? compra.valor_total)
+            ];
+            colunas.forEach(valor => { linha.insertCell().textContent = valor; });
+            const acoes = linha.insertCell();
+            const grupo = document.createElement('div');
+            grupo.className = 'acoes-compra';
             const editar = document.createElement('button');
-            editar.type = 'button';
-            editar.className = 'btn edit';
-            editar.textContent = 'Editar';
+            editar.type = 'button'; editar.className = 'edit'; editar.textContent = 'Editar';
             editar.addEventListener('click', () => editarCompra(compra.compra_id));
             const excluir = document.createElement('button');
-            excluir.type = 'button';
-            excluir.className = 'btn delete';
-            excluir.textContent = 'Excluir';
+            excluir.type = 'button'; excluir.className = 'delete'; excluir.textContent = 'Excluir';
             excluir.addEventListener('click', () => excluirCompra(compra.compra_id));
-            tdAcoes.append(editar, excluir);
-            linha.appendChild(tdAcoes);
-            tabela.appendChild(linha);
+            grupo.append(editar, excluir);
+            acoes.appendChild(grupo);
         });
     });
-    if (!totalLinhas) {
-        const linha = document.createElement('tr');
-        adicionarCelula(linha, 'Nenhuma compra encontrada.').colSpan = 6;
-        tabela.appendChild(linha);
-    }
 }
 
 async function excluirCompra(id) {
     if (!confirm('Tem certeza que deseja excluir esta compra?')) return;
     try {
-        const resposta = await fetch(`/api/compras/${id}`, { method: 'DELETE' });
+        const resposta = await fetch(`/api/compras/${encodeURIComponent(id)}`, {
+            method: 'DELETE', credentials: 'same-origin'
+        });
         const dados = await resposta.json();
         if (!resposta.ok) throw new Error(dados.mensagem || 'Erro ao excluir compra.');
         alert(dados.mensagem || 'Compra excluída.');
@@ -160,16 +151,18 @@ function editarCompra(id) {
     window.location.href = `index.html?editar=${encodeURIComponent(id)}`;
 }
 
-document.getElementById('formFiltrosHistorico').addEventListener('submit', evento => {
-    evento.preventDefault();
-    aplicarFiltros();
-});
-document.getElementById('limparFiltros').addEventListener('click', () => {
-    document.getElementById('formFiltrosHistorico').reset();
-    aplicarFiltros();
-});
-// Também atualiza a listagem ao alterar qualquer campo, sem precisar clicar em Filtrar.
-['filtroFornecedor', 'filtroDataInicial', 'filtroDataFinal'].forEach(id => {
-    document.getElementById(id).addEventListener('change', aplicarFiltros);
-});
-Promise.all([carregarCompras(), carregarFornecedores()]);
+function iniciarHistorico() {
+    const form = elemento('formFiltrosHistorico');
+    form?.addEventListener('submit', evento => { evento.preventDefault(); aplicarFiltros(); });
+    elemento('limparFiltros')?.addEventListener('click', () => { form?.reset(); aplicarFiltros(); });
+    ['filtroFornecedor', 'filtroDataInicial', 'filtroDataFinal'].forEach(id => {
+        elemento(id)?.addEventListener('change', aplicarFiltros);
+    });
+    Promise.allSettled([carregarCompras(), carregarFornecedores()]);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciarHistorico);
+} else {
+    iniciarHistorico();
+}
