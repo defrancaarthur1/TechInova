@@ -26,6 +26,12 @@ const banco = mysql.createPool({
     port:
         Number(process.env.DB_PORT || 3306),
 
+    // TiDB Cloud exige conexões TLS com verificação do certificado.
+    ssl: {
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: true
+    },
+
     // Aguarda uma conexão ficar disponível
     waitForConnections:
         true,
