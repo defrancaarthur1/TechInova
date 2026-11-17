@@ -7,6 +7,7 @@ const session = require('express-session');
 const path = require('path');
 
 const banco = require('./banco');
+const aplicarMigracoes = require('./aplicarMigracoes');
 
 
 const fornecedorRoutes =
@@ -151,13 +152,15 @@ app.use(
 
 const PORT = Number(process.env.PORT || 3000);
 
+async function iniciarServidor() {
+    await aplicarMigracoes(banco);
 
-app.listen(PORT, () => {
+    app.listen(PORT, () => {
+        console.log(`Servidor iniciado em http://localhost:${PORT}`);
+    });
+}
 
-    console.log(
-
-        `Servidor iniciado em http://localhost:${PORT}`
-
-    );
-
+iniciarServidor().catch(erro => {
+    console.error('Erro ao preparar o banco de dados:', erro);
+    process.exit(1);
 });

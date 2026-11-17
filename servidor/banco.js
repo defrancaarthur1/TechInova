@@ -4,17 +4,19 @@ const fs = require('fs');
 const path = require('path');
 
 const caminhoCA = process.env.DB_SSL_CA_PATH;
+const hostConfigurado = process.env.DB_HOST?.trim();
+const hostBanco = hostConfigurado === 'localhost'
+    ? '127.0.0.1'
+    : hostConfigurado;
 
-const configuracaoSSL = {
+const configuracaoSSL = caminhoCA ? {
     minVersion: 'TLSv1.2',
     rejectUnauthorized: true,
-    ...(caminhoCA ? {
-        ca: fs.readFileSync(
-            path.resolve(__dirname, caminhoCA),
-            'utf8'
-        )
-    } : {})
-};
+    ca: fs.readFileSync(
+        path.resolve(__dirname, caminhoCA),
+        'utf8'
+    )
+} : undefined;
 
 
 const mysql = require('mysql2/promise');
@@ -27,7 +29,7 @@ const mysql = require('mysql2/promise');
 const banco = mysql.createPool({
 
     host:
-        process.env.DB_HOST,
+        hostBanco,
 
     user:
         process.env.DB_USER,
@@ -94,6 +96,11 @@ async function testarConexao() {
         console.error(
             'Código:',
             erro.code
+        );
+
+        console.error(
+            'Destino:',
+            `${hostBanco || '(DB_HOST não definido)'}:${process.env.DB_PORT || 3306}`
         );
 
         console.error(
