@@ -1,185 +1,337 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+console.log('EDITAR-EXCLUIR.JS CARREGADO');
 
-<head>
+// FORNECEDORES
+const selectFornecedorEditar = document.querySelector('#fornecedorEditar');
+const selectFornecedorExcluir = document.querySelector('#fornecedorExcluir');
+const btnEditarFornecedor = document.querySelector('#btnEditarFornecedor');
+const btnExcluirFornecedor = document.querySelector('#btnExcluirFornecedor');
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+// CARREGAR FORNECEDORES
+async function carregarFornecedores() {
+    try {
+        const resposta = await fetch('/api/fornecedores');
+        const dados = await resposta.json();
+        const fornecedores = dados.fornecedores || [];
 
-    <title>Editar e Excluir - Sistema de Controle de Compras</title>
+        // SELECT PARA EDITAR
+        selectFornecedorEditar.innerHTML = `
+            <option value="">
+                Selecione o fornecedor
+            </option>
+        `;
 
-    <link rel="stylesheet" href="adegastyle.css">
+        fornecedores.forEach(fornecedor => {
+            const option = document.createElement('option');
+            option.value = fornecedor.id;
+            option.textContent = fornecedor.empresa;
+            selectFornecedorEditar.appendChild(option);
+        });
 
-<link rel="stylesheet" href="tema-vinho.css">
-</head>
+        // SELECT PARA EXCLUIR
+        selectFornecedorExcluir.innerHTML = `
+            <option value="">
+                Selecione o fornecedor
+            </option>
+        `;
 
-<body>
+        fornecedores.forEach(fornecedor => {
+            const option = document.createElement('option');
 
-<header class="topbar">
-<img src="logo-adega-file.png" alt="Adega Filé" class="logo-topbar">
+            option.value = fornecedor.id;
+            option.textContent = fornecedor.empresa;
+            selectFornecedorExcluir.appendChild(option);
+        });
 
-    <h1>Sistema de Controle de Compras</h1>
+    } catch (erro) {
+        console.error('Erro ao carregar fornecedores:', erro);
+        alert('Não foi possível carregar os fornecedores.');
+    }
+}
 
-    <div class="menu-mobile">
-    <button id="btnMenu" class="btn-menu">☰</button>
-</div>
+// PREENCHER FORNECEDOR
+selectFornecedorEditar.addEventListener('change', async () => {
+        const id = selectFornecedorEditar.value;
 
-<nav id="menuPrincipal">
-    <a href="index.html">Registrar Compra</a>
-    <a href="cadastros.html">Cadastros</a>
-    <a href="editar-excluir.html" aria-current="page">Editar / Excluir</a>
-    <a href="historico.html">Histórico</a>
-    <a href="configuracoes.html">Configurações</a>
-            <a href="#" id="btnLogout">Sair</a>
-</nav>
+        if (!id) {
+            return;
+        }
 
-</header>
+        try {
+            const resposta = await fetch('/api/fornecedores');
+            const dados = await resposta.json();
+            const fornecedores = dados.fornecedores || [];
 
-<main class="container">
+            const fornecedor = fornecedores.find(item => item.id == id);
 
-    <!-- FORNECEDORES -->
-    <section class="card">
+            if (!fornecedor) {
+                return;
+            }
 
-        <h2>Editar / Excluir Fornecedor</h2>
+            document.querySelector('#empresa').value = fornecedor.empresa || '';
+            document.querySelector('#cnpj').value = fornecedor.cnpj || '';
+            document.querySelector('#telefone').value = fornecedor.telefone || '';
+            document.querySelector('#consultor').value = fornecedor.consultor || '';
+            document.querySelector('#email').value = fornecedor.email || '';
 
-        <label for="fornecedorEditar">Selecione o fornecedor</label>
+            if (fornecedor.data_cadastro) {
+                const data = new Date(fornecedor.data_cadastro);
+                const ano = data.getFullYear();
+                const mes = String(data.getMonth() + 1).padStart(2, '0');
+                const dia = String(data.getDate()).padStart(2, '0');
+                document.querySelector('#dataCadastro').value =`${ano}-${mes}-${dia}`;
 
-        <select id="fornecedorEditar">
-            <option value="">Selecione o fornecedor</option>
-        </select>
+            } else {
+                document.querySelector('#dataCadastro').value = '';
+            }
 
-        <label for="empresa">Nome da empresa</label>
+        } catch (erro) {
+            console.error('Erro ao carregar dados do fornecedor:', erro);
+        }
+    }
+);
 
-        <input
-            type="text"
-            id="empresa"
-            placeholder="Ex: Coca-Cola">
+// EDITAR FORNECEDOR
+btnEditarFornecedor.addEventListener('click', async () => {
+        const id = selectFornecedorEditar.value;
 
-        <label for="cnpj">CNPJ</label>
+        if (!id) {
+            alert('Selecione um fornecedor para editar.');
+            return;
+        }
 
-        <input
-            type="text"
-            id="cnpj"
-            placeholder="00.000.000/0000-00">
+        const empresa = document.querySelector('#empresa').value.trim();
+        const cnpj = document.querySelector('#cnpj').value.trim();
+        const telefone = document.querySelector('#telefone').value.trim();
+        const consultor = document.querySelector('#consultor').value.trim();
+        const email = document.querySelector('#email').value.trim();
 
-        <label for="telefone">Telefone</label>
+        if (!empresa || !cnpj) {
+            alert('Preencha a empresa e o CNPJ.');
+            return;
+        }
 
-        <input
-            type="tel"
-            id="telefone"
-            placeholder="(11) 00000-0000">
+        try {
+            const resposta = await fetch(`/api/fornecedores/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ empresa, cnpj, telefone, consultor, email})
+                    }
+                );
 
-        <label for="consultor">Consultor de vendas</label>
+            const dados = await resposta.json();
 
-        <input
-            type="text"
-            id="consultor"
-            placeholder="Nome do consultor">
+            if (!resposta.ok) {
+                alert(dados.mensagem ||'Erro ao editar fornecedor.');
+                return;
+            }
 
-        <label for="email">E-mail</label>
+            alert(dados.mensagem || 'Fornecedor atualizado com sucesso.');
 
-        <input
-            type="email"
-            id="email"
-            placeholder="contato@empresa.com">
+            carregarFornecedores();
 
-        <label for="dataCadastro">Data de cadastro</label>
+        } catch (erro) {
+            console.error('Erro ao editar fornecedor:', erro);
+            alert('Não foi possível conectar ao servidor.');
+        }
+    }
+);
 
-        <input
-            type="date"
-            id="dataCadastro">
+// EXCLUIR FORNECEDOR
+btnExcluirFornecedor.addEventListener('click', async () => {
+        const id = selectFornecedorExcluir.value;
 
-        <div class="acoes">
-            <button class="btn edit" id="btnEditarFornecedor">Salvar edição</button>
+        if (!id) {
+            alert('Selecione um fornecedor para excluir.');
+            return;
+        }
 
-        </div>
+        const confirmar = confirm('Tem certeza que deseja excluir este fornecedor?');
 
-        <hr>
+        if (!confirmar) {
+            return;
+        }
 
-        <h3>Excluir fornecedor</h3>
+        try {
+            const resposta = await fetch(`/api/fornecedores/${id}`, {method: 'DELETE'});
 
-        <label for="fornecedorExcluir">Selecione o fornecedor</label>
+            const dados = await resposta.json();
 
-        <select id="fornecedorExcluir">
-            <option value="">Selecione o fornecedor</option>
-        </select>
+            if (!resposta.ok) {
+                alert(dados.mensagem || 'Erro ao excluir fornecedor.');
+                return;
+            }
 
-        <div class="acoes">
-            <button class="btn delete" id="btnExcluirFornecedor">Excluir fornecedor</button>
-        </div>
+            alert(dados.mensagem || 'Fornecedor excluído com sucesso.');
 
-    </section>
+            carregarFornecedores();
 
-    <!-- PRODUTOS -->
-    <section class="card">
+        } catch (erro) {
+            console.error( 'Erro ao excluir fornecedor:', erro);
+            alert('Não foi possível conectar ao servidor.');
+        }
+    }
+);
 
-        <h2>Editar / Excluir Produto</h2>
+// PRODUTOS
+const selectProdutoEditar = document.querySelector('#produtoEditar');
+const selectProdutoExcluir = document.querySelector('#produtoExcluir');
+const btnEditarProduto = document.querySelector('#btnEditarProduto');
+const btnExcluirProduto = document.querySelector('#btnExcluirProduto');
 
-        <label for="produtoEditar">Selecione o produto</label>
+// CARREGAR PRODUTOS
+async function carregarProdutos() {
+    try {
+       const resposta = await fetch('/api/produtos');
+const dados = await resposta.json();
+const produtos = dados.produtos || [];
 
-        <select id="produtoEditar">
-            <option value="">Selecione o produto</option>
-        </select>
+        // SELECT PARA EDITAR
+        selectProdutoEditar.innerHTML = `
+            <option value="">
+                Selecione o produto
+            </option>
+        `;
 
-        <label for="nomeProduto">Nome do produto</label>
+        produtos.forEach(produto => {
+            const option = document.createElement('option');
+            option.value = produto.id;
+            option.textContent = produto.nome;
+            selectProdutoEditar.appendChild(option);
+        });
 
-        <input
-            type="text"
-            id="nomeProduto"
-            placeholder="Ex: Coca-Cola 2L">
+        // SELECT PARA EXCLUIR
+        selectProdutoExcluir.innerHTML = `
+            <option value="">
+                Selecione o produto
+            </option>
+        `;
 
-        <label for="categoria">Categoria</label>
+        produtos.forEach(produto => {
+            const option = document.createElement('option');
+            option.value = produto.id;
+            option.textContent = produto.nome;
+            selectProdutoExcluir.appendChild(option);
+        });
 
-        <select id="categoria">
+    } catch (erro) {
+        console.error('Erro ao carregar produtos:', erro);
+        alert('Não foi possível carregar os produtos.');
+    }
+}
 
-            <option value="">Selecione uma categoria</option>
-<option value="5">Água</option>
-<option value="2">Cervejas</option>
-<option value="4">Destilados</option>
-<option value="6">Gelo</option>
-<option value="7">Outros</option>
-<option value="3">Refrigerantes</option>
-<option value="1">Sucos</option>
+// PREENCHER PRODUTO
+selectProdutoEditar.addEventListener('change', async () => {
+        const id = selectProdutoEditar.value;
 
-        </select>
+        if (!id) {
+            return;
+        }
 
-        <label for="unidade">Unidade de medida</label>
-        <select id="unidade">
+        try {
+            const resposta = await fetch('/api/produtos');
+const dados = await resposta.json();
+const produtos = dados.produtos || [];
+const produto = produtos.find(item => item.id == id);
 
-            <option value="">Selecione</option>
+            if (!produto) {
+                return;
+            }
 
-            <option value="Unidade">Unidade</option>
-            <option value="Caixa">Caixa</option>
-            <option value="Fardo">Fardo</option>
-            <option value="Litro">Litro</option>
+            document.querySelector('#nomeProduto').value = produto.nome || '';
+            document.querySelector('#categoria').value = produto.categoria_id || '';
+            document.querySelector('#unidade').value = produto.unidade || '';
 
-        </select>
+        } catch (erro) {
+            console.error('Erro ao carregar dados do produto:', erro);
+        }
+    }
+);
 
-        <div class="acoes">
-            <button class="btn edit" id="btnEditarProduto">Salvar edição</button>
-        </div>
+// EDITAR PRODUTO
+btnEditarProduto.addEventListener('click', async () => {
+        const id = selectProdutoEditar.value;
 
-        <hr>
+        if (!id) {
+            alert('Selecione um produto para editar.');
+            return;
+        }
 
-        <h3>Excluir produto</h3>
+        const nome = document.querySelector('#nomeProduto').value.trim();
+        const categoria_id = document.querySelector('#categoria').value;
+        const unidade = document.querySelector('#unidade').value;
 
-        <label for="produtoExcluir">Selecione o produto</label>
+        console.log('DADOS PARA EDITAR:', {
+    nome,
+    categoria_id,
+    unidade
+});
 
-        <select id="produtoExcluir">
-            <option value="">Selecione o produto</option>
-        </select>
+        if (!nome || !categoria_id || !unidade) {
+            alert('Preencha o nome, a categoria e a unidade do produto.');
+            return;
+        }
 
-        <div class="acoes">
-            <button class="btn delete" id="btnExcluirProduto">Excluir produto</button>
-        </div>
+        try {
+            const resposta = await fetch(`/api/produtos/${id}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({nome, categoria_id, unidade})
+                    }
+                );
 
-    </section>
+            const dados = await resposta.json();
 
-</main>
+            if (!resposta.ok) {
+                alert(dados.mensagem || 'Erro ao editar produto.');
+                return;
+            }
 
-<script src="editar-excluir.js"></script>
-<script src="auth.js"></script>
+            alert(dados.mensagem || 'Produto atualizado com sucesso.');
 
-</body>
+            carregarProdutos();
 
-</html>
+        } catch (erro) {
+            console.error('Erro ao editar produto:', erro);
+            alert('Não foi possível conectar ao servidor.');
+        }
+    }
+);
+
+// EXCLUIR PRODUTO
+btnExcluirProduto.addEventListener('click', async () => {
+        const id = selectProdutoExcluir.value;
+
+        if (!id) {
+            alert('Selecione um produto para excluir.');
+            return;
+        }
+        const confirmar =confirm('Tem certeza que deseja excluir este produto?');
+
+        if (!confirmar) {
+            return;
+        }
+
+        try {
+            const resposta = await fetch(`/api/produtos/${id}`, {method: 'DELETE'});
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                alert(dados.mensagem || 'Erro ao excluir produto.');
+                return;
+            }
+
+            alert(dados.mensagem || 'Produto excluído com sucesso.');
+
+            carregarProdutos();
+
+        } catch (erro) {
+            console.error('Erro ao excluir produto:', erro);
+            alert('Não foi possível conectar ao servidor.');
+        }
+    }
+);
+
+// CARREGAR DADOS AO ABRIR A PÁGINA
+
+carregarFornecedores();
+carregarProdutos();
