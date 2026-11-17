@@ -5,7 +5,6 @@ async function carregarConta() {
         if (!resposta.ok) throw new Error('Não foi possível consultar a conta.');
         const dados = await resposta.json();
         document.getElementById('nomeConta').textContent = dados.nome;
-        document.getElementById('emailConta').textContent = dados.email;
     } catch (erro) { document.getElementById('mensagemGeral').textContent = erro.message; }
 }
 async function alterar(url, dados, elemento, botao) {
@@ -25,6 +24,27 @@ document.getElementById('formEmail').addEventListener('submit', async (evento) =
     const form = evento.currentTarget;
     await alterar('/api/usuarios/email', { novoEmail: document.getElementById('novoEmail').value.trim(), senhaAtual: document.getElementById('senhaEmail').value }, document.getElementById('mensagemEmail'), form.querySelector('button'));
 });
+document.getElementById('formVerificarEmail').addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const botao = evento.currentTarget.querySelector('button');
+    const mensagem = document.getElementById('mensagemVerificacao');
+    mensagem.textContent = '';
+    botao.disabled = true;
+    try {
+        const resposta = await fetch('/api/usuarios/verificar-email-senha', {
+            method: 'POST', credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: document.getElementById('emailVerificacao').value.trim() })
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.mensagem || 'Não foi possível verificar o e-mail.');
+        document.getElementById('formSenha').hidden = false;
+        document.getElementById('emailVerificacao').readOnly = true;
+        botao.hidden = true;
+        mensagem.textContent = 'E-mail conferido. Defina sua nova senha.';
+    } catch (erro) { mensagem.textContent = erro.message; }
+    finally { botao.disabled = false; }
+});
 document.getElementById('formSenha').addEventListener('submit', async (evento) => {
     evento.preventDefault();
     const form = evento.currentTarget;
@@ -32,6 +52,6 @@ document.getElementById('formSenha').addEventListener('submit', async (evento) =
     const confirmarSenha = document.getElementById('confirmarSenha').value;
     if (novaSenha.length < 8 || !/[0-9]/.test(novaSenha) || !/[^A-Za-z0-9\s]/.test(novaSenha) || new TextEncoder().encode(novaSenha).length > 72) { document.getElementById('mensagemSenha').textContent = 'Use no mínimo 8 caracteres, pelo menos 1 número e 1 símbolo (máximo de 72 bytes).'; return; }
     if (novaSenha !== confirmarSenha) { document.getElementById('mensagemSenha').textContent = 'As senhas não coincidem.'; return; }
-    await alterar('/api/usuarios/senha', { senhaAtual: document.getElementById('senhaAtual').value, novaSenha, confirmarSenha }, document.getElementById('mensagemSenha'), form.querySelector('button'));
+    await alterar('/api/usuarios/senha', { email: document.getElementById('emailVerificacao').value.trim(), novaSenha, confirmarSenha }, document.getElementById('mensagemSenha'), form.querySelector('button'));
 });
 carregarConta();
