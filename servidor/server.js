@@ -83,7 +83,18 @@ app.use(session({
 // Servir apenas arquivos públicos da raiz (não expor servidor/, .env, SQL ou anexos).
 const raiz = path.resolve(__dirname, '..');
 const paginas = new Set(['login.html', 'index.html', 'cadastros.html', 'editar-excluir.html', 'historico.html', 'configuracoes.html']);
-const scripts = new Set(['login.js', 'auth.js', 'cadastro.js', 'historico.js', 'editar-excluir.js', 'script.js', 'configuracoes.js', 'adegastyle.css']);
+const scripts = new Set([
+    'login.js',
+    'auth.js',
+    'cadastro.js',
+    'historico.js',
+    'editar-excluir.js',
+    'script.js',
+    'configuracoes.js',
+    'adegastyle.css',
+    'tema-vinho.css',
+    'logo-adega-file.png'
+]);
 app.get('/', (req, res) => res.redirect('/login.html'));
 app.get('/:arquivo', (req, res, next) => {
     const arquivo = req.params.arquivo;
@@ -160,4 +171,10 @@ app.listen(PORT, () => {
 
     );
 
+});
+
+app.get("/tema-vinho.css", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "..", "tema-vinho.css")
+    );
 });
