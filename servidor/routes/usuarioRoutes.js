@@ -62,7 +62,7 @@ router.get('/usuarios/conta', exigirLogin, async (req, res) => {
     try {
         const usuario = await buscarUsuario(req.session.usuario.id);
         if (!usuario) return res.status(401).json({ mensagem: 'Conta não encontrada.' });
-        res.json({ nome: usuario.nome, email: usuario.email });
+        res.json({ nome: usuario.nome });
     } catch (erro) {
         console.error('Erro ao consultar conta:', erro);
         res.status(500).json({ mensagem: 'Erro ao consultar conta.' });
@@ -86,13 +86,50 @@ router.put('/usuarios/email', exigirLogin, async (req, res) => {
     }
 });
 
+// Limite por sessão: até 5 tentativas de conferência em 15 minutos.
+router.post('/usuarios/verificar-email-senha', exigirLogin, async (req, res) => {
+    try {
+        const agora = Date.now();
+        const limite = req.session.tentativasEmail || { inicio: agora, quantidade: 0 };
+        if (agora - limite.inicio > 15 * 60 * 1000) {
+            limite.inicio = agora;
+            limite.quantidade = 0;
+        }
+        if (limite.quantidade >= 5) return res.status(429).json({ mensagem: 'Muitas tentativas. Aguarde 15 minutos.' });
+        limite.quantidade++;
+        req.session.tentativasEmail = limite;
+        req.session.emailVerificadoSenha = null;
+        const email = normalizarEmail(req.body?.email);
+        const usuario = await buscarUsuario(req.session.usuario.id);
+        if (!usuario || !emailValido(email) || email !== normalizarEmail(usuario.email)) {
+            return res.status(403).json({ mensagem: 'E-mail não corresponde ao cadastro.' });
+        }
+        req.session.emailVerificadoSenha = { email, ate: agora + 5 * 60 * 1000 };
+        req.session.save(erro => {
+            if (erro) return res.status(500).json({ mensagem: 'Não foi possível salvar a verificação.' });
+            res.json({ sucesso: true, mensagem: 'E-mail conferido.' });
+        });
+    } catch (erro) {
+        console.error('Erro na conferência de e-mail:', erro);
+        res.status(500).json({ mensagem: 'Erro ao conferir e-mail.' });
+    }
+});
+
 router.put('/usuarios/senha', exigirLogin, async (req, res) => {
     try {
-        const { senhaAtual, novaSenha, confirmarSenha } = req.body || {};
-        if (typeof senhaAtual !== 'string' || !senhaValida(novaSenha) || novaSenha !== confirmarSenha) return res.status(400).json({ mensagem: 'A nova senha deve ter no mínimo 8 caracteres, incluir pelo menos 1 número e 1 símbolo, respeitar o limite de 72 bytes e coincidir com a confirmação.' });
+        const { email: emailInformado, novaSenha, confirmarSenha } = req.body || {};
+        const email = normalizarEmail(emailInformado);
+        const verificacao = req.session.emailVerificadoSenha;
+        if (!verificacao || verificacao.ate < Date.now() || verificacao.email !== email) {
+            return res.status(403).json({ mensagem: 'Verifique o e-mail cadastrado novamente.' });
+        }
+        if (!senhaValida(novaSenha) || novaSenha !== confirmarSenha) {
+            return res.status(400).json({ mensagem: 'A senha deve ter no mínimo 8 caracteres, 1 número e 1 símbolo, até 72 bytes e coincidir com a confirmação.' });
+        }
         const usuario = await buscarUsuario(req.session.usuario.id);
-        if (!usuario || !(await bcrypt.compare(senhaAtual, usuario.senha))) return res.status(401).json({ mensagem: 'Senha atual incorreta.' });
+        if (!usuario || email !== normalizarEmail(usuario.email)) return res.status(403).json({ mensagem: 'E-mail não corresponde ao cadastro.' });
         if (await bcrypt.compare(novaSenha, usuario.senha)) return res.status(400).json({ mensagem: 'Escolha uma senha diferente da atual.' });
+        req.session.emailVerificadoSenha = null;
         const hash = await bcrypt.hash(novaSenha, 12);
         await banco.execute('UPDATE usuarios SET senha = ? WHERE id = ? AND ativo = TRUE', [hash, usuario.id]);
         encerrarSessao(req, res);
