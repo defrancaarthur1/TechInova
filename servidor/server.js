@@ -80,26 +80,16 @@ app.use(session({
 }));
 
 
-// Servir apenas arquivos públicos da raiz (não expor servidor/, .env, SQL ou anexos).
-const raiz = path.resolve(__dirname, '..');
-const paginas = new Set(['login.html', 'index.html', 'cadastros.html', 'editar-excluir.html', 'historico.html', 'configuracoes.html']);
-const scripts = new Set([
-    'login.js',
-    'auth.js',
-    'cadastro.js',
-    'historico.js',
-    'editar-excluir.js',
-    'script.js',
-    'configuracoes.js',
-    'adegastyle.css',
-    'tema-vinho.css',
-    'logo-adega-file.png'
-]);
-app.get('/', (req, res) => res.redirect('/login.html'));
-app.get('/:arquivo', (req, res, next) => {
-    const arquivo = req.params.arquivo;
-    if (!paginas.has(arquivo) && !scripts.has(arquivo)) return next();
-    res.sendFile(path.join(raiz, arquivo));
+// Servir arquivos públicos da pasta public.
+const pastaPublica = path.join(__dirname, 'public');
+
+app.use(express.static(pastaPublica, {
+    index: false,
+    dotfiles: 'deny'
+}));
+
+app.get('/', (req, res) => {
+    res.redirect('/login.html');
 });
 
 // Autenticação obrigatória nas APIs de negócio, inclusive para chamadas diretas.
@@ -173,8 +163,4 @@ app.listen(PORT, () => {
 
 });
 
-app.get("/tema-vinho.css", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "..", "tema-vinho.css")
-    );
-});
+
