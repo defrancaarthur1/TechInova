@@ -851,3 +851,110 @@ table tr:hover {
 .historico-tabela .btn { margin:2px 3px; padding:7px 12px; }
 .historico-tabela .edit { background:#ffa500; }
 .historico-tabela .delete { background:#e00000; }
+
+/* ========================================
+   AJUSTES FINAIS DE RESPONSIVIDADE
+======================================== */
+
+/* Evita que elementos ultrapassem a tela */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.container,
+.card,
+.topbar {
+    min-width: 0;
+}
+
+/* Tabelas com rolagem independente */
+.itens-compra,
+.historico-tabela-rolagem,
+.tabela-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Impede que tabelas deformem os cards */
+.itens-compra table,
+.historico-tabela,
+.tabela-container table {
+    min-width: 650px;
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 8px;
+    }
+
+    .topbar {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        gap: 10px;
+    }
+
+    .card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .card h2 {
+        font-size: 19px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .acoes,
+    .acoes-fornecedor {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .acoes .btn,
+    .acoes-fornecedor .btn {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .filtros,
+    .filtros-produtos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .historico-filtros {
+        width: 100%;
+    }
+
+    .historico-filtros-acoes {
+        flex-direction: column;
+    }
+
+    .historico-filtros-acoes .btn {
+        width: 100%;
+    }
+
+}
