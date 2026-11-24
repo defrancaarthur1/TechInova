@@ -22,21 +22,10 @@ const usuarioRoutes =
 
 
 const app = express();
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
 
 
-// ========================================
-// CORS
-// ========================================
-
-app.use(cors({
-
-    origin: true,
-
-    credentials: true
-
-}));
-
-
+// Requisições do frontend usam a mesma origem; CORS aberto não é necessário.
 // ========================================
 // JSON
 // ========================================
@@ -50,6 +39,19 @@ app.use(express.urlencoded({
 
 }));
 
+// Impede alterações enviadas por páginas de outra origem.
+app.use((req, res, next) => {
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+        const origem = req.get('origin');
+        const host = req.get('host');
+        if (origem) {
+            try { if (new URL(origem).host !== host) return res.status(403).json({ mensagem: 'Origem não permitida.' }); }
+            catch { return res.status(403).json({ mensagem: 'Origem inválida.' }); }
+        }
+    }
+    next();
+});
+
 
 
 // ========================================
@@ -58,8 +60,7 @@ app.use(express.urlencoded({
 
 app.use(session({
 
-    secret:
-        'controle-fornecedores-adega',
+    secret: process.env.SESSION_SECRET || (process.env.NODE_ENV !== 'production' ? 'somente-desenvolvimento-altere-esta-chave' : (() => { throw new Error('Defina SESSION_SECRET no Render.'); })()),
 
     resave: false,
 
@@ -68,6 +69,8 @@ app.use(session({
     cookie: {
 
         httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
 
         maxAge:
             1000 * 60 * 60 * 8
@@ -77,23 +80,37 @@ app.use(session({
 }));
 
 
-// ========================================
-// FRONT-END
-// ========================================
+// Servir arquivos públicos da pasta public.
+const pastaPublica = path.join(__dirname, 'public');
 
-app.use(
+app.use(express.static(pastaPublica, {
+    index: false,
+    dotfiles: 'deny'
+}));
 
-    express.static(
+app.get('/', (req, res) => {
+    res.redirect('/login.html');
+});
 
-        path.join(
-            __dirname,
-            '..'
-        )
-
-    )
-
-);
-
+// Autenticação obrigatória nas APIs de negócio, inclusive para chamadas diretas.
+async function protegerApi(req, res, next) {
+    if (!req.session?.usuario?.id || !req.session.credencial) return res.status(401).json({ mensagem: 'Faça login novamente.' });
+    try {
+        const [linhas] = await banco.execute('SELECT senha, email FROM usuarios WHERE id = ? AND ativo = TRUE', [req.session.usuario.id]);
+        if (!linhas.length || linhas[0].senha !== req.session.credencial || linhas[0].email !== req.session.usuario.email) {
+            return req.session.destroy(() => res.status(401).json({ mensagem: 'Sessão expirada. Faça login novamente.' }));
+        }
+        next();
+    } catch (erro) {
+        console.error('Erro na autenticação:', erro);
+        res.status(500).json({ mensagem: 'Erro ao verificar autenticação.' });
+    }
+}
+app.use('/api/fornecedores', protegerApi);
+app.use('/api/produtos', protegerApi);
+app.use('/api/compras', protegerApi);
+app.use('/api/usuarios', protegerApi);
+app.use('/api/sessao', protegerApi);
 
 // ========================================
 // ROTAS
@@ -130,58 +147,6 @@ app.use(
 
 
 // ========================================
-// TESTAR BANCO
-// ========================================
-
-app.get(
-    '/api/teste-banco',
-
-    async (req, res) => {
-
-        try {
-
-            const [resultado] =
-                await banco.query(
-                    'SELECT 1 AS conectado'
-                );
-
-
-            res.json({
-
-                sucesso: true,
-
-                mensagem:
-                    'Servidor conectado ao MySQL.',
-
-                resultado
-
-            });
-
-
-        } catch (erro) {
-
-            console.error(erro);
-
-
-            res.status(500).json({
-
-                sucesso: false,
-
-                mensagem:
-                    'Erro ao conectar ao MySQL.',
-
-                erro:
-                    erro.message
-
-            });
-
-        }
-
-    }
-);
-
-
-// ========================================
 // SERVIDOR
 // ========================================
 
@@ -197,3 +162,5 @@ app.listen(PORT, () => {
     );
 
 });
+
+

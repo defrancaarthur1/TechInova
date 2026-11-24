@@ -1,6 +1,21 @@
-require('dotenv').config({
-    path: __dirname + '/.env'
-});
+require('dotenv').config({ path: __dirname + '/.env' });
+
+const fs = require('fs');
+const path = require('path');
+
+const caminhoCA = process.env.DB_SSL_CA_PATH;
+
+const configuracaoSSL = {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true,
+    ...(caminhoCA ? {
+        ca: fs.readFileSync(
+            path.resolve(__dirname, caminhoCA),
+            'utf8'
+        )
+    } : {})
+};
+
 
 const mysql = require('mysql2/promise');
 
@@ -25,6 +40,9 @@ const banco = mysql.createPool({
 
     port:
         Number(process.env.DB_PORT || 3306),
+
+    // TiDB Cloud exige conexões TLS com verificação do certificado.
+    ssl: configuracaoSSL,
 
     // Aguarda uma conexão ficar disponível
     waitForConnections:
