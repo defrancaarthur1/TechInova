@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastros - Sistema de Controle de Compras</title>
+
+   <link rel="stylesheet" href="/css/adegastyle.css">
+<link rel="stylesheet" href="/css/tema-vinho.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+<img src="/imagens/logo-adega-file.png" alt="Adega Filé" class="logo-topbar">
+
+        <h1>Sistema de Controle de Compras</h1>
+
+        <div class="menu-mobile">
+            <button id="btnMenu" class="btn-menu">☰</button>
+        </div>
+
+        <nav id="menuPrincipal">
+            <a href="index.html">Registrar Compra</a>
+            <a href="cadastros.html" aria-current="page">Cadastros</a>
+            <a href="editar-excluir.html">Editar / Excluir</a>
+            <a href="historico.html">Histórico</a>
+            <a href="configuracoes.html">Configurações</a>
+            <a href="#" id="btnLogout">Sair</a>
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- CADASTRO DE PRODUTO -->
+
+        <section class="card">
+
+            <h2>Cadastro de Produto</h2>
+
+            <label for="nomeProduto">
+                Nome do produto *
+            </label>
+
+            <input
+                type="text"
+                id="nomeProduto"
+                placeholder="Ex: Coca-Cola 2L"
+                maxlength="100"
+                autocomplete="off"
+                autofocus
+                required
+            >
+
+            <label for="categoria">
+                Categoria *
+            </label>
+
+            <select id="categoria" required>
+
+                <option value="">
+                    Selecione uma categoria
+                </option>
+
+                <option value="5">Água</option>
+                <option value="2">Cervejas</option>
+                <option value="4">Destilados</option>
+                <option value="6">Gelo</option>
+                <option value="7">Outros</option>
+                <option value="3">Refrigerantes</option>
+                <option value="1">Sucos</option>
+
+            </select>
+
+            <label for="unidade">
+                Unidade de medida *
+            </label>
+
+            <select id="unidade" required>
+
+                <option value="">
+                    Selecione uma unidade
+                </option>
+
+                <option value="Unidade">
+                    Unidade
+                </option>
+
+                <option value="Caixa">
+                    Caixa
+                </option>
+
+                <option value="Fardo">
+                    Fardo
+                </option>
+
+            </select>
+
+            <p>
+                <small>
+                    * Campos obrigatórios
+                </small>
+            </p>
+
+            <div class="acoes">
+
+                <button
+                    class="btn"
+                    id="btnCadastrarProduto"
+                    type="button"
+                >
+                    Cadastrar produto
+                </button>
+
+            </div>
+
+            <!-- CONSULTA DE PRODUTOS -->
+
+            <h2>Produtos cadastrados</h2>
+
+            <div class="filtros-produtos">
+
+                <!-- BUSCAR POR NOME -->
+
+                <div>
+
+                    <label for="filtroNome">
+                        Buscar produto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="filtroNome"
+                        placeholder="Digite o nome do produto"
+                    >
+
+                </div>
+
+                <!-- FILTRO POR CATEGORIA -->
+
+                <div>
+
+                    <label for="filtroCategoria">
+                        Filtrar por categoria
+                    </label>
+
+                    <select id="filtroCategoria">
+
+                        <option value="">
+                            Todas as categorias
+                        </option>
+
+                        <option value="5">Água</option>
+                        <option value="2">Cervejas</option>
+                        <option value="4">Destilados</option>
+                        <option value="6">Gelo</option>
+                        <option value="7">Outros</option>
+                        <option value="3">Refrigerantes</option>
+                        <option value="1">Sucos</option>
+
+                    </select>
+
+                </div>
+
+                <!-- FILTRO POR UNIDADE -->
+
+                <div>
+
+                    <label for="filtroUnidade">
+                        Filtrar por unidade
+                    </label>
+
+                    <select id="filtroUnidade">
+
+                        <option value="">
+                            Todas
+                        </option>
+
+                        <option value="Unidade">
+                            Unidade
+                        </option>
+
+                        <option value="Caixa">
+                            Caixa
+                        </option>
+
+                        <option value="Fardo">
+                            Fardo
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- TABELA DE PRODUTOS -->
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Produto
+                            </th>
+
+                            <th>
+                                Categoria
+                            </th>
+
+                            <th>
+                                Unidade
+                            </th>
+
+                            <th>
+                                Estoque
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaProdutos">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Carregando produtos...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- CADASTRO DE FORNECEDOR -->
+
+        <section class="card">
+
+            <h2>Cadastro de Fornecedor</h2>
+
+            <label for="empresa">
+                Nome da empresa *
+            </label>
+
+            <input
+                type="text"
+                id="empresa"
+                placeholder="Ex: Coca-Cola"
+                maxlength="120"
+                autocomplete="organization"
+                required
+            >
+
+            <label for="cnpj">
+                CNPJ *
+            </label>
+
+            <input
+                type="text"
+                id="cnpj"
+                placeholder="00.000.000/0000-00"
+                inputmode="numeric"
+                maxlength="18"
+                autocomplete="off"
+                required
+            >
+
+            <label for="telefone">
+                Telefone
+            </label>
+
+            <input
+                type="tel"
+                id="telefone"
+                placeholder="(11) 00000-0000"
+                inputmode="tel"
+                maxlength="15"
+                autocomplete="tel"
+            >
+
+            <label for="consultor">
+                Consultor de vendas
+            </label>
+
+            <input
+                type="text"
+                id="consultor"
+                placeholder="Nome do consultor"
+                maxlength="100"
+                autocomplete="name"
+            >
+
+            <label for="email">
+                E-mail
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="contato@empresa.com"
+                maxlength="120"
+                autocomplete="email"
+            >
+
+            <label for="dataCadastro">
+                Data de cadastro *
+            </label>
+
+            <input
+                type="date"
+                id="dataCadastro"
+                required
+            >
+
+            <p>
+                <small>
+                    * Campos obrigatórios
+                </small>
+            </p>
+
+            <div class="acoes">
+
+                <button
+                    class="btn"
+                    id="btnCadastrarFornecedor"
+                    type="button"
+                >
+                    Cadastrar fornecedor
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/cadastro.js"></script>
+<script src="/js/auth.js"></script>
+
+</body>
+
+</html>

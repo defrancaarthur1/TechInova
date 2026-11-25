@@ -1,0 +1,76 @@
+/* TechInova | Identidade visual vinho e grafite | Apenas apresentação */
+:root {
+  --vinho: #722f45; --vinho-escuro: #552035; --vinho-claro: #f5e9ee;
+  --grafite: #24232b; --texto: #292730; --muted: #69636d;
+  --fundo: #f6f4f5; --borda: #e7e0e4; --branco: #fff;
+  --sombra: 0 8px 28px rgba(45, 30, 39, .07);
+}
+html { color-scheme: light; }
+body { background: var(--fundo); color: var(--texto); padding: 20px; font-family: Inter, 'Segoe UI', Arial, sans-serif; line-height: 1.5; }
+*, *::before, *::after { font-family: inherit; }
+.topbar { background: linear-gradient(115deg, var(--grafite), #342a35); border: 1px solid #40343f; border-radius: 14px; padding: 18px 22px; margin-bottom: 20px; gap: 12px; box-shadow: 0 7px 22px rgba(25, 22, 27, .12); }
+.topbar h1 { font-size: clamp(19px, 2vw, 25px); letter-spacing: -.5px; margin-bottom: 0; line-height: 1.25; }
+.topbar nav { gap: 7px; }
+.topbar nav a { background: rgba(255,255,255,.075); border: 1px solid transparent; border-radius: 8px; padding: 10px 13px; color: #f8f4f6; font-weight: 600; transition: background .2s, border-color .2s, transform .2s; }
+.topbar nav a:hover { background: rgba(255,255,255,.16); }
+.topbar nav a[aria-current="page"] { background: var(--vinho); border-color: #a45e75; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+.topbar nav a:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #dba8ba; outline-offset: 3px; }
+.container { gap: 20px; }
+.card, .login-card { background: var(--branco); border: 1px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); padding: 26px; }
+.card h2, .login-card h1 { color: var(--grafite); font-weight: 750; letter-spacing: -.45px; }
+.card h2 { font-size: 22px; padding-bottom: 11px; border-bottom: 2px solid var(--vinho-claro); margin-bottom: 20px; }
+.card h3 { color: var(--vinho-escuro); }
+.orientacao-formulario, .campos-obrigatorios, .login-subtitulo { color: var(--muted); }
+label { color: #433b43; font-weight: 650; margin-top: 13px; margin-bottom: 6px; }
+input, select, textarea, .historico-filtros input[type="date"], .historico-filtros select, .filtros-historico input, .filtros-historico select, .config-form input {
+  border: 1px solid #d5cbd1; border-radius: 8px; padding: 11px 12px; background: #fff; color: var(--texto); min-height: 42px;
+  transition: border-color .2s, box-shadow .2s; font-size: 14px;
+}
+input:focus, select:focus, textarea:focus, .filtros-historico input:focus, .filtros-historico select:focus, .config-form input:focus {
+  outline: none; border-color: var(--vinho); box-shadow: 0 0 0 3px rgba(114,47,69,.15);
+}
+input:disabled, select:disabled { background: #f0ecee; }
+.btn, .acoes-filtros button, .acoes-compra button, .historico-filtros-acoes .btn, .config-form button {
+  background: var(--vinho); color: #fff; border: 1px solid transparent; border-radius: 8px;
+  padding: 10px 15px; min-height: 39px; font-size: 13px; font-weight: 650;
+  cursor: pointer; transition: background .18s, transform .15s, box-shadow .18s;
+}
+.btn:hover, .acoes-filtros button:hover, .acoes-compra button:hover, .config-form button:hover { opacity: 1; filter: brightness(.92); box-shadow: 0 4px 12px rgba(80, 32, 50, .13); }
+.btn:active, .acoes-filtros button:active { transform: translateY(1px); }
+.btn.success, .success { background: #287657; }
+.btn.edit, .edit, .acoes-compra .edit { background: #98601d; }
+.btn.delete, .delete, .acoes-compra .delete { background: #b23e4a; }
+#limparFiltros, .acoes-filtros #limparFiltros { background: #645c66; }
+.filtros-produtos, .info-box, .form-extra { background: #fbf8fa; border: 1px solid var(--borda); border-radius: 11px; padding: 18px; }
+.filtros-historico { gap: 13px; }
+.filtros-historico label { color: #433b43; margin-bottom: 6px; }
+.acoes, .acoes-fornecedor, .acoes-filtros { gap: 9px; }
+.tabela-container, .tabela-rolagem, .historico-tabela-rolagem, .itens-compra { overflow-x: auto; max-width: 100%; border-radius: 9px; }
+table { border-collapse: separate; border-spacing: 0; margin-top: 18px; }
+table th { background: var(--grafite); color: white; font-weight: 650; }
+table th, table td, .historico-tabela th, .historico-tabela td { border: 0; border-bottom: 1px solid var(--borda); padding: 12px 13px; }
+table tbody tr:nth-child(even) { background: #fbf9fa; }
+table tbody tr:hover { background: var(--vinho-claro); }
+.login-card { max-width: 440px; padding: 38px; }
+.login-card h1 { color: var(--vinho); font-size: 28px; }
+.login-card .btn { padding: 12px; font-size: 15px; }
+.pagina-login { background: radial-gradient(ellipse at top, #f0dfe6 0%, var(--fundo) 55%); border-radius: 20px; }
+.login-card a, .card a:not(.btn) { color: var(--vinho); }
+.login-card a:hover, .card a:not(.btn):hover { color: var(--vinho-escuro); }
+.mensagem-de-erro, #mensagemFiltros { color: #a72f42; }
+.config-grid { gap: 20px; }
+.config-card { padding: 26px; }
+.config-form { gap: 10px; }
+.config-form input { width: 100%; }
+[hidden] { display: none !important; }
+@media (max-width: 900px) { .topbar nav { border-top-color: #594753; } .topbar nav a { text-align: center; } }
+@media (max-width: 600px) { body { padding: 9px; } .topbar { padding: 14px; } .container { gap: 12px; } .card, .config-card { padding: 18px; } .login-card { padding: 25px 20px; } input, select, textarea, .config-form input { font-size: 16px; } .btn { margin-right: 0; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+/* Logo Adega Filé — responsiva */
+.marca-login { display: flex; justify-content: center; margin: 0 0 18px; }
+.logo-login { display: block; width: 155px; height: 155px; max-width: 55vw; object-fit: contain; border-radius: 50%; }
+.logo-topbar { display: block; width: 56px; height: 56px; flex: 0 0 56px; object-fit: cover; border-radius: 50%; border: 2px solid #b47c55; }
+.topbar { display: flex; align-items: center; flex-wrap: wrap; }
+.topbar h1 { flex: 1 1 220px; }
+@media (max-width: 600px) { .logo-topbar { width: 44px; height: 44px; flex-basis: 44px; } .logo-login { width: 125px; height: 125px; } .topbar h1 { flex-basis: 150px; } }

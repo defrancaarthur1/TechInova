@@ -35,3 +35,73 @@ CREATE TABLE IF NOT EXISTS fornecedores (
 USE adega_controle;
 
 SELECT * FROM fornecedores;
+SELECT * FROM produtos;
+
+Show tables ;
+
+USE adega_controle;
+USE adega_controle;
+
+ALTER TABLE itens_compra
+ADD COLUMN subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00;
+
+INSERT INTO usuarios (nome, email, senha)
+VALUES ('Administrador', 'admin@adega.com', 'TEMPORARIA');
+
+SELECT id, nome, email, senha
+FROM usuarios;
+
+SELECT 
+    nome,
+    categoria,
+    unidade,
+    COUNT(*) AS quantidade
+FROM produtos
+GROUP BY nome, categoria, unidade
+HAVING COUNT(*) > 1;
+
+ALTER TABLE produtos
+ADD CONSTRAINT uq_produto_nome_categoria_unidade
+UNIQUE (nome, categoria, unidade);
+
+DESCRIBE produtos;
+SELECT *
+FROM produtos
+ORDER BY id DESC;
+
+SELECT * FROM compras;
+SELECT * FROM itens_compra;
+
+SELECT * FROM compras ORDER BY id DESC;
+
+SELECT * FROM itens_compra ORDER BY id DESC;
+
+SELECT * FROM itens_compra
+WHERE compra_id = 9;
+
+SELECT *
+FROM compras
+WHERE id = 13;
+
+SELECT id, nome, estoque
+FROM produtos
+WHERE id = 7;
+
+USE adega_controle;
+
+ALTER TABLE Compras
+ADD COLUMN estoque_contabilizado
+TINYINT(1) NOT NULL DEFAULT 0;
+
+SELECT
+    c.id,
+    c.data_compra,
+    p.nome AS produto,
+    i.quantidade,
+    c.estoque_contabilizado
+FROM Compras c
+INNER JOIN Itens_compra i
+    ON i.compra_id = c.id
+INNER JOIN produtos p
+    ON p.id = i.produto_id
+ORDER BY c.id DESC;

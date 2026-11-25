@@ -1,10 +1,116 @@
+require('dotenv').config({ path: __dirname + '/.env' });
+
+const fs = require('fs');
+const path = require('path');
+
+const caminhoCA = process.env.DB_SSL_CA_PATH;
+
+const configuracaoSSL = {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true,
+    ...(caminhoCA ? {
+        ca: fs.readFileSync(
+            path.resolve(__dirname, caminhoCA),
+            'utf8'
+        )
+    } : {})
+};
+
+
 const mysql = require('mysql2/promise');
 
+
+// =====================================================
+// CONFIGURAÇÃO DO POOL DE CONEXÕES
+// =====================================================
+
 const banco = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'Amor1003*',
-    database: 'adega_controle'
+
+    host:
+        process.env.DB_HOST,
+
+    user:
+        process.env.DB_USER,
+
+    password:
+        process.env.DB_PASSWORD,
+
+    database:
+        process.env.DB_NAME,
+
+    port:
+        Number(process.env.DB_PORT || 3306),
+
+    // TiDB Cloud exige conexões TLS com verificação do certificado.
+    ssl: configuracaoSSL,
+
+    // Aguarda uma conexão ficar disponível
+    waitForConnections:
+        true,
+
+    // Quantidade máxima de conexões simultâneas
+    connectionLimit:
+        10,
+
+    // Sem limite de requisições aguardando conexão
+    queueLimit:
+        0
+
 });
+
+
+// =====================================================
+// TESTE DE CONEXÃO
+// =====================================================
+//
+// Não encerra o servidor se o MySQL estiver
+// temporariamente indisponível.
+// Apenas registra o problema no terminal.
+// =====================================================
+
+async function testarConexao() {
+
+    try {
+
+        const conexao =
+            await banco.getConnection();
+
+        console.log(
+            'MySQL conectado com sucesso.'
+        );
+
+        conexao.release();
+
+    } catch (erro) {
+
+        console.error(
+            '========================================'
+        );
+
+        console.error(
+            'ERRO AO CONECTAR AO MYSQL'
+        );
+
+        console.error(
+            'Código:',
+            erro.code
+        );
+
+        console.error(
+            'Mensagem:',
+            erro.message
+        );
+
+        console.error(
+            '========================================'
+        );
+
+    }
+
+}
+
+
+testarConexao();
+
 
 module.exports = banco;
